@@ -1,0 +1,391 @@
+@import "../navbar-style-one/navbar-style-one.component.scss";
+
+.navbar-area {
+    top: 0 !important;
+    left: 250px !important;
+    z-index: 999 !important;
+    height: auto !important;
+    position: fixed !important;
+    animation: unset !important;
+    width: calc(100% - 250px) !important;
+    background-color: var(--whiteColor) !important;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.12) !important;
+
+    .vesax-nav {
+        padding: {
+            left: 30px;
+            right: 30px;
+        };
+        .navbar {
+            .navbar-nav {
+                margin: {
+                    left: 0;
+                    right: 0;
+                };
+                .nav-item {
+                    .dropdown-menu {
+                        li {
+                            .dropdown-menu {
+                                left: 250px;
+                                
+                                li {
+                                    .dropdown-menu {
+                                        left: -250px;
+            
+                                        li {
+                                            .dropdown-menu {
+                                                left: 250px;
+                    
+                                                li {
+                                                    .dropdown-menu {
+                                                        left: -250px;
+                            
+                                                        li {
+                                                            .dropdown-menu {
+                                                                left: 250px;
+
+                                                                li {
+                                                                    .dropdown-menu {
+                                                                        left: -250px;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .others-option {
+                margin-left: auto;
+
+                .profile-nav-item {
+                    .dropdown-toggle {
+                        padding: 0;
+                        font-weight: 500;
+                        color: var(--optionalColor);
+            
+                        &::after {
+                            display: none;
+                        }
+                        &::before {
+                            right: 0;
+                            top: 10px;
+                            content: "\f106";
+                            position: absolute;
+                            transition: var(--transition);
+                            font: {
+                                size: 15px;
+                                family: Flaticon;
+                            };
+                        }
+                        span {
+                            top: 1px;
+                            color: var(--optionalColor);
+            
+                            &::before {
+                                display: none;
+                            }
+                        }
+                        &:hover {
+                            &::before {
+                                color: var(--mainColor);
+                            }
+                            span {
+                                color: var(--mainColor);
+                            }
+                        }
+                    }
+                    .menu-profile {
+                        padding-right: 20px;
+
+                        img {
+                            width: 40px;
+                            height: 40px;
+                            margin-right: 12px;
+                            display: inline-block;
+                        }
+                    }
+                    &.dropdown {
+                        .dropdown-menu {
+                            right: 0;
+                            left: auto;
+                            border: none;
+                            display: none;
+                            margin-top: 10px;
+                            min-width: 230px;
+                            max-width: 280px;
+                            border-radius: 2px;
+                            position: absolute;
+                            padding: 15px 15px 10px;
+                            background-color: var(--whiteColor);
+                            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, .05);
+
+                            .dropdown-header {
+                                padding: 0;
+                                border-bottom: 1px solid #f2f4f9;
+                                margin: {
+                                    left: -15px;
+                                    right: -15px;
+                                };
+                                .figure {
+                                    position: relative;
+
+                                    img {
+                                        width: 80px;
+                                        height: 80px;
+                                    }
+                                }
+                                .name {
+                                    display: block;
+                                    margin-bottom: 2px;
+                                    color: var(--blackColor);
+                                    font: {
+                                        size: 17px;
+                                        weight: 600;
+                                    };
+                                    &::before {
+                                        display: none;
+                                    }
+                                }
+                                .email {
+                                    color: var(--optionalColor);
+                                    font-size: 14px;
+                                }
+                            }
+                            .dropdown-body {
+                                ul {
+                                    padding-left: 0;
+                                    margin-bottom: 0;
+                                    list-style-type: none;
+
+                                    .nav-item {
+                                        margin-left: 0;
+
+                                        .nav-link {
+                                            padding: 5px 15px 5px 38px;
+                                            color: var(--blackColor);
+                                            position: relative;
+                                            font: {
+                                                size: 14px;
+                                                weight: 500;
+                                            };
+                                            span {
+                                                color: var(--blackColor);
+                                                font-weight: 500;
+                                                display: block;
+
+                                                &::before {
+                                                    display: none;
+                                                }
+                                            }
+                                            i {
+                                                transition: var(--transition);
+                                                color: var(--mainColor);
+                                                position: absolute;
+                                                font-size: 16px;
+                                                left: 15px;
+                                                top: 7px;
+                                            }
+                                            &:hover {
+                                                span {
+                                                    color: var(--mainColor);
+                                                }
+                                                i {
+                                                    transform: rotateY(-180deg);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .dropdown-footer {
+                                margin: 10px -15px 0;
+                                padding: 10px 15px 0;
+                                border-top: 1px solid #eeeeee;
+
+                                ul {
+                                    padding-left: 0;
+                                    margin-bottom: 0;
+                                    list-style-type: none;
+
+                                    .nav-item {
+                                        .nav-link {
+                                            color: red;
+                                            position: relative;
+                                            padding: 5px 15px 5px 38px;
+                                            font: {
+                                                size: 14px;
+                                                weight: 500;
+                                            };
+                                            span {
+                                                color: red;
+                                                display: block;
+                                                font-weight: 500;
+
+                                                &::before {
+                                                    display: none;
+                                                }
+                                            }
+                                            i {
+                                                transition: var(--transition);
+                                                position: absolute;
+                                                font-size: 16px;
+                                                color: red;
+                                                left: 15px;
+                                                top: 7px;
+                                            }
+                                            &:hover {
+                                                i {
+                                                    transform: rotateY(-180deg);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            &.active {
+                                display: block;
+                            }
+                        }
+                    }
+                }
+            }
+            .navbar-toggler {
+                margin-left: auto;
+            }
+        }
+    }
+}
+.responsive-burger-menu {
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    z-index: 9999;
+    width: 70%;
+
+    span {
+        height: 1px;
+        width: 25px;
+        background: white;
+        display: block;
+        margin: 6px 0;
+        transition: all .50s ease-in-out;
+    }
+    &.active {                
+        span {
+            &.top-bar {
+                transform: rotate(45deg);
+                transform-origin: 10% 10%;
+            }
+            &.middle-bar {
+                opacity: 0;
+            }
+            &.bottom-bar {
+                transform: rotate(-45deg);
+                transform-origin: 10% 90%;
+                margin-top: 5px;
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width: 767px) {
+
+    .navbar-area {
+        padding: 20px 0;
+        left: 0 !important;
+        width: 100% !important;
+
+        .vesax-nav {
+            padding: {
+                left: 15px;
+                right: 15px;
+            };
+            .navbar {
+                .others-option {
+                    .profile-nav-item {
+                        .dropdown-toggle {
+                            font-size: 14px;
+                        }
+                        &.dropdown {
+                            .dropdown-menu {
+                                right: auto;
+                                left: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width: 576px) and (max-width: 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+
+    .navbar-area {
+        left: 0 !important;
+        width: 100% !important;
+        padding: 20px 15px !important;
+
+        .vesax-nav {
+            .navbar {
+                .others-option {
+                    .profile-nav-item {
+                        &.dropdown {
+                            .dropdown-menu {
+                                right: auto;
+                                left: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+
+    .navbar-area {
+        left: 0 !important;
+        width: 100% !important;
+        padding: 20px 15px !important;
+
+        .vesax-nav {
+            .navbar {
+                .others-option {
+                    .profile-nav-item {
+                        &.dropdown {
+                            .dropdown-menu {
+                                right: auto;
+                                left: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 1200px to Max width 1355px */
+@media only screen and (min-width: 1200px) and (max-width: 1355px) {}
+
+/* Min width 1550px */
+@media only screen and (min-width: 1550px) {}
