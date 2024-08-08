@@ -7,11 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardSidemenuComponent implements OnInit {
 
+    classApplied = false;
     constructor() { }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
 
-    classApplied = false;
+    }
     toggleClass() {
         this.classApplied = !this.classApplied;
     }
