@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AddBusinessService } from '../../../../services/AddBusiness/AddBusiness.service'
-import { BusinessDetail } from "../../../../models/AddBusiness/AddBusiness.model";
+import { BusinessDetail, BusinessFilesDetailList } from "../../../../models/AddBusiness/AddBusiness.model";
 import { Observable } from 'rxjs';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { DropzoneConfig } from 'ngx-dropzone-wrapper';
@@ -32,6 +32,8 @@ export class DashboardEditListingsComponent implements OnInit {
     uploadedFilesName: string[] = [];
     uploadedFilesNameClient: string[] = [];
     disableTreatmentLocation: boolean;
+    selectedImagesList: BusinessFilesDetailList[];
+    selectedListStr: string;
      
 
     constructor(private _addBusinessService: AddBusinessService, public _globalSettingService: GlobalSettingService, private _genericUtilities: GenericUtility) 
@@ -51,6 +53,8 @@ export class DashboardEditListingsComponent implements OnInit {
 
         this.uploadedFilesName = [];
         this.uploadedFilesNameClient = [];
+        this.selectedImagesList = [];
+        this.selectedImagesList = [];
 
     }
 
@@ -133,6 +137,46 @@ this.getBusiness();
                 });
         }
     }
+
+    deleteSelectedRecord()
+    {
+        this.selectedListStr  = '';
+        for (const entry of this.selectedImages) {
+            const id = entry;
+            const detail = new BusinessFilesDetailList();
+            detail.BUSINESS_FILES_DTEAIL_ID = id;
+            this.selectedImagesList.push(detail);
+
+            //this.selectedListStr = this.selectedListStr + id + ',';
+            //this.selectedImagesList.push({ BUSINESS_FILES_DETAIL_ID: Number(id });
+          }
+
+console.log(this.selectedImagesList);
+          
+
+        // const businessFilesDetailListArray: BusinessFilesDetailList[] = this.selectedImages[0].map(id => new BusinessFilesDetailList(BUSINESS_FILES_DTEAIL_ID));
+        // var id = this.selectedImages;
+        // this.selectedImagesList.ids = this.selectedImages.map(item => item.);
+        // console.log(this.businessDetail);
+        // console.log("click on RegisterNow");
+        // this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+        if (this.selectedImagesList != null) {
+            //this._spinner.show();
+            this._addBusinessService.deleteSelectedImage(this.selectedImagesList).subscribe(
+                response => {
+                    console.log(response);
+                    //this.getBusiness();
+                    //this.businessDetailsList = response;
+                   // this._spinner.hide();
+                   //this.ShowToast("Alert", response.Message, response.success);
+                   //this.toastr.success(response.Message, 'Toastr fun!');
+                   //this.ShowToast("Xplore", response.Message, response.Success);
+                 
+                });
+        }
+
+    }
+
 
     onRemoveFile($event) {
         //console.log("onRemoveFile");
@@ -229,4 +273,32 @@ this.getBusiness();
         }
 
     }
+
+    images = [
+            { id: 1, src: 'assets/img/listings/listings4.jpg', alt: 'Image 1' },
+            { id: 2, src: 'assets/img/listings/listings4.jpg', alt: 'Image 2' },
+            { id: 3, src: 'assets/img/listings/listings4.jpg', alt: 'Image 3' },
+            // Add more images as needed
+          ];
+        
+          selectedImages: Set<number> = new Set();
+        
+          toggleSelection(imageId: number) {
+            if (this.selectedImages.has(imageId)) {
+              this.selectedImages.delete(imageId);
+            } else {
+              this.selectedImages.add(imageId);
+            }
+          }
+        
+          deleteSelectedImages() {
+            this.images = this.images.filter(image => !this.selectedImages.has(image.id));
+            this.selectedImages.clear();
+          }
+        hideImagePopup()
+        {
+                this.images = this.images.filter(image => !this.selectedImages.has(image.id));
+            this.selectedImages.clear();
+        }
+        
 }

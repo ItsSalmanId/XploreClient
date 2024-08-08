@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AccountUtility } from '../../utilities/account-utility';
 import { SurveyAutomation, SurveyLink, UserAccount } from "../../models/login/login.model";
-import { BusinessDetail } from "../../models/AddBusiness/AddBusiness.model";
+import { BusinessDetail, BusinessFilesDetailList } from "../../models/AddBusiness/AddBusiness.model";
 //import { PatientSurveyModel } from "../../models/patient-survey/patient-survey-model";
 
 @Injectable({
@@ -41,6 +41,9 @@ export class AddBusinessService {
     return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/GetSelectedBusiness', data);
   }
 
+  deleteSelectedImage(data: BusinessFilesDetailList[]) {
+    return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/DeleteSelectedImage', data);
+  }
 
   // deleteBusinessDetails(data: BusinessDetail) {
   //   return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/GetBusiness', data);
