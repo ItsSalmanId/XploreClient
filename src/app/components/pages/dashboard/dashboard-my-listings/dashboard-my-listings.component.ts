@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { AddBusinessService } from '../../../../services/AddBusiness/AddBusiness.service'
+import { BusinessDetail } from "../../../../models/AddBusiness/AddBusiness.model";
 
 @Component({
     selector: 'app-dashboard-my-listings',
@@ -7,11 +9,85 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
     styleUrls: ['./dashboard-my-listings.component.scss']
 })
 export class DashboardMyListingsComponent implements OnInit {
+    businessDetail: BusinessDetail;
+    businessDetailsList: BusinessDetail[] = [];
+    isShownDelete: boolean;
+    modal='modal';
+    name = 'Angular';
+    selectedId: number;
+    constructor(private _addBusinessService: AddBusinessService) { 
+    this.businessDetail = new BusinessDetail();
+    this.businessDetailsList = [];
+    this.isShownDelete = true;
+    this.selectedId = 0;
+    
+    
 
-    constructor() { }
+    }
 
     ngOnInit(): void {
         this.resetOption = [this.options[0]];
+        this.getBusiness();
+    }
+
+    fetchRecord(id: number)
+    {
+        console.log(id);
+        this.selectedId = id;
+    }
+    editRecord(id: number)
+    {
+        localStorage.setItem('selectedIdForEdit', id.toString());
+    }
+    deleteRecord()
+    {
+        var id = this.selectedId;
+        console.log(this.businessDetail);
+        console.log("click on RegisterNow");
+        this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+        if (this.selectedId != 0) {
+            //this._spinner.show();
+            this._addBusinessService.deleteBusinessDetails(this.selectedId).subscribe(
+                response => {
+                    console.log(response);
+                    this.getBusiness();
+                    //this.businessDetailsList = response;
+                   // this._spinner.hide();
+                   //this.ShowToast("Alert", response.Message, response.success);
+                   //this.toastr.success(response.Message, 'Toastr fun!');
+                   //this.ShowToast("Xplore", response.Message, response.Success);
+                 
+                });
+        }
+
+    }
+
+
+    openModal(inp: string) {
+        console.log(inp);
+        this.modal='modal-open';
+      }
+      closeModal(){
+        this.modal='modal';
+      }
+    getBusiness()
+    {
+        console.log(this.businessDetail);
+        console.log("click on RegisterNow");
+        this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+        if (this.businessDetail) {
+            //this._spinner.show();
+            this._addBusinessService.getBusinessDetails(this.businessDetail).subscribe(
+                response => {
+                    console.log(response);
+                    this.businessDetailsList = response;
+                   // this._spinner.hide();
+                   //this.ShowToast("Alert", response.Message, response.success);
+                   //this.toastr.success(response.Message, 'Toastr fun!');
+                   //this.ShowToast("Xplore", response.Message, response.Success);
+                 
+                });
+        }
     }
 
     breadcrumb = [

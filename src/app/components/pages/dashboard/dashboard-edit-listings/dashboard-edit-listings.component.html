@@ -110,13 +110,10 @@
     <div class="add-listings-box">
         <h3>Gallery</h3>
     
-        <div class="file-upload-box">
+        <!-- <div class="file-upload-box">
             <input type="file" name="" id="">
             <form action="/file-upload" class="dropzone"></form>
-            <!-- <div>
-                <img *ngFor='let preview of previews' [src]="preview" class="preview">
-            </div> -->
-        </div>
+        </div> -->
 
         <div>
             <div class="col-md-12">
@@ -127,6 +124,23 @@
             </div>
             
             <div class="clearfix"></div>
+            <!-- <form action="/upload" class="dropzone" id="p-uploadimg-dropzone">
+            </form> -->
+
+            <div class="listings-image">
+                <div class="listings-image-slides">
+                    <owl-carousel-o [options]="customOptions">
+                        <ng-template carouselSlide *ngFor="let Image of businessDetail.uploadedFilesName;">
+                            <div class="single-image">
+                                <img [src]="Image" alt="image">
+                                <!-- <a routerLink="/{{Content.detailsLink}}" class="link-btn"></a> -->
+                            </div>
+                        </ng-template>
+                    </owl-carousel-o>
+                </div>
+                <a class="bookmark-save"><i class="flaticon-heart"></i></a>
+                <a  class="category"><i class="flaticon-cooking"></i></a>
+            </div>
             
             <dropzone id="p-uploadimg-dropzone" [config]="config" [message]="'Click or Drag Images and Documents here to upload (.pdf, .png, .jpg/.jpeg, .tif/.tiff, .bmp)'" (maxFilesExceeded)="onMaxFilesExceeded()"
     (maxFilesReached)="onMaxFilesReached()" (removedFile)="onRemoveFile($event)" (error)="onUploadError($event)"

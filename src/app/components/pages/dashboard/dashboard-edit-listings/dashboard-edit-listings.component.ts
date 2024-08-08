@@ -7,15 +7,17 @@ import { DropzoneConfig } from 'ngx-dropzone-wrapper';
 import { GlobalSettingService } from '../../../../services/Global/global-setting.service';
 import { GenericUtility } from '../../../../utilities/generic-utility';
 //declare var $: any;
+import Dropzone from 'dropzone';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 import * as $ from 'jquery'; // Import jQuery
 
 
 @Component({
-    selector: 'app-dashboard-add-listings',
-    templateUrl: './dashboard-add-listings.component.html',
-    styleUrls: ['./dashboard-add-listings.component.scss']
+    selector: 'app-dashboard-edit-listings',
+    templateUrl: './dashboard-edit-listings.component.html',
+    styleUrls: ['./dashboard-edit-listings.component.scss']
 })
-export class DashboardAddListingsComponent implements OnInit {
+export class DashboardEditListingsComponent implements OnInit {
 
     config: DropzoneConfig;
     
@@ -53,11 +55,38 @@ export class DashboardAddListingsComponent implements OnInit {
     }
 
     ngOnInit(): void {
+this.getBusiness();
     }
+
+    existingImages = [
+        { name: 'image1.jpg', size: 12345, url: 'http://localhost:11492/FoxDocumentDirectory/RequestForOrder/UploadImages/Captur2e%20-%20Copy_638584824582889755.PNG' },
+        { name: 'image2.jpg', size: 67890, url: 'http://localhost:11492/FoxDocumentDirectory/RequestForOrder/UploadImages/Captur2e%20-%20Copy_638584824582889755.PNG' }
+      ];
+
+    // ngAfterViewInit() {
+    //     // Initialize Dropzone
+    //     Dropzone.autoDiscover = false;
+    //     const dropzone = new Dropzone('#p-uploadimg-dropzone', this.config);
+    
+    //     // Add existing images
+    //     this.existingImages.forEach(image => {
+    //       const mockFile = {
+    //         name: image.name,
+    //         size: image.size,
+    //         status: Dropzone.ADDED,
+    //         url: image.url
+    //       };
+    
+    //       dropzone.emit('addedfile', mockFile);
+    //       dropzone.emit('thumbnail', mockFile, image.url);
+    //       dropzone.emit('complete', mockFile);
+    //     });
+    //   }
+    
     
     breadcrumb = [
         {
-            title: 'Add Listings',
+            title: 'Edit Listings',
             subTitle: 'Dashboard'
         }
     ]
@@ -71,6 +100,31 @@ export class DashboardAddListingsComponent implements OnInit {
             //this._spinner.show();
             this._addBusinessService.addUpdateBusiness(this.businessDetail).subscribe(
                 response => {
+                   // this._spinner.hide();
+                   //this.ShowToast("Alert", response.Message, response.success);
+                   //this.toastr.success(response.Message, 'Toastr fun!');
+                   //this.ShowToast("Xplore", response.Message, response.Success);
+                 
+                });
+        }
+    }
+
+    getBusiness()
+    {
+        let selectedIdForEdit = localStorage.getItem("selectedIdForEdit");
+        console.log(this.businessDetail);
+        this.businessDetail.BUSINESS_DETAIL_ID = Number(selectedIdForEdit);
+
+
+        console.log(this.businessDetail);
+        console.log("click on RegisterNow");
+        this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+        if (this.businessDetail) {
+            //this._spinner.show();
+            this._addBusinessService.getSelectedBusiness(this.businessDetail).subscribe(
+                response => {
+                    console.log(response);
+                    this.businessDetail = response;
                    // this._spinner.hide();
                    //this.ShowToast("Alert", response.Message, response.success);
                    //this.toastr.success(response.Message, 'Toastr fun!');
@@ -104,6 +158,23 @@ export class DashboardAddListingsComponent implements OnInit {
         //console.log("onCanceled");
         //console.log($event);
     }
+
+    customOptions: OwlOptions = {
+		loop: true,
+		nav: true,
+		dots: false,
+		animateOut: 'fadeOut',
+		animateIn: 'fadeIn',
+		autoplayHoverPause: true,
+		autoplay: true,
+		mouseDrag: false,
+		items: 1,
+        navText: [
+            "<i class='flaticon-left-chevron'></i>",
+            "<i class='flaticon-right-chevron'></i>"
+        ]
+    }
+
     onUploadSuccess($event) {
         //console.log("onUploadSuccess");
         this.uploadedFilesName.push($event[1].FilePath);

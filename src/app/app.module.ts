@@ -80,6 +80,18 @@ import { AccountUtility } from './utilities/account-utility';
 import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 import { GlobalSettingService } from './services/Global/global-setting.service';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { DropzoneModule, DROPZONE_CONFIG, DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
+import { GenericUtility } from './utilities/generic-utility';
+import { DashboardEditListingsComponent } from './components/pages/dashboard/dashboard-edit-listings/dashboard-edit-listings.component';
+
+
+
+const DROPZONECONFIG: DropzoneConfigInterface = {
+    url: 'C:/new1/Xploradoor-main/main/Xploradoor/images',
+    maxFilesize: 50,
+    acceptedFiles: 'image/*,application/pdf'
+  };
 
 @NgModule({
     declarations: [
@@ -149,7 +161,8 @@ import { ToastrModule } from 'ngx-toastr';
         DashboardMyProfileComponent,
         DashboardAddListingsComponent,
         DashboardBookmarksComponent,
-        DashboardMyListingsComponent
+        DashboardMyListingsComponent,
+        DashboardEditListingsComponent,
     ],
     imports: [
         BrowserModule,
@@ -162,11 +175,14 @@ import { ToastrModule } from 'ngx-toastr';
         NgxPaginationModule,
         NgxScrollTopModule,
         HttpClientModule,
-        ToastrModule.forRoot() // ToastrModule added
+        ToastrModule.forRoot(), // ToastrModule added
+        NgxDropzoneModule,
+        DropzoneModule
     ],
     providers: [
         AccountUtility,
-        GlobalSettingService 
+        GlobalSettingService,
+        GenericUtility
     ],
     bootstrap: [AppComponent]
 })

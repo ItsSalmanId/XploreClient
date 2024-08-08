@@ -81,11 +81,38 @@
                     <span class="menu-title">Bookmarks</span>
                 </a>
             </li> -->
-            <li class="nav-item" routerLinkActive="active mm-active">
+            <li class="nav-item" routerLinkActive="active mm-active" id="add-listings">
                 <a routerLink="/dashboard-add-listings" class="nav-link">
                     <span class="icon"><i class='bx bx-plus-circle'></i></span>
                     <span class="menu-title">Add Listings</span>
                 </a>
+            </li>
+
+            <li class="nav-item" routerLinkActive="active mm-active">
+                <a href="javascript:void(0)" class="collapsed-nav-link nav-link" aria-expanded="false">
+                    <span class="icon"><i class='bx bx-layer'></i></span>
+                    <span class="menu-title">My Listings</span>
+                </a>
+                <ul class="sidemenu-nav-second-level">
+                    <li class="nav-item" routerLinkActive="active">
+                        <a routerLink="/dashboard-my-listings" class="nav-link">
+                            <span class="menu-title">Active</span>
+                            <span class="badge">5</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
+                        <a routerLink="/dashboard-my-listings" class="nav-link">
+                            <span class="menu-title">Pending</span>
+                            <span class="badge yellow">1</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
+                        <a routerLink="/dashboard-my-listings" class="nav-link">
+                            <span class="menu-title">Expired</span>
+                            <span class="badge red">2</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <!-- <li class="nav-item" routerLinkActive="active mm-active">
                 <a routerLink="/dashboard-invoice" class="nav-link">
@@ -109,6 +136,7 @@
                 </a>
             </li> -->
         </ul>
+
     </div>
 </div>
 <!-- End Sidemenu Area -->

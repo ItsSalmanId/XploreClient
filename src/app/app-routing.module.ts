@@ -39,6 +39,8 @@ import { TopPlaceComponent } from './components/pages/top-place/top-place.compon
 import { VerticalListingsFullWidthComponent } from './components/pages/vertical-listings-full-width/vertical-listings-full-width.component';
 import { VerticalListingsLeftSidebarComponent } from './components/pages/vertical-listings-left-sidebar/vertical-listings-left-sidebar.component';
 import { VerticalListingsRightSidebarComponent } from './components/pages/vertical-listings-right-sidebar/vertical-listings-right-sidebar.component';
+import { DashboardEditListingsComponent } from './components/pages/dashboard/dashboard-edit-listings/dashboard-edit-listings.component';
+
 
 const routes: Routes = [
     {path: '', component: HomeDemoOneComponent},
@@ -77,6 +79,7 @@ const routes: Routes = [
     {path: 'dashboard-invoice', component: DashboardInvoiceComponent},
     {path: 'dashboard-my-profile', component: DashboardMyProfileComponent},
     {path: 'dashboard-add-listings', component: DashboardAddListingsComponent},
+    {path: 'dashboard-edit-listings', component: DashboardEditListingsComponent},
     {path: 'dashboard-bookmarks', component: DashboardBookmarksComponent},
     {path: 'dashboard-my-listings', component: DashboardMyListingsComponent},
     // Here add new pages component
