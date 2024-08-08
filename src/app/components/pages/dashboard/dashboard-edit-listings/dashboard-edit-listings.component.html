@@ -18,8 +18,7 @@
 
     <!-- Start -->
     <div class="add-listings-box">
-        <h3>Basic Informations</h3>
-    
+        <h3>Basic Informations</h3>    
         <div class="row">
             <div class="col-lg-12 col-md-12">
                 <div class="form-group">
@@ -109,6 +108,8 @@
 
     <div class="add-listings-box">
         <h3>Gallery</h3>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#message_modal">To Preview Old Images</button>
+
     
         <!-- <div class="file-upload-box">
             <input type="file" name="" id="">
@@ -127,20 +128,19 @@
             <!-- <form action="/upload" class="dropzone" id="p-uploadimg-dropzone">
             </form> -->
 
-            <div class="listings-image">
+            <!-- <div class="listings-image">
                 <div class="listings-image-slides">
                     <owl-carousel-o [options]="customOptions">
                         <ng-template carouselSlide *ngFor="let Image of businessDetail.uploadedFilesName;">
                             <div class="single-image">
                                 <img [src]="Image" alt="image">
-                                <!-- <a routerLink="/{{Content.detailsLink}}" class="link-btn"></a> -->
                             </div>
                         </ng-template>
                     </owl-carousel-o>
                 </div>
                 <a class="bookmark-save"><i class="flaticon-heart"></i></a>
                 <a  class="category"><i class="flaticon-cooking"></i></a>
-            </div>
+            </div> -->
             
             <dropzone id="p-uploadimg-dropzone" [config]="config" [message]="'Click or Drag Images and Documents here to upload (.pdf, .png, .jpg/.jpeg, .tif/.tiff, .bmp)'" (maxFilesExceeded)="onMaxFilesExceeded()"
     (maxFilesReached)="onMaxFilesReached()" (removedFile)="onRemoveFile($event)" (error)="onUploadError($event)"
@@ -167,8 +167,67 @@
     </div>
     <!-- End -->
 
-    <div class="flex-grow-1"></div>
-    
+    <div class="modal fade" id="send_message_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered">
+       <div class="modal-content">
+           <div class="modal-header">
+               <h1 class="modal-title fs-5" id="exampleModalLabel">Share</h1>
+               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+           </div>
+           <div class="modal-body">
+               <div class="send">
+                   <div class="search_person">
+                       <p>Are you sure want to delete the record.</p>
+                   </div>
+               </div>
+           </div>
+           <div class="modal-footer">
+               <button class="btn btn-primary" class="btn-close" data-bs-dismiss="modal" aria-label="Close">No</button>
+               <button class="btn btn-primary" (click)="deleteSelectedRecord()" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Yes</button>
+           </div>
+       </div>
+   </div>
+</div>
+
+<!-- Modal to delete the images -->
+<div class="modal fade" id="message_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="box-shadow: 5px 5px #16f5f5; border: 1px solid #96e3e3;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Select Images to Delete 
+                        <span *ngIf="businessDetail.BusinessFilesDetail != null"> ({{ selectedImages.size }} selected)</span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hideImagePopup()"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="deleteImagesForm">
+                        <div *ngIf="businessDetail.BusinessFilesDetail != null; else noImages">
+                            <div class="row">
+                                <div class="col-12 col-md-4 col-lg-4 mb-3" *ngFor="let image of businessDetail.BusinessFilesDetail;">
+                                    <div class="image-card">
+                                        <img [src]="image.FILE_PATH" class="card-img-top" >
+                                        <input type="checkbox" class="image-checkbox" id="imageCheckbox{{image.BUSINESS_FILES_DTEAIL_ID}}" (change)="toggleSelection(image.BUSINESS_FILES_DTEAIL_ID)">
+                                        <label for="imageCheckbox{{image.BUSINESS_FILES_DTEAIL_ID}}" class="image-label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-template #noImages>
+                            <p>No images are left.</p>
+                        </ng-template>
+                    </form>
+                </div>
+                <div class="modal-footer" *ngIf="images.length > 0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="hideImagePopup()">Close</button>
+                    <button type="button" class="btn btn-danger" (click)="deleteSelectedRecord()" data-bs-toggle="modal" data-bs-target="#send_message_modal">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-grow-1"></div>   
     <!-- <app-copyrights></app-copyrights> -->
 
 </div>

@@ -17,6 +17,11 @@ export class BusinessDetail {
     MODIFIED_DATE: Date;
     DELETED: boolean = false;
     uploadedFilesName: string[] = [];
+    BusinessFilesDetail: BusinessFilesDetail[];
+}
+
+export class  BusinessFilesDetailList {
+    BUSINESS_FILES_DTEAIL_ID: number;
 }
 
 
