@@ -15,24 +15,24 @@ export class HowItWorksComponent implements OnInit {
     sectionTitle = [
         {
             title: 'How It Works',
-            paragraph: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra.'
+            paragraph: 'Finding and booking a place on xploradoor is simple and straightforward. Follow these easy steps to get started:'
         }
     ]
     howItWorksBox = [
         {
             icon: 'flaticon-placeholder',
             title: 'Find Interesting Place',
-            paragraph: 'Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.'
+            paragraph: 'Browse our diverse listings using filters to easily and quickly find the perfect spot for you. Lets go!'
         },
         {
             icon: 'flaticon-support-1',
             title: 'Contact a Few Owners',
-            paragraph: 'Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.'
+            paragraph: 'Reach out to property owners through our platform to ask questions and get more details.'
         },
         {
             icon: 'flaticon-tick',
             title: 'Make a Reservation',
-            paragraph: 'Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.'
+            paragraph: 'Book your chosen place securely and manage your reservations through your account.'
         }
     ]
 

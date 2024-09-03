@@ -84,8 +84,15 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { DropzoneModule, DROPZONE_CONFIG, DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { GenericUtility } from './utilities/generic-utility';
 import { DashboardEditListingsComponent } from './components/pages/dashboard/dashboard-edit-listings/dashboard-edit-listings.component';
-
-
+import { CategorytwoComponent } from './components/common/category-two/category-two.component';
+import { DashboardAddBlogComponent } from './components/pages/dashboard/dashboard-add-blog/dashboard-add-blog.component';
+//import { MultiSelectDropdownComponent } from './components/common/multi-select-dropdown/multi-select-dropdown.component';
+import { DashboardUserDetailsComponent } from './components/pages/dashboard/dashboard-user-details/dashboard-user-details.component';
+import { DashboardAllListingsComponent } from './components/pages/dashboard/dashboard-all-listings/dashboard-all-listings.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from '../../../Xploradoor/src/app/services/AuthService/auth.interceptor';
+import { CommonCall } from './components/common/commonCall/commonCall.component'; // Adjust the path
+import { DatePipe } from '@angular/common';
 
 const DROPZONECONFIG: DropzoneConfigInterface = {
     url: 'C:/new1/Xploradoor-main/main/Xploradoor/images',
@@ -104,6 +111,7 @@ const DROPZONECONFIG: DropzoneConfigInterface = {
         FeedbackStyleOneComponent,
         HomeoneDestinationsComponent,
         CategoryComponent,
+        CategorytwoComponent,
         HomeoneListingsComponent,
         FeaturesComponent,
         HomeoneBannerComponent,
@@ -163,6 +171,10 @@ const DROPZONECONFIG: DropzoneConfigInterface = {
         DashboardBookmarksComponent,
         DashboardMyListingsComponent,
         DashboardEditListingsComponent,
+        DashboardAddBlogComponent,
+        DashboardUserDetailsComponent,
+        DashboardAllListingsComponent,
+        CommonCall
     ],
     imports: [
         BrowserModule,
@@ -182,7 +194,9 @@ const DROPZONECONFIG: DropzoneConfigInterface = {
     providers: [
         AccountUtility,
         GlobalSettingService,
-        GenericUtility
+        GenericUtility,
+        DatePipe,
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
     ],
     bootstrap: [AppComponent]
 })

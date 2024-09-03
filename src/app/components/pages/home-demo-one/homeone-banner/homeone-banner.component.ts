@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { AddBusinessService } from '../../../../services/AddBusiness/AddBusiness.service'
+import { BusinessDetail, BusinessBlogDetail } from "../../../../models/AddBusiness/AddBusiness.model";
 
 @Component({
     selector: 'app-homeone-banner',
@@ -7,12 +9,69 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
     styleUrls: ['./homeone-banner.component.scss']
 })
 export class HomeoneBannerComponent implements OnInit {
+    businessDetail: BusinessDetail;
+    businessDetailsList: BusinessDetail[] = [];
+    businessBlogDetails: BusinessBlogDetail;
+    businessBlogDetailsList: BusinessBlogDetail[] = [];
 
-    constructor() { }
+    constructor(private _addBusinessService: AddBusinessService) {
+        this.businessDetail = new BusinessDetail();
+        this.businessDetailsList = [];
+        this.businessBlogDetails = new BusinessBlogDetail();
+        this.businessBlogDetailsList = [];
+     }
 
     ngOnInit(): void {
         this.resetOption = [this.options[0]];
+        this.getBusiness();
+        this.getBlogsDetails();
     }
+
+    getBusiness()
+    {
+        console.log(this.businessDetail);
+        console.log("click on RegisterNow");
+        this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+        if (this.businessDetail) {
+            //this._spinner.show();
+            this._addBusinessService.getBusinessDetails(this.businessDetail).subscribe(
+                response => {
+                    console.log(response);
+                    this.businessDetailsList = response;
+                   // this._spinner.hide();
+                   //this.ShowToast("Alert", response.Message, response.success);
+                   //this.toastr.success(response.Message, 'Toastr fun!');
+                   //this.ShowToast("Xplore", response.Message, response.Success);
+                 
+                });
+        }
+
+  }
+  selectBusiness(selectedBusinessId: number)
+  {
+    console.log(selectedBusinessId);
+    localStorage.setItem('selectedBusinessId', selectedBusinessId.toString());
+  }
+
+  getBlogsDetails()
+    {
+        console.log(this.businessDetail);
+        console.log("click on RegisterNow");
+        this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+        // if (this.businessDetail) {
+        //     //this._spinner.show();
+            this._addBusinessService.getBlogsDetails(this.businessBlogDetails).subscribe(
+                response => {
+                    console.log(response);
+                    this.businessBlogDetailsList = response;
+                   // this._spinner.hide();
+                   //this.ShowToast("Alert", response.Message, response.success);
+                   //this.toastr.success(response.Message, 'Toastr fun!');
+                   //this.ShowToast("Xplore", response.Message, response.Success);
+                 
+                });
+        //}
+  }
 
     mainBannerContent = [
         {

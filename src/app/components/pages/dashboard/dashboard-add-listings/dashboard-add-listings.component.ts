@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AddBusinessService } from '../../../../services/AddBusiness/AddBusiness.service'
-import { BusinessDetail } from "../../../../models/AddBusiness/AddBusiness.model";
+import { BusinessDetail, TimeSlots, WeeklyTimeSlots } from "../../../../models/AddBusiness/AddBusiness.model";
 import { Observable } from 'rxjs';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { DropzoneConfig } from 'ngx-dropzone-wrapper';
@@ -8,6 +8,8 @@ import { GlobalSettingService } from '../../../../services/Global/global-setting
 import { GenericUtility } from '../../../../utilities/generic-utility';
 //declare var $: any;
 import * as $ from 'jquery'; // Import jQuery
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -30,9 +32,12 @@ export class DashboardAddListingsComponent implements OnInit {
     uploadedFilesName: string[] = [];
     uploadedFilesNameClient: string[] = [];
     disableTreatmentLocation: boolean;
-     
+    list : any[];
+     TimeSlots: string[];
+     timeSlots: string[] = [];
+     weeklyTimeSlots: WeeklyTimeSlots;
 
-    constructor(private _addBusinessService: AddBusinessService, public _globalSettingService: GlobalSettingService, private _genericUtilities: GenericUtility) 
+    constructor(private _addBusinessService: AddBusinessService, public _globalSettingService: GlobalSettingService, private _genericUtilities: GenericUtility, private router: Router, private toastr: ToastrService) 
     { 
      this.businessDetail = new BusinessDetail();
      this.config = new DropzoneConfig();
@@ -49,10 +54,22 @@ export class DashboardAddListingsComponent implements OnInit {
 
         this.uploadedFilesName = [];
         this.uploadedFilesNameClient = [];
+        this.weeklyTimeSlots = new WeeklyTimeSlots();
 
+        this.list = 
+      [
+        {name :'India',checked : false},
+        {name :'US',checked : false},
+        {name :'China',checked : false},
+        {name :'France',checked : false}
+      ]
+
+
+      
     }
 
     ngOnInit(): void {
+        this.timeSlots = TimeSlots;
     }
     
     breadcrumb = [
@@ -62,22 +79,69 @@ export class DashboardAddListingsComponent implements OnInit {
         }
     ]
 
+
+    
+    shareCheckedList(item:any[]){
+        console.log(item);
+      }
+      shareIndividualCheckedList(item:{}){
+        console.log(item);
+      }
+      NullCheckFun(obj: any): boolean {
+        if (obj != null && obj !== undefined && obj != 'NaN' && obj !== '') {
+            return true;
+        }
+        return false;
+    }
+    ShowToast(message: string, title: string, success: boolean) {
+        let timeOut: number = success ? 2000 : 4000;
+        //let toastOptions: ToastOptions = { title: title, msg: message, timeout: timeOut };
+        if (success)
+          this.toastr.success(title, message);
+        else {
+          this.toastr.error(title, message);
+        }
+      }
     addUpdateBusiness()
     {
-        console.log(this.businessDetail);
-        console.log("click on RegisterNow");
-        if (this.businessDetail) {
-            this.businessDetail.uploadedFilesName = this.uploadedFilesName;
-            //this._spinner.show();
-            this._addBusinessService.addUpdateBusiness(this.businessDetail).subscribe(
-                response => {
-                   // this._spinner.hide();
-                   //this.ShowToast("Alert", response.Message, response.success);
-                   //this.toastr.success(response.Message, 'Toastr fun!');
-                   //this.ShowToast("Xplore", response.Message, response.Success);
-                 
-                });
+        if (!this.NullCheckFun(this.businessDetail.BUSINESS_CITY) ||
+        !this.NullCheckFun(this.businessDetail.BUSINESS_NAME) ||
+        !this.NullCheckFun(this.businessDetail.BUSINESS_ADDRESS) ||
+        !this.NullCheckFun(this.businessDetail.EMAIL_ADDRESS) ||
+        !this.NullCheckFun(this.businessDetail.BUSINESS_NAME) ||
+        !this.NullCheckFun(this.businessDetail.CONTACT_NO) ||
+        !this.NullCheckFun(this.businessDetail.BUSINESS_CATEGORY) ||
+        !this.NullCheckFun(this.businessDetail.BUSINESS_IMPORTANT_NOTES) 
+        ) 
+        {
+            this.ShowToast("Xplore", "One or more required fields are empty.", false);
         }
+        else
+        {
+           if(this.uploadedFilesName.length == 0)
+           {
+            this.ShowToast("Xplore", "At least one picture is required. Please upload one.", false);
+           }
+           else
+           {
+            console.log(this.businessDetail);
+            console.log("click on RegisterNow");
+            if (this.businessDetail) {
+                this.businessDetail.uploadedFilesName = this.uploadedFilesName;
+                //this._spinner.show();
+                this._addBusinessService.addUpdateBusiness(this.businessDetail).subscribe(
+                    response => {
+                        this.ShowToast("Xplore", "Your business has been successfully added.", true);
+                        this.router.navigate(['/dashboard-my-listings']);
+                       // this._spinner.hide();
+                       //this.ShowToast("Alert", response.Message, response.success);
+                       //this.toastr.success(response.Message, 'Toastr fun!');
+                       //this.ShowToast("Xplore", response.Message, response.Success);
+                     
+                    });
+            }
+           }
+      }
     }
 
     onRemoveFile($event) {

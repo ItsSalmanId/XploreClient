@@ -13,10 +13,6 @@
             <li class="item"><a routerLink="dashboard">{{Content.subTitle}}</a></li>
             <li class="item">{{Content.title}}</li>
         </ol>
-        <!-- <button type="button" class="btn btn-primary" 
-        data-toggle="modal" data-target="#exampleModal" (click)="openModal('custom-modal-1')">
-            Launch demo modal
-          </button> -->
     </div>
     <!-- End Breadcrumb Area -->
 
@@ -51,7 +47,7 @@
                             <li><a ><i class="flaticon-furniture-and-household"></i> {{Content.BUSINESS_CATEGORY}}</a></li>
                             <li><i class="flaticon-pin"></i> {{Content.BUSINESS_ADDRESS}}</li>
                         </ul>
-                        <h3><a >{{Content.BUSINESS_CATEGORY}}</a></h3>
+                        <h3><a >{{Content.BUSINESS_NAME}}</a></h3>
                         <!-- <span class="status {{Content.extraClass}}"><i class="flaticon-save"></i> {{Content.openORclose}}</span> -->
                         <span ><i class="flaticon-save"></i> Open Now</span>
                         <div class="d-flex align-items-center justify-content-between">
@@ -69,7 +65,7 @@
                     <div class="listings-footer">
                         <div class="d-flex justify-content-between align-items-center">
                             <a routerLink="/dashboard-edit-listings" class="default-btn" (click)="editRecord(Content.BUSINESS_DETAIL_ID)">Edit</a>
-                            <a class="default-btn" data-bs-toggle="modal" data-bs-target="#send_message_modal" (click)="fetchRecord(Content.BUSINESS_DETAIL_ID)">Delete</a>
+                            <a class="default-btn" data-bs-toggle="modal" data-bs-target="#message_modal-Confirmation" (click)="fetchRecord(Content.BUSINESS_DETAIL_ID)">Delete</a>
                         </div>
                     </div>
                 </div>
@@ -81,40 +77,13 @@
                 </div>
             </div>
         </div>
-    </section>
-    <!-- End -->
 
-    <div class="flex-grow-1"></div>
-    
-    <app-copyrights></app-copyrights>
-
-  	<!-- Modal -->
-	<div [ngClass]="modal" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Modal title</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-				</div>
-				<div class="modal-body">
-					<p>Modal body text goes here.</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-    <div class="modal fade" id="send_message_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
+    <!-- Modal to delete the images -->
+<div class="modal fade" id="message_modal-Confirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content" style="box-shadow: 5px 5px #16f5f5; border: 1px solid #96e3e3;">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Share</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmation</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -125,11 +94,55 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" class="btn-close" data-bs-dismiss="modal" aria-label="Close">No</button>
-                <button class="btn btn-primary" (click)="deleteRecord()" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Yes</button>
+                <button class="btn btn-primary"  data-bs-dismiss="modal" aria-label="Close">No</button>
+                <button class="btn btn-primary" (click)="deleteRecord()"  data-bs-dismiss="modal" aria-label="Close">Yes</button>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="message_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="box-shadow: 5px 5px #16f5f5; border: 1px solid #96e3e3;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Select Images to Delete 
+                    <span *ngIf="images.length > 0"> ({{ selectedImages.size }} selected)</span>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="deleteImagesForm">
+                    <div *ngIf="images.length > 0; else noImages">
+                        <div class="row">
+                            <div class="col-12 col-md-4 col-lg-4 mb-3" *ngFor="let image of images">
+                                <div class="image-card">
+                                    <img [src]="image.src" class="card-img-top" alt="{{image.alt}}">
+                                    <input type="checkbox" class="image-checkbox" id="imageCheckbox{{image.id}}" (change)="toggleSelection(image.id)">
+                                    <label for="imageCheckbox{{image.id}}" class="image-label"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-template #noImages>
+                        <p>No images are left.</p>
+                    </ng-template>
+                </form>
+            </div>
+            <div class="modal-footer" *ngIf="images.length > 0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" (click)="deleteSelectedImages()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </section>
+    <!-- End -->
+
+    <div class="flex-grow-1"></div>
+
+    <!-- <app-copyrights></app-copyrights> -->
+
 </div>
 <!-- End Main Content Wrapper Area -->

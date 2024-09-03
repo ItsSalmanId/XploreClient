@@ -1,11 +1,10 @@
 .single-feedback-box {
-    box-shadow: 5px 5px var(--mainColor);
+    box-shadow: 5px 5px #282a38;
     border: 1px solid #f9f9f9;
-    border-radius: 5px;
     position: relative;
     z-index: 1;
     transition: var(--transition);
-    background-color: var(--whiteColor);
+    background-color: #0ec6c6;
     padding: 35px 30px;
     margin: {
         bottom: 35px;

@@ -2,11 +2,16 @@
     margin-bottom: 30px;
     text-align: center;
     position: relative;
+    padding: 46px;
+    // border-radius: 10px;
+    background: #0ec6c6;
+    // border: 1px solid #282a38;
+    box-shadow: 5px 5px #282a38;
     z-index: 1;
-    padding: {
-        left: 26px;
-        right: 26px;
-    };
+    // padding: {
+    //     left: 26px;
+    //     right: 26px;
+    // };
     .icon {
         margin-bottom: 30px;
         display: inline-block;
@@ -14,8 +19,8 @@
         height: 80px;
         line-height: 80px;
         background-color: var(--whiteColor);
-        border: 1px solid var(--mainColor);
-        box-shadow: 5px 5px var(--mainColor);
+        border: 1px solid #282a38;
+        box-shadow: 5px 5px #282a38;
         text-align: center;
         color: var(--mainColor);
         font-size: 40px;
@@ -23,6 +28,7 @@
     h3 {
         font-size: 22px;
         margin-bottom: 12px;
+        color: white;
     }
     &::before {
         width: 197px;

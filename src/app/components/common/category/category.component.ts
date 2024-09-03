@@ -35,8 +35,11 @@ export class CategoryComponent implements AfterViewInit {
       0: {
         items: 4
       },
-      600: {
+      375: {
         items: 5
+      },
+      600: {
+        items: 10
       },
       1000: {
         items: 4

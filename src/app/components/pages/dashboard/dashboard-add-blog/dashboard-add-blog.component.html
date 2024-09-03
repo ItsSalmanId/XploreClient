@@ -1,0 +1,200 @@
+<app-dashboard-sidemenu></app-dashboard-sidemenu>
+
+<!-- Start Main Content Wrapper Area -->
+<div class="main-content d-flex flex-column">
+
+    <app-dashboard-navbar></app-dashboard-navbar>
+
+    <!-- Breadcrumb Area -->
+    <div class="breadcrumb-area" *ngFor="let Content of breadcrumb;">
+        <h1>{{Content.title}}</h1>
+        <ol class="breadcrumb">
+            <li class="item"><a routerLink="/">Home</a></li>
+            <li class="item"><a routerLink="dashboard">{{Content.subTitle}}</a></li>
+            <li class="item">{{Content.title}}</li>
+        </ol>
+    </div>
+    <!-- End Breadcrumb Area -->
+
+    <!-- Start -->
+    <div class="add-listings-box">
+        <h3>Basic Informations</h3>
+    
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class='bx bx-briefcase-alt'></i> Author</label>
+                    <input type="text" class="form-control" placeholder="Author Name" [(ngModel)]="businessBlogDetail.AUTHOR_NAME">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class='bx bx-briefcase-alt'></i> Blog title</label>
+                    <input type="text" class="form-control" placeholder="Enter Blog title" [(ngModel)]="businessBlogDetail.BLOG_TITLE">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class="bi bi-bricks"></i> City</label>
+                    <input type="text" class="form-control" placeholder="Enter your city" [(ngModel)]="businessBlogDetail.BUSINESS_BLOG_CITY">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class='bx bx-menu-alt-left'></i> Address:</label>
+                    <input type="text" class="form-control" placeholder="e.g. 55 County Laois" [(ngModel)]="businessBlogDetail.BUSINESS_BLOG_ADDRESS">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class='bx bx-menu-alt-left'></i> Date & Time</label>
+                    <input type="date" class="form-control" placeholder="e.g. 55 County Laois">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class='bx bx-duplicate'></i> All Category</label>
+                    <select [(ngModel)]="businessBlogDetail.BUSINESS_BLOG_CATEGORY">
+                        <option>Select Category</option>
+                        <option>Fitness</option>
+                        <option>Beauty & Spa</option>
+                        <option>Restaurants</option>
+                        <option>Events</option>
+                        <option>Health & Care</option>
+                        <option>Travel & Public</option>
+                        <option>Auto Insurance</option>
+                        <option>Attorny</option>
+                        <option>Plumbers</option>
+                        <option>Hotel</option>
+                        <option>Plumbers</option>
+                        <option>Shopping</option>
+                        <option>Others (submit request for other category)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label><i class='bx bx-duplicate'></i> Social media accounts</label>
+                    <div class="social-media-accounts">
+                        <div class="social-media-account" >
+                            <input type="checkbox" id="facebook"> 
+                            <i class="bi bi-facebook"></i>
+                            <label for="facebook" style="margin-bottom: 0px;padding-left: 0px;">Facebook</label>
+                        </div>
+                        <div class="social-media-account" >
+                            <input type="checkbox" id="twitter"> 
+                            <i class="bi bi-twitter"></i>
+                            <label for="twitter" style="margin-bottom: 0px;padding-left: 0px;">Twitter</label>
+                        </div>
+                        <div class="social-media-account" data-bs-toggle="modal" data-bs-target="#message_modal">
+                            <input type="checkbox" id="instagram"> 
+                            <i class="bi bi-instagram"></i>
+                            <label for="instagram" style="margin-bottom: 0px;padding-left: 0px;">Instagram</label>
+                        </div>
+                        <div class="social-media-account" >
+                            <input type="checkbox" id="youtube"> 
+                            <i class="bi bi-youtube"></i>
+                            <label for="youtube" style="margin-bottom: 0px;padding-left: 0px;">Youtube</label>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <!-- model -->
+         <div class="modal fade" id="message_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="box-shadow: 5px 5px #16f5f5; border: 1px solid #96e3e3;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Select Images to Delete 
+                            <span *ngIf="images.length > 0"> ({{ selectedImages.size }} selected)</span>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="deleteImagesForm">
+                            <div *ngIf="images.length > 0; else noImages">
+                                <div class="row">
+                                    <div class="col-12 col-md-4 col-lg-4 mb-3" *ngFor="let image of images">
+                                        <div class="image-card">
+                                            <img [src]="image.src" class="card-img-top" alt="{{image.alt}}">
+                                            <input type="checkbox" class="image-checkbox" id="imageCheckbox{{image.id}}" (change)="toggleSelection(image.id)">
+                                            <label for="imageCheckbox{{image.id}}" class="image-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-template #noImages>
+                                <p>No images are left.</p>
+                            </ng-template>
+                        </form>
+                    </div>
+                    <div class="modal-footer" *ngIf="images.length > 0">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" (click)="deleteSelectedImages()">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="add-listings-box">
+        <h3>Feature Image</h3>
+    
+        <div class="file-upload-box">
+            <input type="file" name="" id="">
+            <form action="/file-upload" class="dropzone"></form>
+        </div>
+    </div>
+
+    <div class="add-listings-box">
+        <h3>Details</h3>
+    
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label><i class='bx bx-text'></i> Description:</label>
+                    <textarea cols="30" rows="7" class="form-control" placeholder="Details..." [(ngModel)]="businessBlogDetail.BUSINESS_IMPORTANT_NOTES"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="add-listings-box">
+        <h3>Gallery (optional)</h3>
+    
+        <!-- <div class="file-upload-box">
+            <input type="file" name="" id="">
+            <form action="/file-upload" class="dropzone"></form>
+        </div> -->
+        <div class="col-md-12">
+            <ol id="ol-uploadimg-imgname">
+                <li *ngFor="let fileName of uploadedFilesName; let ndx=index" [id]="'opt-uploadimg-imgname-'+ndx"><a [id]="'a-imgname-'+ndx" href="FoxDocumentDirectory\RequestForOrder\UploadImages\{{fileName}}"
+                        target="_blank">{{fileName}}</a></li>
+            </ol>
+        </div>
+        
+        <div class="clearfix"></div>
+        <dropzone id="p-uploadimg-dropzone" [config]="config" [message]="'Click or Drag Images and Documents here to upload (.pdf, .png, .jpg/.jpeg, .tif/.tiff, .bmp)'" (maxFilesExceeded)="onMaxFilesExceeded()"
+    (maxFilesReached)="onMaxFilesReached()" (removedFile)="onRemoveFile($event)" (error)="onUploadError($event)"
+    (success)="onUploadSuccess($event)" (canceled)="onCanceled($event)"></dropzone>
+    </div>
+
+ 
+            
+    <div class="add-listings-btn">
+        <button type="submit" (click)="addUpdateBlogBusiness()">Submit Blog</button>
+    </div>
+    <!-- End -->
+
+    <div class="flex-grow-1"></div>
+ 
+
+
+
+
+</div>
+<!-- End Main Content Wrapper Area -->

@@ -9,10 +9,10 @@
                         <h3 class="widget-title">Filters</h3>
 
                         <ul>
-                            <li><button type="button">$</button></li>
-                            <li><button type="button">$$</button></li>
-                            <li><button type="button">$$$</button></li>
-                            <li><button type="button">$$$$</button></li>
+                            <li><button type="button" id="applyCategoryFIlter" (click)="applyCategoryFIlter()">Apply Filter</button></li>
+                            <li><button type="button" id="clearCategoryFilters" (click)="clearCategoryFilters()">Clear All Filters</button></li>
+                            <!-- <li><button type="button">$$$</button></li>
+                            <li><button type="button">$$$$</button></li> --> 
                         </ul>
                     </section>
 
@@ -21,16 +21,16 @@
 
                         <ul>
                             <li>
-                                <input id="categories1" type="checkbox">
+                                <input id="categories1" type="checkbox" [(ngModel)]="businessFilters.isCheckRestaurant">
                                 <label for="categories1">Restaurant</label>
                             </li>
                             <li>
-                                <input id="categories2" type="checkbox">
-                                <label for="categories2">Hotel</label>
+                                <input id="categories2" type="checkbox" [(ngModel)]="businessFilters.isCheckHomeServices">
+                                <label for="categories2">Home Service</label>
                             </li>
                             <li>
-                                <input id="categories3" type="checkbox">
-                                <label for="categories3">Beauty & Spa</label>
+                                <input id="categories3" type="checkbox" [(ngModel)]="businessFilters.isCheckAgency">
+                                <label for="categories3">Agency</label>
                             </li>
                             <li>
                                 <input id="categories4" type="checkbox">
@@ -143,7 +143,7 @@
             <div class="col-lg-8 col-md-12">
                 <div class="listings-grid-sorting row align-items-center">
                     <div class="col-lg-5 col-md-6 result-count">
-                        <p>We found <span class="count">9</span> listings available for you</p>
+                        <p id="totalCountInList">We found <span class="count">{{this.listCount}}</span> listings available for you</p>
                     </div>
 
                     <div class="col-lg-7 col-md-6 ordering">
@@ -157,19 +157,19 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-12 col-md-12" *ngFor="let Content of singleListingsItem | paginate: { itemsPerPage: 4, currentPage: verticalListings }">
+                    <div class="col-lg-12 col-md-12" *ngFor="let Content of businessFilteredList | paginate: { itemsPerPage: 4, currentPage: verticalListings }">
                         <div class="single-listings-item">
                             <div class="row m-0">
                                 <div class="col-lg-4 col-md-4 p-0">
-                                    <div class="listings-image" style="background-image: url({{Content.mainImg}});">
-                                        <img [src]="Content.mainImg" alt="image">
-                                        <a routerLink="/{{Content.bookmarkLink}}" class="bookmark-save"><i class="flaticon-heart"></i></a>
-                                        <a routerLink="/{{Content.categoryLink}}" class="category"><i class="flaticon-cooking"></i></a>
-                                        <a routerLink="/{{Content.detailsLink}}" class="link-btn"></a>
+                                    <div class="listings-image" style="background-image: url({{Content.uploadedFilesName[0]}});">
+                                        <img [src]="Content.uploadedFilesName[0]" alt="image">
+                                        <a routerLink="" class="bookmark-save"><i class="flaticon-heart"></i></a>
+                                        <a routerLink="" class="category"><i class="flaticon-cooking"></i></a>
+                                        <a routerLink="" class="link-btn"></a>
                                         <div class="author">
                                             <div class="d-flex align-items-center">
-                                                <img [src]="Content.authorImg" alt="image">
-                                                <span>{{Content.authorName}}</span>
+                                                <!-- <img [src]="Content.authorImg" alt="image"> -->
+                                                <span>Salman</span>
                                             </div>
                                         </div>
                                     </div>
@@ -177,20 +177,24 @@
 
                                 <div class="col-lg-8 col-md-8 p-0">
                                     <div class="listings-content">
-                                        <span class="status {{Content.extraClass}}"><i class="flaticon-save"></i> {{Content.openORclose}}</span>
-                                        <h3><a routerLink="/{{Content.detailsLink}}">{{Content.title}}</a></h3>
+                                        <span class="status {{'status-open'}}"><i class="flaticon-save"></i> {{Content.OpenClose}}</span>
+                                        <h3><a routerLink="">{{Content.BUSINESS_NAME}}</a></h3>
                                         <div class="d-flex align-items-center justify-content-between">
                                             <div class="rating">
-                                                <i class='{{Star.icon}}' *ngFor="let Star of Content.rating;"></i>
-                                                <span class="count">({{Content.ratingCount}})</span>
+                                                <!-- <i class='{{Star.icon}}' *ngFor="let Star of Content.rating;"></i>
+                                                <span class="count">({{Content.ratingCount}})</span> -->
+                                                <!-- <i class='bx bxs-star' *ngFor="let Star of Content.rating;"></i> -->
+                                                <span class="count">18</span>
                                             </div>
                                             <div class="price">
-                                                {{Content.price}}
+                                                <!-- {{Content.price}} -->
+                                                200
+
                                             </div>
                                         </div>
                                         <ul class="listings-meta">
-                                            <li><a routerLink="/{{Content.categoryLink}}"><i class="flaticon-furniture-and-household"></i> Restaurant</a></li>
-                                            <li><i class="flaticon-pin"></i> {{Content.location}}</li>
+                                            <li><a routerLink="/"><i class="flaticon-furniture-and-household"></i> {{Content.BUSINESS_CATEGORY}}</a></li>
+                                            <li><i class="flaticon-pin"></i> {{Content.BUSINESS_ADDRESS}}</li>
                                         </ul>
                                     </div>
                                 </div>

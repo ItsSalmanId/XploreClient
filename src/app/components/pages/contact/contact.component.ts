@@ -18,7 +18,7 @@ export class ContactComponent implements OnInit {
             title: 'Our Address',
             info: [
                 {
-                    text: '175 5th Ave, New York, NY 10010, United States'
+                    text: 'abc'
                 }
             ]
         },
@@ -27,10 +27,10 @@ export class ContactComponent implements OnInit {
             title: 'Email Us',
             info: [
                 {
-                    text: '(+44) - 45789 - 5789'
+                    text: '(+00) - 0000 -000 '
                 },
                 {
-                    text: 'hello&#64;vesax.com'
+                    text: 'abc'
                 }
             ]
         },
@@ -39,10 +39,10 @@ export class ContactComponent implements OnInit {
             title: 'Hours of Operation',
             info: [
                 {
-                    text: 'Monday - Friday: 09:00 - 20:00'
+                    text: 'Monday - Friday: 00:00 - 00:00'
                 },
                 {
-                    text: 'Sunday & Saturday: 10:30 - 22:00'
+                    text: 'Sunday & Saturday: 00:00 - 00:00'
                 }
             ]
         }
@@ -57,7 +57,7 @@ export class ContactComponent implements OnInit {
 
     contactImage = [
         {
-            img: 'assets/img/contact.png'
+            img: 'assets/img/contact-1.png'
         }
     ]
 

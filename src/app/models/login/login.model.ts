@@ -35,11 +35,25 @@ export class NavigationAndToggle  {
 }
 
 export class UserAccount {
+    APPLICATION_USER_ACCOUNTS_ID: number;
     User_Name: string;
     EMAIL_ADDRESS: string;
     PASSWORD: string;
     CONFIRM_PASSWORD: string;
     UserNameEmail: string;
     LoginPassword: string;
+    Blocked: boolean;
+    ACCOUNT_TYPE: string;
+}
+
+export class UserProfileToken {
+    TOKEN_ID: number;
+    USER_ID: number;
+    AUTH_TOKEN: string;
+    ISSUED_ON: Date;
+    EXPIRES_ON: Date;
+    PROFILE: string;
+    IS_LOG_OUT: boolean;
+    AUTO_LOCK_TIMESPAN: number;
 }
 

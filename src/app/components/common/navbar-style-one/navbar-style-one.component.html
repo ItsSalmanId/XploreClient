@@ -206,19 +206,21 @@
                         <span class="sub-title"><span>Or login with</span></span>
                         <form>
                             <div class="form-group">
-                                <!-- <input type="text" placeholder="Username or Email" 
-                                class="form-control" [(ngModel)]="userAccount.UserNameEmail" > -->
                                 <input type="text" [(ngModel)]="userAccount.UserNameEmail" name="userNameEmail" placeholder="Username or Email" class="form-control" (ngModelChange)="disableLoginBtn()">
                                 <span class="text-danger" *ngIf="errorUserNameEmail.isError">{{ errorUserNameEmail.errorMessage }}</span>
-                                
+                                <!-- <input type="text" placeholder="Username or Email" class="form-control"> -->
                             </div>
                             <div class="form-group">
+                                
+                                
                                 <input type="password" placeholder="Password" class="form-control"
                                 [(ngModel)]="userAccount.LoginPassword" name="loginPassword" (ngModelChange)="disableLoginBtn()"
                                 >
                                 <span class="text-danger" *ngIf="errorLoginPassword.isError">{{ errorLoginPassword.errorMessage }}</span>
+                                <!-- <input type="password" placeholder="Password" class="form-control"> -->
                             </div>
                             <button type="submit" (click)="Login()">Login Now</button>
+                            <!-- <button type="submit">Login Now</button> -->
                         </form>
                         <span class="dont-account">Don't have an account? <a href="#">Register Now</a></span>
                     </div>
@@ -234,24 +236,33 @@
                         </div>
                         <span class="sub-title"><span>Or Register with</span></span>
                         <form>
-                            <div class="form-group">
+                            <div class="form-group">                             
                                 <input type="text" [(ngModel)]="userAccount.User_Name" name="username" placeholder="Username" class="form-control" (ngModelChange)="disableRegisterBtn()">
                                 <span class="text-danger" *ngIf="errorRegisterUserName.isError">{{ errorRegisterUserName.errorMessage }}</span>
                                 <!-- <span class="text-danger" style="font-size: 12px;" *ngIf="errorRegisterUserName.isError">{{ errorRegisterUserName.errorMessage }}</span> -->
+                                <!-- <input type="text" placeholder="Username" class="form-control"> -->
                             </div>
                             <div class="form-group">
+                                
                                 <input type="email" placeholder="Email" class="form-control" name="usernameemail" [(ngModel)]="userAccount.EMAIL_ADDRESS" (ngModelChange)="disableRegisterBtn()">
                                 <span class="text-danger" *ngIf="errorEmail.isError">{{ errorEmail.errorMessage }}</span>
+                                <!-- <input type="email" placeholder="Email" class="form-control"> -->
                             </div>
                             <div class="form-group">
                                 <input type="password" placeholder="Password" class="form-control" name="password" [(ngModel)]="userAccount.PASSWORD" (ngModelChange)="disableRegisterBtn()">
                                 <span class="text-danger" *ngIf="errorPassword.isError">{{ errorPassword.errorMessage }}</span>
                             </div>
                             <div class="form-group">
+                                
                                 <input type="confirmpassword" placeholder="Confirm Password"  name="confirmpassword"class="form-control" [(ngModel)]="userAccount.CONFIRM_PASSWORD" (ngModelChange)="disableRegisterBtn()">
                                 <span class="text-danger" *ngIf="errorConfirmPassword.isError">{{ errorConfirmPassword.errorMessage }}</span>
+
+                                <!-- <input type="password" placeholder="Confirm Password" class="form-control"> -->
                             </div>
+                            
                             <button type="button" (click)="registerNow()" [disabled]="isDisableRegisterBtn">Register Now</button>
+
+                            <!-- <button type="submit">Register Now</button> -->
                         </form>
                         <span class="already-account">Already have an account? <a href="#">Login Now</a></span>
                     </div>

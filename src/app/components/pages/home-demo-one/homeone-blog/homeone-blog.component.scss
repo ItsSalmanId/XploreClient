@@ -27,6 +27,7 @@
     .post-content {
         padding: 25px 20px;
         position: relative;
+        background-color: #282a38;
 
         .post-meta {
             margin-bottom: 14px;
@@ -371,3 +372,88 @@
     
 
 }
+
+
+////////
+/// 
+.subscription-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 2rem;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .subscription-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    text-align: center;
+    width: 300px;
+    transition: transform 0.3s ease;
+  }
+  
+  .subscription-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .basic {
+    background: linear-gradient(135deg, #2196F3, #03A9F4);
+    color: #fff;
+  }
+  
+  .enterprise {
+    background: linear-gradient(135deg, #FF9800, #FFC107);
+    color: #fff;
+  }
+  
+  .premium {
+    background: linear-gradient(135deg, #9C27B0, #E91E63);
+    color: #fff;
+  }
+  
+  .price {
+    font-size: 2rem;
+    margin: 1rem 0;
+    font-weight: bold;
+  }
+  
+  .features {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+  }
+  
+  .features li {
+    margin: 0.5rem 0;
+  }
+  
+  .subscribe-btn {
+    // background: #fff;
+    color: inherit;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  
+  .subscribe-btn:hover {
+    background: #000;
+    color: #fff;
+  }
+  
+  @media (max-width: 768px) {
+    .subscription-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .subscription-card {
+      width: 80%;
+      margin-bottom: 2rem;
+    }
+  }
+  

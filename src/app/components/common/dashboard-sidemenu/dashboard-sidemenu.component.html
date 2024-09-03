@@ -81,14 +81,37 @@
                     <span class="menu-title">Bookmarks</span>
                 </a>
             </li> -->
-            <li class="nav-item" routerLinkActive="active mm-active" id="add-listings">
+
+            <li  id="Review_User" class="nav-item" routerLinkActive="active mm-active" *ngIf="this.IsLoginAdmin == true">
+                <a routerLink="/dashboard-user-details" class="nav-link">
+                    <span class="icon"><i class='bx bx-plus-circle'></i></span>
+                    <span class="menu-title">Review User</span>
+                </a>
+            </li>
+            <li id="Review_Business" class="nav-item" routerLinkActive="active mm-active" *ngIf="this.IsLoginAdmin">
+                <a routerLink="/dashboard-all-listings" class="nav-link">
+                    <span class="icon"><i class='bx bx-plus-circle'></i></span>
+                    <span class="menu-title">Review Business</span>
+                </a>
+            </li>
+            
+
+            <li id="Add_Listings" class="nav-item" routerLinkActive="active mm-active" *ngIf="this.IsLoginAdmin || this.IsLoginBusinessOwner">
                 <a routerLink="/dashboard-add-listings" class="nav-link">
                     <span class="icon"><i class='bx bx-plus-circle'></i></span>
                     <span class="menu-title">Add Listings</span>
                 </a>
             </li>
+            
+            <li id="Add_Blog" class="nav-item" routerLinkActive="active mm-active" *ngIf="this.IsLoginAdmin">
+                <a routerLink='/dashboard-add-blog' class="nav-link">
+                    <span class="icon"><i class='bx bx-plus-circle'></i></span>
+                    <span class="menu-title">Add Blog</span>
+                </a>
+            </li>
 
-            <li class="nav-item" routerLinkActive="active mm-active">
+            
+            <li id="My_Listings" class="nav-item" routerLinkActive="active mm-active" *ngIf="this.IsLoginAdmin || this.IsLoginBusinessOwner">
                 <a href="javascript:void(0)" class="collapsed-nav-link nav-link" aria-expanded="false">
                     <span class="icon"><i class='bx bx-layer'></i></span>
                     <span class="menu-title">My Listings</span>
@@ -100,7 +123,7 @@
                             <span class="badge">5</span>
                         </a>
                     </li>
-                    <li class="nav-item" routerLinkActive="active">
+                    <!-- <li class="nav-item" routerLinkActive="active">
                         <a routerLink="/dashboard-my-listings" class="nav-link">
                             <span class="menu-title">Pending</span>
                             <span class="badge yellow">1</span>
@@ -111,7 +134,7 @@
                             <span class="menu-title">Expired</span>
                             <span class="badge red">2</span>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </li>
             <!-- <li class="nav-item" routerLinkActive="active mm-active">
@@ -136,7 +159,7 @@
                 </a>
             </li> -->
         </ul>
-
     </div>
 </div>
+<app-common-call></app-common-call>
 <!-- End Sidemenu Area -->

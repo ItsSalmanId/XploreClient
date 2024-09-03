@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { CommonCall } from '../../../components/common/commonCall/commonCall.component';
+import { CommonCallsService } from '../../../services/common-call/common-call.service';
 
 @Component({
     selector: 'app-dashboard-navbar',
@@ -7,10 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardNavbarComponent implements OnInit {
 
-    constructor() { }
+    constructor(
+        private _commonCallsService: CommonCallsService
+        ) { }
 
     ngOnInit(): void {}
-
+    Logout()
+    {
+     //this._commonCall.logout();
+     this._commonCallsService.logout();
+    }
     classApplied = false;
     toggleClass() {
         this.classApplied = !this.classApplied;

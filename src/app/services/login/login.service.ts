@@ -28,7 +28,16 @@ export class AccountService {
   loginUser(data: UserAccount) {
     return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/LoginUser', data);
   }
+
+  logintest(data: UserAccount) {
+    return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/LoginUser', data);
+  }
+  validateUser(data: UserAccount) {
+    return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/ValidateUser', data);
+  }
+  
 //   updatePatientSurvey(data: PatientSurveyModel) {
 //     return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/UpdatePatientSurvey', data);
 //   }
 }
+

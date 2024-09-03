@@ -23,24 +23,28 @@
         <div class="row">
             <div class="col-lg-12 col-md-12">
                 <div class="form-group">
-                    <label><i class='bx bx-briefcase-alt'></i> Business Name:</label>
+                    <label><i class='bx bx-briefcase-alt'></i> Business Name:
+                    <span style="color: red;"> *</span>
+                    </label>
                     <input type="text" class="form-control" placeholder="Name of your business" 
-                    [(ngModel)]="businessDetail.BUSINESS_NAME" name="BUSINESS_NAME"
+                    [(ngModel)]="businessDetail.BUSINESS_NAME" name="BUSINESS_NAME" maxlength="40"
                     >
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
-                    <label><i class="bi bi-envelope"></i> Email</label>
+                    <label><i class="bi bi-envelope"></i> Email
+                        <span style="color: red;"> *</span>
+                    </label>
                     <input type="email" class="form-control" placeholder="Enter your email"
-                    [(ngModel)]="businessDetail.EMAIL_ADDRESS" name="EMAIL_ADDRESS"
+                    [(ngModel)]="businessDetail.EMAIL_ADDRESS" name="EMAIL_ADDRESS" maxlength="40"
                     >
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
                     <label><i class="bi bi-pass"></i> Password</label>
-                    <input type="password" class="form-control" placeholder="Enter your password"
+                    <input type="password" class="form-control" placeholder="Enter your password" maxlength="20"
                     [(ngModel)]="businessDetail.PASSWORD" name="PASSWORD"
                     >
                 </div>
@@ -55,20 +59,48 @@
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
-                    <label><i class="bi bi-bricks"></i> City</label>
+                    <label><i class="bi bi-bricks"></i> City
+                        <span style="color: red;"> *</span>
+                    </label>
                     <input type="text" class="form-control" placeholder="Enter your city"
-                    [(ngModel)]="businessDetail.BUSINESS_CITY" name="BUSINESS_CITY"
+                    [(ngModel)]="businessDetail.BUSINESS_CITY" name="BUSINESS_CITY" maxlength="20"
                     >
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
-                    <label><i class='bx bx-menu-alt-left'></i> Address:</label>
+                    <label><i class='bx bx-menu-alt-left'></i> Address
+                        <span style="color: red;"> *</span>
+                    </label>
                     <input type="text" class="form-control" placeholder="e.g. 55 County Laois"
-                    [(ngModel)]="businessDetail.BUSINESS_ADDRESS" name="BUSINESS_ADDRESS"
+                    [(ngModel)]="businessDetail.BUSINESS_ADDRESS" name="BUSINESS_ADDRESS" maxlength="50"
                     >
                 </div>
             </div>
+
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class='bx bx-menu-alt-left'></i> Google Location Link
+                        <span style="color: red;"> *</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="e.g. 55 County Laois"
+                    [(ngModel)]="businessDetail.BUSINESS_ADDRESS_LINK" name="BUSINESS_ADDRESS" maxlength="50"
+                    >
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class='bx bx-phone-call'></i> Contact No
+                        <span style="color: red;"> *</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Phone Number"
+                    [(ngModel)]="businessDetail.CONTACT_NO" name="BUSINESS_ADDRESS" maxlength="10"
+                    mask="(000) 000-0000"
+                    >
+                </div>
+            </div>
+
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
                     <label><i class='bx bx-menu-alt-left'></i> Date & Time</label>
@@ -79,7 +111,9 @@
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
-                    <label><i class='bx bx-duplicate'></i> All Category</label>
+                    <label><i class='bx bx-duplicate'></i> All Category
+                        <span style="color: red;"> *</span>
+                    </label>
                     <select  [(ngModel)]="businessDetail.BUSINESS_CATEGORY">
                         <option>Select Category</option>
                         <option>Agency</option>
@@ -108,16 +142,138 @@
     </div>
 
     <div class="add-listings-box">
-        <h3>Gallery</h3>
-    
-        <div class="file-upload-box">
-            <input type="file" name="" id="">
-            <form action="/file-upload" class="dropzone"></form>
-            <!-- <div>
-                <img *ngFor='let preview of previews' [src]="preview" class="preview">
-            </div> -->
+        <h3>Opening Hours</h3>
+
+        <div class="row opening-day align-items-center">
+            <div class="col-lg-2 col-md-12">
+                <h5>Monday</h5>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.MONDAY_OPENING_TIME">
+                    <option value="" disabled selected>Select closing time</option>
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.MONDAY_CLOSING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
         </div>
 
+        <div class="row opening-day align-items-center">
+            <div class="col-lg-2 col-md-12">
+                <h5>Tuesday</h5>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.TUESDAY_OPENING_TIME ">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.TUESDAY_CLOSING_TIME ">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row opening-day align-items-center">
+            <div class="col-lg-2 col-md-12">
+                <h5>Wednesday</h5>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.WEDNESDAY_OPENING_TIME ">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.WEDNESDAY_CLOSING_TIME ">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row opening-day align-items-center">
+            <div class="col-lg-2 col-md-12">
+                <h5>Thursday</h5>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.THURSDAY_OPENING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.THURSDAY_CLOSING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row opening-day align-items-center">
+            <div class="col-lg-2 col-md-12">
+                <h5>Friday</h5>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.FRIDAY_OPENING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.FRIDAY_CLOSING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row opening-day align-items-center">
+            <div class="col-lg-2 col-md-12">
+                <h5>Saturday</h5>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.SATURDAY_OPENING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.SATURDAY_CLOSING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row opening-day align-items-center">
+            <div class="col-lg-2 col-md-12">
+                <h5>Sunday</h5>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.SUNDAY_OPENING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.SUNDAY_CLOSING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="add-listings-box">
+        <h3>Gallery</h3>
         <div>
             <div class="col-md-12">
                 <ol id="ol-uploadimg-imgname">
@@ -135,14 +291,14 @@
     </div>
 
     <div class="add-listings-box">
-        <h3>Details</h3>
+        <h3>Details <span style="color: red;"> *</span></h3>
     
         <div class="row">
             <div class="col-lg-12 col-md-12">
                 <div class="form-group">
                     <label><i class='bx bx-text'></i> Description:</label>
                     <textarea cols="30" rows="7" class="form-control" placeholder="Details..."
-                    [(ngModel)]="businessDetail.BUSINESS_IMPORTANT_NOTES" name="BUSINESS_IMPORTANT_NOTES"
+                    [(ngModel)]="businessDetail.BUSINESS_IMPORTANT_NOTES" name="BUSINESS_IMPORTANT_NOTES" maxlength="500"
                     ></textarea>
                 </div>
             </div>

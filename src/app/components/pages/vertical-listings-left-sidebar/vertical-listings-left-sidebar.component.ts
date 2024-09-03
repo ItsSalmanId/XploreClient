@@ -1,17 +1,113 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { AddBusinessService } from '../../../services/AddBusiness/AddBusiness.service'
+import { BusinessDetail, BusinessBlogDetail, BusinessFilters } from "../../../models/AddBusiness/AddBusiness.model";
 
 @Component({
     selector: 'app-vertical-listings-left-sidebar',
     templateUrl: './vertical-listings-left-sidebar.component.html',
     styleUrls: ['./vertical-listings-left-sidebar.component.scss']
 })
-export class VerticalListingsLeftSidebarComponent implements OnInit {
+export class VerticalListingsLeftSidebarComponent implements OnChanges {
 
-    constructor() { }
+    businessDetail: BusinessDetail;
+    businessDetailsList: BusinessDetail[] = [];
+    businessBlogDetails: BusinessBlogDetail;
+    businessBlogDetailsList: BusinessBlogDetail[] = [];
+    listCount: number;
+    isChecked: boolean;
+    businessFilteredList: BusinessDetail[];
+    businessFilters: BusinessFilters; 
+    businessFilteredListTemp: any[];
+    @Input() value: number;
+    
+
+    constructor(private _addBusinessService: AddBusinessService) {
+        this.businessDetail = new BusinessDetail();
+        this.businessDetailsList = [];
+        this.businessBlogDetails = new BusinessBlogDetail();
+        this.businessBlogDetailsList = [];
+        this.isChecked = false;
+        this.businessFilters = new BusinessFilters();
+     }
 
     ngOnInit(): void {
         this.resetOption = [this.options[0]];
+        this.getBusiness();
     }
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['value']) {
+          this.callSpecificFunction();
+        }
+      }
+    
+      callSpecificFunction() {
+        console.log('Specific function called because the value changed.');
+        // Yahan aap apna desired function ya logic likh sakte hain
+      }
+
+    clearCategoryFilters()
+    {
+        this.businessFilteredList = this.businessDetailsList;
+        this.listCount = this.businessFilteredList.length;
+        this.businessFilters = new BusinessFilters();
+    }
+    applyCategoryFIlter()
+    {
+        // if(this.businessFilters.isCheckResturnat == true)
+        // {
+        //     this.businessFilteredList = this.businessDetailsList.filter(item => item.BUSINESS_CATEGORY === 'Restaurants');
+        // }
+
+        this.businessFilteredListTemp = [];
+        this.businessFilteredListTemp = this.businessDetailsList.filter(item => {
+            // Use the `some` method to check if any filter matches
+            return (
+              (this.businessFilters.isCheckRestaurant && item.BUSINESS_CATEGORY === 'Restaurants') ||
+              (this.businessFilters.isCheckHomeServices && item.BUSINESS_CATEGORY === 'Home Services') ||
+              (this.businessFilters.isCheckAgency && item.BUSINESS_CATEGORY === 'Agency')
+            );
+          });
+    console.log(this.businessFilteredList);
+    this.businessFilteredList = this.businessFilteredListTemp;
+    this.listCount = this.businessFilteredList.length;
+
+    }
+    getBusiness()
+    {
+        console.log(this.businessDetail);
+        console.log("click on RegisterNow");
+        this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+        if (this.businessDetail) {
+            //this._spinner.show();
+            this._addBusinessService.getBusinessDetails(this.businessDetail).subscribe(
+                response => {
+                    console.log(response);
+                    this.businessDetailsList = response;
+                    this.listCount = this.businessDetailsList.length;
+                    this.businessFilteredList = this.businessDetailsList;
+                    this.listCount = this.businessFilteredList.length;
+                    let selectedIdForEdit = localStorage.getItem("selectBusinessCategoryList");
+                    if(selectedIdForEdit != null)
+                    {
+                        const idsArray = selectedIdForEdit.split(",").map(Number);
+
+                     // Filter the list based on the IDs
+                     const filteredList = this.businessFilteredList.filter((item) =>
+                       idsArray.includes(item.BUSINESS_DETAIL_ID)
+                     );
+                       this.businessFilteredList = filteredList;
+                       localStorage.removeItem("selectBusinessCategoryList");
+                    }
+                    console.log(selectedIdForEdit);
+                   // this._spinner.hide();
+                   //this.ShowToast("Alert", response.Message, response.success);
+                   //this.toastr.success(response.Message, 'Toastr fun!');
+                   //this.ShowToast("Xplore", response.Message, response.Success);
+                 
+                });
+        }
+
+  }
 
     pageTitleContent = [
         {

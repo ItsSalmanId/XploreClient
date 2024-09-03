@@ -22,7 +22,9 @@
         <div class="row">
             <div class="col-lg-12 col-md-12">
                 <div class="form-group">
-                    <label><i class='bx bx-briefcase-alt'></i> Business Name:</label>
+                    <label><i class='bx bx-briefcase-alt'></i> Business Name:
+                        <span style="color: red;"> *</span>
+                    </label>
                     <input type="text" class="form-control" placeholder="Name of your business" 
                     [(ngModel)]="businessDetail.BUSINESS_NAME" name="BUSINESS_NAME"
                     >
@@ -30,7 +32,9 @@
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
-                    <label><i class="bi bi-envelope"></i> Email</label>
+                    <label><i class="bi bi-envelope"></i> Email
+                        <span style="color: red;"> *</span>
+                    </label>
                     <input type="email" class="form-control" placeholder="Enter your email"
                     [(ngModel)]="businessDetail.EMAIL_ADDRESS" name="EMAIL_ADDRESS"
                     >
@@ -54,7 +58,9 @@
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
-                    <label><i class="bi bi-bricks"></i> City</label>
+                    <label><i class="bi bi-bricks"></i> City
+                        <span style="color: red;"> *</span>
+                    </label>
                     <input type="text" class="form-control" placeholder="Enter your city"
                     [(ngModel)]="businessDetail.BUSINESS_CITY" name="BUSINESS_CITY"
                     >
@@ -62,7 +68,9 @@
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
-                    <label><i class='bx bx-menu-alt-left'></i> Address:</label>
+                    <label><i class='bx bx-menu-alt-left'></i> Address:
+                        <span style="color: red;"> *</span>
+                    </label>
                     <input type="text" class="form-control" placeholder="e.g. 55 County Laois"
                     [(ngModel)]="businessDetail.BUSINESS_ADDRESS" name="BUSINESS_ADDRESS"
                     >
@@ -78,7 +86,9 @@
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
-                    <label><i class='bx bx-duplicate'></i> All Category</label>
+                    <label><i class='bx bx-duplicate'></i> All Category
+                        <span style="color: red;"> *</span>
+                    </label>
                     <select  [(ngModel)]="businessDetail.BUSINESS_CATEGORY">
                         <option>Select Category</option>
                         <option>Agency</option>
@@ -102,6 +112,188 @@
                         <option>Linkedin</option>
                     </select>
                 </div>
+            </div>
+        </div>
+
+
+         <div class="modal fade" id="message_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="box-shadow: 5px 5px #16f5f5; border: 1px solid #96e3e3;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Select Images to Delete 
+                            <span *ngIf="businessDetail.BusinessFilesDetail.length > 0"> ({{ selectedImages.size }} selected)</span>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hideImagePopup()"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="deleteImagesForm">
+                            <div *ngIf="businessDetail.BusinessFilesDetail.length > 0; else noImages">
+                                <div class="row">
+                                    <div class="col-12 col-md-4 col-lg-4 mb-3" *ngFor="let image of businessDetail.BusinessFilesDetail;">
+                                        <div class="image-card">
+                                            <img [src]="image.FILE_PATH" class="card-img-top" alt="'image'">
+                                            <input type="checkbox" class="image-checkbox" id="imageCheckbox{{image.BUSINESS_FILES_DTEAIL_ID}}" (change)="toggleSelection(image.BUSINESS_FILES_DTEAIL_ID)">
+                                            <label for="imageCheckbox{{image.BUSINESS_FILES_DTEAIL_ID}}" class="image-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div *ngIf="images.length > 0; else noImages">
+                                <div class="row">
+                                    <div class="col-12 col-md-4 col-lg-4 mb-3" *ngFor="let image of images">
+                                        <div class="image-card">
+                                            <img [src]="image.src" class="card-img-top" alt="{{image.alt}}">
+                                            <input type="checkbox" class="image-checkbox" id="imageCheckbox{{image.id}}" (change)="toggleSelection(image.id)">
+                                            <label for="imageCheckbox{{image.id}}" class="image-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <ng-template #noImages>
+                                <p>No images are left.</p>
+                            </ng-template>
+                        </form>
+                    </div>
+                    <div class="modal-footer" *ngIf="businessDetail.BusinessFilesDetail.length > 0">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="hideImagePopup()">Close</button>
+                        <button type="button" class="btn btn-danger" (click)="deleteSelectedRecord()">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="add-listings-box">
+        <h3>Opening Hours</h3>
+
+        <div class="row opening-day align-items-center">
+            <div class="col-lg-2 col-md-12">
+                <h5>Monday</h5>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.MONDAY_OPENING_TIME">
+                    <option value="" disabled selected>Select closing time</option>
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.MONDAY_CLOSING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row opening-day align-items-center">
+            <div class="col-lg-2 col-md-12">
+                <h5>Tuesday</h5>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.TUESDAY_OPENING_TIME ">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.TUESDAY_CLOSING_TIME ">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row opening-day align-items-center">
+            <div class="col-lg-2 col-md-12">
+                <h5>Wednesday</h5>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.WEDNESDAY_OPENING_TIME ">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.WEDNESDAY_CLOSING_TIME ">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row opening-day align-items-center">
+            <div class="col-lg-2 col-md-12">
+                <h5>Thursday</h5>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.THURSDAY_OPENING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.THURSDAY_CLOSING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row opening-day align-items-center">
+            <div class="col-lg-2 col-md-12">
+                <h5>Friday</h5>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.FRIDAY_OPENING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.FRIDAY_CLOSING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row opening-day align-items-center">
+            <div class="col-lg-2 col-md-12">
+                <h5>Saturday</h5>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.SATURDAY_OPENING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.SATURDAY_CLOSING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row opening-day align-items-center">
+            <div class="col-lg-2 col-md-12">
+                <h5>Sunday</h5>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.SUNDAY_OPENING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <select [(ngModel)]="this.businessDetail.SUNDAY_CLOSING_TIME">
+                    <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+                </select>
             </div>
         </div>
     </div>
@@ -154,7 +346,9 @@
         <div class="row">
             <div class="col-lg-12 col-md-12">
                 <div class="form-group">
-                    <label><i class='bx bx-text'></i> Description:</label>
+                    <label><i class='bx bx-text'></i> Description:
+                        <span style="color: red;"> *</span>
+                    </label>
                     <textarea cols="30" rows="7" class="form-control" placeholder="Details..."
                     [(ngModel)]="businessDetail.BUSINESS_IMPORTANT_NOTES" name="BUSINESS_IMPORTANT_NOTES"
                     ></textarea>
@@ -163,7 +357,7 @@
         </div>
     </div>   
     <div class="add-listings-btn">
-        <button type="submit" (click)="addUpdateBusiness()">Submit Listings</button>
+        <button type="submit" (click)="addUpdateBusiness()">Edit Listings</button>
     </div>
     <!-- End -->
 
@@ -172,7 +366,7 @@
    <div class="modal-dialog modal-dialog-centered">
        <div class="modal-content">
            <div class="modal-header">
-               <h1 class="modal-title fs-5" id="exampleModalLabel">Share</h1>
+               <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmation</h1>
                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
            </div>
            <div class="modal-body">
@@ -183,49 +377,12 @@
                </div>
            </div>
            <div class="modal-footer">
-               <button class="btn btn-primary" class="btn-close" data-bs-dismiss="modal" aria-label="Close">No</button>
-               <button class="btn btn-primary" (click)="deleteSelectedRecord()" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Yes</button>
+               <button class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">No</button>
+               <button class="btn btn-primary" (click)="deleteSelectedRecord()"  data-bs-dismiss="modal" aria-label="Close">Yes</button>
            </div>
        </div>
    </div>
 </div>
-
-<!-- Modal to delete the images -->
-<div class="modal fade" id="message_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="box-shadow: 5px 5px #16f5f5; border: 1px solid #96e3e3;">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                        Select Images to Delete 
-                        <span *ngIf="businessDetail.BusinessFilesDetail != null"> ({{ selectedImages.size }} selected)</span>
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hideImagePopup()"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="deleteImagesForm">
-                        <div *ngIf="businessDetail.BusinessFilesDetail != null; else noImages">
-                            <div class="row">
-                                <div class="col-12 col-md-4 col-lg-4 mb-3" *ngFor="let image of businessDetail.BusinessFilesDetail;">
-                                    <div class="image-card">
-                                        <img [src]="image.FILE_PATH" class="card-img-top" >
-                                        <input type="checkbox" class="image-checkbox" id="imageCheckbox{{image.BUSINESS_FILES_DTEAIL_ID}}" (change)="toggleSelection(image.BUSINESS_FILES_DTEAIL_ID)">
-                                        <label for="imageCheckbox{{image.BUSINESS_FILES_DTEAIL_ID}}" class="image-label"></label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <ng-template #noImages>
-                            <p>No images are left.</p>
-                        </ng-template>
-                    </form>
-                </div>
-                <div class="modal-footer" *ngIf="images.length > 0">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="hideImagePopup()">Close</button>
-                    <button type="button" class="btn btn-danger" (click)="deleteSelectedRecord()" data-bs-toggle="modal" data-bs-target="#send_message_modal">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="flex-grow-1"></div>   
     <!-- <app-copyrights></app-copyrights> -->

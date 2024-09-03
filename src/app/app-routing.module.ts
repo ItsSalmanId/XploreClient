@@ -40,7 +40,10 @@ import { VerticalListingsFullWidthComponent } from './components/pages/vertical-
 import { VerticalListingsLeftSidebarComponent } from './components/pages/vertical-listings-left-sidebar/vertical-listings-left-sidebar.component';
 import { VerticalListingsRightSidebarComponent } from './components/pages/vertical-listings-right-sidebar/vertical-listings-right-sidebar.component';
 import { DashboardEditListingsComponent } from './components/pages/dashboard/dashboard-edit-listings/dashboard-edit-listings.component';
-
+import { DashboardAddBlogComponent } from './components/pages/dashboard/dashboard-add-blog/dashboard-add-blog.component';
+import { DashboardUserDetailsComponent } from './components/pages/dashboard/dashboard-user-details/dashboard-user-details.component';
+import { DashboardAllListingsComponent } from './components/pages/dashboard/dashboard-all-listings/dashboard-all-listings.component';
+import { AuthGuard } from '../../../Xploradoor/src/app/services/AuthService/auth.guard';
 
 const routes: Routes = [
     {path: '', component: HomeDemoOneComponent},
@@ -63,7 +66,7 @@ const routes: Routes = [
     {path: 'categories', component: CategoriesComponent},
     {path: 'destinations', component: TopPlaceComponent},
     {path: 'vertical-listings-left-sidebar', component: VerticalListingsLeftSidebarComponent},
-    {path: 'vertical-listings-right-sidebar', component: VerticalListingsRightSidebarComponent},
+    {path: 'vertical-listings-right-sidebar', component: VerticalListingsRightSidebarComponent, canActivate: [AuthGuard]},
     {path: 'vertical-listings-full-width', component: VerticalListingsFullWidthComponent},
     {path: 'grid-listings-left-sidebar', component: GridListingsLeftSidebarComponent},
     {path: 'grid-listings-right-sidebar', component: GridListingsRightSidebarComponent},
@@ -75,6 +78,7 @@ const routes: Routes = [
     {path: 'dashboard-messages', component: DashboardMessagesComponent},
     {path: 'dashboard-bookings', component: DashboardBookingsComponent},
     {path: 'dashboard-wallet', component: DashboardWalletComponent},
+    {path: 'dashboard-add-blog', component: DashboardAddBlogComponent},
     {path: 'dashboard-reviews', component: DashboardReviewsComponent},
     {path: 'dashboard-invoice', component: DashboardInvoiceComponent},
     {path: 'dashboard-my-profile', component: DashboardMyProfileComponent},
@@ -82,6 +86,8 @@ const routes: Routes = [
     {path: 'dashboard-edit-listings', component: DashboardEditListingsComponent},
     {path: 'dashboard-bookmarks', component: DashboardBookmarksComponent},
     {path: 'dashboard-my-listings', component: DashboardMyListingsComponent},
+    {path: 'dashboard-user-details', component: DashboardUserDetailsComponent},
+    {path: 'dashboard-all-listings', component: DashboardAllListingsComponent},
     // Here add new pages component
 
     {path: '**', component: NotFoundComponent} // This line will remain down from the whole pages component list

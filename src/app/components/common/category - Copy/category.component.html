@@ -1,0 +1,11 @@
+<owl-carousel-o #carousel [options]="customOptions">
+  <ng-container *ngFor="let profile of profiles; let i = index">
+    <ng-template carouselSlide>
+      <div class="item_s">
+        <img [src]="profile.image" [alt]="profile.name">
+        <div *ngIf="profile.isAddStory" class="add-story-icon">+</div>
+        <p>{{ profile.name }}</p>
+      </div>
+    </ng-template>
+  </ng-container>
+</owl-carousel-o>

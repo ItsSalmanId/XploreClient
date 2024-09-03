@@ -16,12 +16,12 @@ export class FeedbackStyleOneComponent implements OnInit {
     sectionTitle = [
         {
             title: 'User’s Feedback About Us',
-            paragraph: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra.'
+            paragraph: 'Discover what our users have to say about their experiences with our platform. Whether you are listing properties, services, or products, our users feedback highlights the seamless and efficient process of creating and managing listings.'
         }
     ]
     singleFeedbackBox = [
         {
-            paragraph: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus viverra maecenas accumsan.',
+            paragraph: '"Using this platform was a game-changer for my business. Listing my services has never been easier!"',
             authorImg: 'assets/img/user1.jpg',
             authorName: 'John Smith',
             authorDesignation: 'Restaurant Owner',
@@ -44,7 +44,7 @@ export class FeedbackStyleOneComponent implements OnInit {
             ]
         },
         {
-            paragraph: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus viverra maecenas accumsan.',
+            paragraph: '"As a buyer, I found exactly what I was looking for. The interface is user-friendly and intuitive."',
             authorImg: 'assets/img/user2.jpg',
             authorName: 'Sarah Taylor',
             authorDesignation: 'Hotel Owner',
@@ -67,7 +67,7 @@ export class FeedbackStyleOneComponent implements OnInit {
             ]
         },
         {
-            paragraph: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus viverra maecenas accumsan.',
+            paragraph: '"The support team is always ready to help, ensuring a smooth experience from start to finish."',
             authorImg: 'assets/img/user3.jpg',
             authorName: 'Alex Hales',
             authorDesignation: 'Developer',
@@ -90,7 +90,7 @@ export class FeedbackStyleOneComponent implements OnInit {
             ]
         },
         {
-            paragraph: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus viverra maecenas accumsan.',
+            paragraph: '"Listing my products was a breeze. The process is straightforward and efficient."',
             authorImg: 'assets/img/user4.jpg',
             authorName: 'Andy James',
             authorDesignation: 'Traveler',
