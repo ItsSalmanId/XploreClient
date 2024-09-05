@@ -1,0 +1,43 @@
+<!-- Start Main Banner Area -->
+<div class="main-banner-area1" style="height: 100vh; padding: 10px 0px; background-color: black;">
+  <div class="container">
+     <div class="d-flex justify-content-between align-items-center pb-4">
+      <img src="../../../../assets/img/logo.png" alt="" style="width: 80px;">
+      <i class="bi bi-x-lg" style="color: white; cursor: pointer;"></i>
+     </div>
+      <div class="listings-slides">
+          <owl-carousel-o [options]="customOptions">
+              <ng-template carouselSlide *ngFor="let Content of singleListingsBox;">
+                  <div class="single-listings-box">
+                      <div class="listings-image">
+                          <div class="listings-image-slides">
+                              <owl-carousel-o [options]="customOptions2">
+                                  <ng-template carouselSlide *ngFor="let Image of Content.mainImg;">
+                                      <div class="single-image">
+                                          <img [src]="Image.img" alt="image" style="height: 65vh;">
+                                      </div>
+                                  </ng-template>
+                              </owl-carousel-o>
+                          </div>
+                          <a  class="bookmark-save"><i class="flaticon-heart"></i></a>
+                          <div class="category"><div class="author">
+                            <div class="d-flex align-items-center">
+                                <img [src]="Content.authorImg" alt="image" style="border-radius: 50%;">&nbsp;&nbsp;
+                                <span class="pl-5">{{Content.authorName}}</span>
+                            </div>
+                        </div></div>
+                      </div>
+                      <div class="listings-content">
+                          
+                           <div class="d-flex ">
+                            <input type="text" placeholder="what is in your mind"> <button><i class="bi bi-send"></i></button><button><i class="bi bi-heart"></i></button>
+                           </div>
+                          
+                      </div>
+                  </div>
+              </ng-template>
+          </owl-carousel-o>
+      </div>
+  </div>
+</div>
+<!-- End Main Banner Area -->

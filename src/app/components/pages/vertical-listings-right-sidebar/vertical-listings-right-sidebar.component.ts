@@ -13,6 +13,7 @@ import { GenericUtility } from '../../../utilities/generic-utility';
 import * as $ from 'jquery'; // Import jQuery
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 
 
@@ -50,6 +51,7 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
      reelsCommentsLikeModel: ReelsCommentsDetails;
      userAccountList: UserAccount[];
      userAccount: UserAccount;
+     isShowStories : boolean;
 
 
 
@@ -105,6 +107,86 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
     currentOption: string;
     userReelsAccount: UserAccount;
     profileTab: string;
+    showStory: boolean = false;
+  currentStory: any;
+    activeStoryIndex: number = 0;
+    selectedStory: number;
+    stories: { id: number; user: string; videoUrl: string; }[];
+    selectedIndex: number = 1;
+    showComment: boolean;
+    commentText: any;
+    showCommentIndex: number;
+
+
+
+    @ViewChild('carousel', { static: false }) carousel: ElementRef;
+
+  profiles = [
+    { image: 'assets/img/user1.jpg', name: 'Add Story', isAddStory: true },
+    { image: 'assets/img/user1.jpg', name: 'Alex', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Sam', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    // other profiles
+    { image: 'assets/img/user1.jpg', name: 'Jordan', isAddStory: false }
+  ];
+
+  customOptionsT: OwlOptions = {
+    nav: false,
+    dots: false,
+    responsive: {
+      0: {
+        items: 4
+      },
+      375: {
+        items: 5
+      },
+      600: {
+        items: 10
+      },
+      1000: {
+        items: 4
+      }
+    }
+  };
+
+  outerSliderOptions = {
+    loop: false,
+    margin: 10,
+    nav: true,
+    navText: ['<', '>'],
+    responsive: {
+      0: {
+        items: 1
+      },
+      600: {
+        items: 2
+      },
+      1000: {
+        items: 3
+      }
+    }
+  };
+
+  innerSliderOptions = {
+    loop: false,
+    items: 1,
+    margin: 10,
+    nav: false,
+    dots: true
+  };
+  
+
+
 
     constructor(private cdr: ChangeDetectorRef, private _addBusinessService: AddBusinessService, 
         public _globalSettingService: GlobalSettingService, 
@@ -119,6 +201,7 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
             this.allReelsCommentsDetails = [];
             this.userAccount = new UserAccount();
             this.reelSaved = new ReelSaved();
+            this.isShowStories = false;
 
 
 
@@ -167,6 +250,13 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
                 // Add more posts as needed
               ];
               this.selectedTab = 'posts';
+              this.stories = [
+                { id: 1, user: 'User1', videoUrl: 'path/to/video1.mp4' },
+                { id: 2, user: 'User2', videoUrl: 'path/to/video2.mp4' },
+                // Add more stories as needed
+              ];
+              this.selectedStory = 0;
+              
               
 
               
@@ -248,7 +338,65 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
         selectTab(tab: string) {
             this.selectedTab = tab;
           }
+          onClick()
+          {
+            this.isShowStories == true;
+          }
+          onClose()
+          {
+            this.isShowStories == false;
+            //showStory
+          }
 
+          
+
+          
+
+
+
+
+ openStory() {
+    this.showStory = true;
+    document.body.style.overflow = 'hidden'; // Prevent scrolling
+}
+
+closeReel() {
+    this.showStory = false;
+  }
+  
+
+  
+
+  previousStory() {
+    if (this.selectedIndex > 0) {
+      this.selectedIndex--;
+    }
+  }
+
+  nextStory() {
+    if (this.selectedIndex < this.reelsDetailsList.length - 1) {
+      this.selectedIndex++;
+    }
+  }
+
+  showCommentInput() {
+    this.showComment = !this.showComment;
+  }
+
+  postComments() {
+    console.log('Comment Posted:', this.commentText);
+    this.commentText = '';
+    this.showComment = false;
+  }
+
+  likeReel() {
+    console.log('Reel Liked:', this.reelsDetailsList[this.selectedIndex]);
+  }
+
+  shareReel() {
+    console.log('Reel Shared:', this.reelsDetailsList[this.selectedIndex]);
+  }
+          
         toggleFollow(user: any) {
             user.isFollowing = !user.isFollowing;
             this.userFollowDetail.USER_FOLLOWERS_ID = user.APPLICATION_USER_ACCOUNTS_ID;
@@ -259,7 +407,9 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
           {
             if(selectedOption == 'Home')
             {
+                this.isShowStories = true;
                 this.currentOption = 'HomeTab';
+                this.openStory()
             }
             else if(selectedOption == 'Reels')
             {
@@ -293,6 +443,7 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
         window.scrollTo(0, 0);
         this.getReels();
         this.getReelsUser();
+        //this.getReelsStatus();
     }
 
     getTimeAgo(date: Date) {
@@ -368,7 +519,20 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
         this.isReplyVisible[index] = !this.isReplyVisible[index];
       }
 
+      updateWidth(selector: string, newWidth: string) {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(element => {
+          if (element instanceof HTMLElement) {
+            element.style.removeProperty('width');
+            element.style.width = newWidth;
+          }
+        });
+      }
+
     ngAfterViewInit(): void {
+        setTimeout(() => {
+            this.updateWidth('.owl-item', '68.8px');
+          }, 1000); // Adjust the delay as needed
         this.wantToReplay(0, 0);
         const options = {
             root: null,
@@ -507,6 +671,38 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
     //   }
     }
 
+    addUpdateReelsStatus()
+    {
+        
+           if(this.uploadedFilesName.length == 0)
+           {
+            this.ShowToast("Xplore", "At least one picture is required. Please upload one.", false);
+           }
+           else
+           {
+            console.log(this.reelsDetails);
+            console.log("click on RegisterNow");
+            this.reelsDetails.USER_ID = Number(localStorage.getItem("Temp"));
+            this.reelsDetails.REEL_STATUS = true;
+
+            if (this.reelsDetails) {
+                this.reelsDetails.uploadedFilesName = this.uploadedFilesName;
+                //this._spinner.show();
+                this._addBusinessService.addUpdateReelsStatus(this.reelsDetails).subscribe(
+                    response => {
+                        this.ShowToast("Xplore", "Your reels status has been successfully added.", true);
+                        //this.router.navigate(['/dashboard-my-listings']);
+                       // this._spinner.hide();
+                       //this.ShowToast("Alert", response.Message, response.success);
+                       //this.toastr.success(response.Message, 'Toastr fun!');
+                       //this.ShowToast("Xplore", response.Message, response.Success);
+                     
+                    });
+            }
+           }
+    //   }
+    }
+
     wantToReplay(selectedUser: Number, selectedComment: number)
     {
         if(selectedUser != 0)
@@ -537,6 +733,44 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
         if (this.reelsDetails) {
             //this._spinner.show();
             this._addBusinessService.getReelsDetails(this.reelsDetails).subscribe(
+                response => {
+                    console.log(response);
+                    this.reelsDetailsList = response;
+                    //this.reelsDetailsList
+                    // this.reelsCommentsDetails = this.reelsDetailsList.map(item => item.reelsCommentsModelList).flat();
+                    this.reelsCommentsDetails = this.reelsDetailsList
+                                                .map(item => item.reelsCommentsModelList)
+                                                .reduce((acc, val) => acc.concat(val), []);
+
+
+
+                            // this.allReelsCommentsDetails = this.reelsCommentsDetails.filter(comment => !comment.IS_REPLAY_COMMENT);
+                            // this.allReelsCommentsDetails.forEach(mainComment => {
+                            //   mainComment.replies = this.reelsCommentsDetails.filter(reply => reply.IS_REPLAY_COMMENT && reply.REPLAY_COMMENT_HEADER_ID === mainComment.REELS_COMMENTS_DETAILS_ID);
+                            // });
+
+                            this.allReelsCommentsDetails = this.reelsCommentsDetails.filter(comment => !comment.IS_REPLAY_COMMENT);
+this.allReelsCommentsDetails.forEach(mainComment => {
+  mainComment.replies = this.reelsCommentsDetails.filter(reply => reply.IS_REPLAY_COMMENT && reply.REPLAY_COMMENT_HEADER_ID === mainComment.REELS_COMMENTS_DETAILS_ID);
+});
+                    console.log(response);
+                   // this._spinner.hide();
+                   //this.ShowToast("Alert", response.Message, response.success);
+                   //this.toastr.success(response.Message, 'Toastr fun!');
+                   //this.ShowToast("Xplore", response.Message, response.Success);
+                 
+                });
+        }
+  }
+  getReelsStatus()
+    {
+        console.log(this.businessDetail);
+        console.log("click on RegisterNow");
+        this.reelsDetails.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+        this.reelsDetails.USER_ID = Number(localStorage.getItem("Temp"));
+        if (this.reelsDetails) {
+            //this._spinner.show();
+            this._addBusinessService.getReelsStatus(this.reelsDetails).subscribe(
                 response => {
                     console.log(response);
                     this.reelsDetailsList = response;
@@ -864,5 +1098,325 @@ this.allReelsCommentsDetails.forEach(mainComment => {
     //         //$("#modal-dropzone-error").modal("show");
     //         this.ShowToast("File Upload", "Maximum file size allowed is 20MB", false);
     //     }
+    }
+
+    /// stories page 
+
+    
+    mainBannerContent = [
+        {
+            title: 'Find Nearby',
+            paragraph: 'Expolore top-rated attractions, activities and more...',
+            popularSearchList: [
+                {
+                    title: 'Restaurants',
+                    link: 'grid-listings-left-sidebar'
+                },
+                {
+                    title: 'Events',
+                    link: 'grid-listings-left-sidebar'
+                },
+                {
+                    title: 'Clothing',
+                    link: 'grid-listings-left-sidebar'
+                },
+                {
+                    title: 'Bank',
+                    link: 'grid-listings-left-sidebar'
+                },
+                {
+                    title: 'Fitness',
+                    link: 'grid-listings-left-sidebar'
+                },
+                {
+                    title: 'Bookstore',
+                    link: 'grid-listings-left-sidebar'
+                }
+            ]
+        }
+    ]
+
+    // Category Select
+    singleSelect: any = [];
+    multiSelect: any = [];
+    stringArray: any = [];
+    objectsArray: any = [];
+    resetOption: any;
+    configg:any = {
+        displayKey: "name",
+        search: true
+    };
+    options = [
+        // Type here your category name
+        {
+            name: "Restaurants",
+        },
+        {
+            name: "Events",
+        },
+        {
+            name: "Clothing",
+        },
+        {
+            name: "Bank",
+        },
+        {
+            name: "Fitness",
+        },
+        {
+            name: "Bookstore",
+        }
+    ];
+    searchChange($event) {
+        console.log($event);
+    }
+    reset() {
+        this.resetOption = [];
+    }
+    sectionTitle = [
+        {
+            title: 'Trending Listings Right Now',
+            paragraph: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra.'
+        }
+    ]
+    singleListingsBox = [
+        
+        {
+            mainImg: [
+                {
+                    img: 'assets/img/listings/listings2.jpg'
+                },
+                {
+                    img: 'assets/img/listings/listings4.jpg'
+                }
+            ],
+            categoryLink: 'single-listings',
+            category: 'Hotel',
+            bookmarkLink: 'single-listings',
+            location: 'Los Angeles, USA',
+            title: 'The Beverly Hills Hotel',
+            price: 'Start From: $200',
+            detailsLink: 'single-listings',
+            authorImg: 'assets/img/user2.jpg',
+            openORclose: 'Open Now',
+            extraClass: 'status-open',
+            authorName: 'Sarah',
+            rating: [
+                {
+                    icon: 'bx bxs-star'
+                },
+                {
+                    icon: 'bx bxs-star'
+                },
+                {
+                    icon: 'bx bxs-star'
+                },
+                {
+                    icon: 'bx bxs-star'
+                },
+                {
+                    icon: 'bx bx-star'
+                }
+            ],
+            ratingCount: '10'
+        },
+         
+        {
+            mainImg: [
+                {
+                    img: 'assets/img/listings/listings5.jpg'
+                },
+                {
+                    img: 'assets/img/listings/listings6.jpg'
+                }
+            ],
+            categoryLink: 'single-listings',
+            category: 'Beauty',
+            bookmarkLink: 'single-listings',
+            location: 'Suwanee, USA',
+            title: 'Vesax Beauty Center',
+            price: 'Start From: $100',
+            detailsLink: 'single-listings',
+            authorImg: 'assets/img/user4.jpg',
+            openORclose: 'Open Now',
+            extraClass: 'status-open',
+            authorName: 'Andy',
+            rating: [
+                {
+                    icon: 'bx bxs-star'
+                },
+                {
+                    icon: 'bx bxs-star'
+                },
+                {
+                    icon: 'bx bxs-star'
+                },
+                {
+                    icon: 'bx bx-star'
+                },
+                {
+                    icon: 'bx bx-star'
+                }
+            ],
+            ratingCount: '15'
+        },
+        {
+          mainImg: [
+              {
+                  img: 'assets/img/listings/listings5.jpg'
+              },
+              {
+                  img: 'assets/img/listings/listings6.jpg'
+              }
+          ],
+          categoryLink: 'single-listings',
+          category: 'Beauty',
+          bookmarkLink: 'single-listings',
+          location: 'Suwanee, USA',
+          title: 'Vesax Beauty Center',
+          price: 'Start From: $100',
+          detailsLink: 'single-listings',
+          authorImg: 'assets/img/user4.jpg',
+          openORclose: 'Open Now',
+          extraClass: 'status-open',
+          authorName: 'Andy',
+          rating: [
+              {
+                  icon: 'bx bxs-star'
+              },
+              {
+                  icon: 'bx bxs-star'
+              },
+              {
+                  icon: 'bx bxs-star'
+              },
+              {
+                  icon: 'bx bx-star'
+              },
+              {
+                  icon: 'bx bx-star'
+              }
+          ],
+          ratingCount: '15'
+      },
+      {
+        mainImg: [
+            {
+                img: 'assets/img/listings/listings5.jpg'
+            },
+            {
+                img: 'assets/img/listings/listings6.jpg'
+            }
+        ],
+        categoryLink: 'single-listings',
+        category: 'Beauty',
+        bookmarkLink: 'single-listings',
+        location: 'Suwanee, USA',
+        title: 'Vesax Beauty Center',
+        price: 'Start From: $100',
+        detailsLink: 'single-listings',
+        authorImg: 'assets/img/user4.jpg',
+        openORclose: 'Open Now',
+        extraClass: 'status-open',
+        authorName: 'Andy',
+        rating: [
+            {
+                icon: 'bx bxs-star'
+            },
+            {
+                icon: 'bx bxs-star'
+            },
+            {
+                icon: 'bx bxs-star'
+            },
+            {
+                icon: 'bx bx-star'
+            },
+            {
+                icon: 'bx bx-star'
+            }
+        ],
+        ratingCount: '15'
+    },
+    {
+      mainImg: [
+          {
+              img: 'assets/img/listings/listings5.jpg'
+          },
+          {
+              img: 'assets/img/listings/listings6.jpg'
+          }
+      ],
+      categoryLink: 'single-listings',
+      category: 'Beauty',
+      bookmarkLink: 'single-listings',
+      location: 'Suwanee, USA',
+      title: 'Vesax Beauty Center',
+      price: 'Start From: $100',
+      detailsLink: 'single-listings',
+      authorImg: 'assets/img/user4.jpg',
+      openORclose: 'Open Now',
+      extraClass: 'status-open',
+      authorName: 'Andy',
+      rating: [
+          {
+              icon: 'bx bxs-star'
+          },
+          {
+              icon: 'bx bxs-star'
+          },
+          {
+              icon: 'bx bxs-star'
+          },
+          {
+              icon: 'bx bx-star'
+          },
+          {
+              icon: 'bx bx-star'
+          }
+      ],
+      ratingCount: '15'
+  }
+    ]
+    customOptions: OwlOptions = {
+        loop: false,
+        nav: true,
+        dots: false,
+        autoplayHoverPause: false,
+        autoplay: false,
+        margin: 30,
+        navText: [
+            "<i class='flaticon-left-chevron'></i>",
+            "<i class='flaticon-right-chevron'></i>"
+        ],
+        responsive: {
+            0: {
+                items: 1,
+            },
+            425:{
+                items: 2,
+            },
+            768: {
+                items: 3,
+            },
+            1200: {
+                items: 3,
+            }
+        }
+    }
+    customOptions2: OwlOptions = {
+		loop: true,
+		nav: true,
+		dots: false,
+		animateOut: 'fadeOut',
+		animateIn: 'fadeIn',
+		autoplayHoverPause: true,
+		autoplay: true,
+		mouseDrag: false,
+		items: 1,
+        navText: [
+            "<i class='flaticon-left-chevron'></i>",
+            "<i class='flaticon-right-chevron'></i>"
+        ]
     }
 }

@@ -44,6 +44,7 @@ import { DashboardAddBlogComponent } from './components/pages/dashboard/dashboar
 import { DashboardUserDetailsComponent } from './components/pages/dashboard/dashboard-user-details/dashboard-user-details.component';
 import { DashboardAllListingsComponent } from './components/pages/dashboard/dashboard-all-listings/dashboard-all-listings.component';
 import { AuthGuard } from '../../../Xploradoor/src/app/services/AuthService/auth.guard';
+import { ReelsStatusComponent } from './components/pages/reels-status/reels-status.component';
 
 const routes: Routes = [
     {path: '', component: HomeDemoOneComponent},
@@ -74,6 +75,7 @@ const routes: Routes = [
     {path: 'single-listings', component: ListingsDetailsComponent},
     {path: 'events', component: EventsComponent},
     {path: 'single-events', component: EventsDetailsComponent},
+    {path: 'stories', component: ReelsStatusComponent},
     {path: 'dashboard', component: DashboardComponent},
     {path: 'dashboard-messages', component: DashboardMessagesComponent},
     {path: 'dashboard-bookings', component: DashboardBookingsComponent},

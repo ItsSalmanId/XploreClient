@@ -109,8 +109,12 @@ export class AddBusinessService {
   savedPost(data: ReelSaved) {
     return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/SavedPost', data);
   }
+  addUpdateReelsStatus(data: ReelsDetails) {
+    return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/AddUpdateReelsStatus', data);
+  }
+  getReelsStatus(data: ReelsDetails) {
+    return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/GetReelsStatus', data);
+  }
 
-//   updatePatientSurvey(data: PatientSurveyModel) { AddUpdateBlogBusiness
-//     return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/UpdatePatientSurvey', data);
-//   }
+
 }

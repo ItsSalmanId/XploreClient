@@ -925,10 +925,22 @@
         </div>
         <div class="modal-body">
           <p>Drag photos and videos here</p>
-          <button class="btn btn-primary btn_upload custom-btn-upload" (click)="addUpdateReels()">
+          <button class="btn btn-primary btn_upload custom-btn-upload" (click)="addUpdateReelsStatus()">
             Post
           </button>
           <div>
+            <div class="add-listings-box">
+              <h3>Gallery</h3>
+              <dropzone id="p-uploadimg-dropzone" [config]="config" [message]="'Drag photos and videos here'" 
+              class="custom-dropzone"
+              (maxFilesExceeded)="onMaxFilesExceeded()"
+              (maxFilesReached)="onMaxFilesReached()" 
+              (removedFile)="onRemoveFile($event)" 
+              (error)="onUploadError($event)"
+              (success)="onUploadSuccess($event)" 
+              (canceled)="onCanceled($event)">
+            </dropzone> 
+          </div>
             <!-- <div class="col-md-12">
               <ol id="ol-uploadimg-imgname" class="custom-file-list">
                 <li *ngFor="let fileName of uploadedFilesName; let ndx=index" [id]="'opt-uploadimg-imgname-'+ndx">
@@ -936,7 +948,7 @@
                 </li>
               </ol>
             </div> -->
-            <div class="clearfix"></div>
+            <!-- <div class="clearfix"></div>
             <dropzone id="p-uploadimg-dropzone" [config]="config" [message]="'Drag photos and videos here'" 
               class="custom-dropzone"
               (maxFilesExceeded)="onMaxFilesExceeded()"
@@ -945,7 +957,7 @@
               (error)="onUploadError($event)"
               (success)="onUploadSuccess($event)" 
               (canceled)="onCanceled($event)">
-            </dropzone>
+            </dropzone> -->
           </div>
         </div>
       </div>
@@ -1040,7 +1052,43 @@
     </div>
   </div>
 
+  <!-- Start Main Banner Area -->
 
+<div class="story-overlay" *ngIf="showStory">
+  <div class="reel-container">
+    <button class="close-button" (click)="closeReel()">X</button>
+    <div class="navigation-buttons">
+      <button class="prev-button" (click)="previousStory()">
+        <img src="assets/icons/left-arrow.svg" alt="Previous" />
+      </button>
+      <button class="next-button" (click)="nextStory()">
+        <img src="assets/icons/right-arrow.svg" alt="Next" />
+      </button>
+    </div>
+    <div class="reel-item" *ngFor="let reel of reelsDetailsList; let i = index" [ngClass]="{'active': selectedIndex === i}">
+      <div class="video-wrapper">
+        <video [id]="'video-' + i" [src]="reel.uploadedFilesName" autoplay loop controls></video>
+      </div>
+      <div class="status-bar-wrapper">
+        <div class="status-bar" *ngFor="let reel of reelsDetailsList; let j = index" [ngClass]="{'active': selectedIndex === j}"></div>
+      </div>
+      <div class="reel-footer">
+        <div class="reel-actions">
+          <button class="like-button" (click)="likeReel()">
+            <span class="heart-icon" [ngClass]="{'liked': isLiked}">&#9829;</span>
+            Like
+          </button>
+          <button class="comment-button" (click)="showCommentInput()">Comment</button>
+          <button class="share-button" (click)="shareReel()">Share</button>
+        </div>
+        <div class="comment-section" *ngIf="showComment">
+          <input type="text" placeholder="Add a comment..." [(ngModel)]="commentText" />
+          <button (click)="postComment()">Post</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 
 

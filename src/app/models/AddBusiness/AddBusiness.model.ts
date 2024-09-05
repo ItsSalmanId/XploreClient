@@ -111,6 +111,8 @@ export class UserAccount {
     FollowersCount: number;
     reelsDetailsList: ReelsDetails[] = [];
     savedReelsDetailsList: ReelsDetails[] = [];
+    REEL_STATUS: boolean;
+
 }
 
 
@@ -207,6 +209,7 @@ export class ReelsDetails {
   isLikeUnlikeReel: boolean;
   IS_REEL_SAVED_OR_NOT: boolean;
   isPlaying: boolean;
+  REEL_STATUS: boolean;
 }
 
 export class ReelsCommentsDetails {
