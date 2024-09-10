@@ -104,12 +104,12 @@ export class CommonCall implements OnChanges {
                    if(!this.NullCheckFun(this.userProfileToken))
                    {
                     this.router.navigate(['/products-list']);
-                    this.ShowToast("Xplore", 'JWT Token Expired, Please login again!!', true);
+                    //this.ShowToast("Xplore", 'JWT Token Expired, Please login again!!', true);
                     //this.currentTab = 'tab1';
                    }
                    else
                    {
-                    this.ShowToast("Xplore", 'JWT Token verified', true);
+                    //this.ShowToast("Xplore", 'JWT Token verified', true);
                    }
                 });
         }
@@ -131,12 +131,12 @@ export class CommonCall implements OnChanges {
                    if(!this.NullCheckFun(this.userAccount))
                    {
                     this.router.navigate(['/products-list']);
-                    this.ShowToast("Xplore", 'JWT Token Expired, Please login again!!', true);
+                    //this.ShowToast("Xplore", 'JWT Token Expired, Please login again!!', true);
                     //this.currentTab = 'tab1';
                    }
                    else
                    {
-                    this.ShowToast("Xplore", 'JWT Token verified', true);
+                    //this.ShowToast("Xplore", 'JWT Token verified', true);
                    }
                 });
         }

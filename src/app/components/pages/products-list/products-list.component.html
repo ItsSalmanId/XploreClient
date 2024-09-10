@@ -3,6 +3,10 @@
 <!-- Start Page Title Area -->
 <div class="page-title-area md:py-5"  style="background-image: url('assets/img/page-title/page-title1.jpg'); padding-top: 0px;
 padding-bottom: 0px;">
+
+<div class="spinner-overlay" *ngIf="isLoading">
+    <div class="spinner"></div>
+  </div>
     <!-- Start Login & Register Modal -->
     <div class="modal-content">
          

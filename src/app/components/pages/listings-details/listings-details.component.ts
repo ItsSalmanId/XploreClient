@@ -55,6 +55,7 @@ export class ListingsDetailsComponent implements OnInit {
     fullStars: number = 1;
     halfStar: boolean = false;
     emptyStars: number = 4;
+    isLoading: boolean;
 
 
     constructor(private _addBusinessService: AddBusinessService, 
@@ -154,6 +155,7 @@ export class ListingsDetailsComponent implements OnInit {
       }
       submitRating(isCallFromAddReview: boolean = false)
       {
+        this.isLoading = true;
         if (!this.NullCheckFun(this.businessRating.NAME) ||
         !this.NullCheckFun(this.businessRating.EMAIL_ADDRESS) ||
         !this.NullCheckFun(this.businessRating.FEEDBACK) 
@@ -180,6 +182,7 @@ export class ListingsDetailsComponent implements OnInit {
                         {
                             this.currentTab = "tab4";
                         }
+                        this.isLoading = false;
                         
                         
                        // this._spinner.hide();
@@ -224,6 +227,7 @@ export class ListingsDetailsComponent implements OnInit {
       }
     getBusiness()
     {
+        this.isLoading = true;
         let selectedBusinessId = localStorage.getItem("selectedBusinessId");
         console.log(this.businessDetail);
         this.businessDetail.BUSINESS_DETAIL_ID = Number(selectedBusinessId);
@@ -238,6 +242,7 @@ export class ListingsDetailsComponent implements OnInit {
                 response => {
                     console.log(response);
                     this.businessDetail = response;
+                    this.isLoading = true;
                     
                    // this._spinner.hide();
                    //this.ShowToast("Alert", response.Message, response.success);
@@ -250,6 +255,8 @@ export class ListingsDetailsComponent implements OnInit {
 
     getBusinessRating()
     {
+        
+        this.isLoading = true;
         let selectedBusinessId = localStorage.getItem("selectedBusinessId");
         console.log(this.businessDetail);
         this.businessRating.BUSINESS_ID = this.businessDetail.BUSINESS_DETAIL_ID = Number(selectedBusinessId);
@@ -265,6 +272,10 @@ export class ListingsDetailsComponent implements OnInit {
                     console.log(response);
                     if(response.length > 0)
                     {
+                        this.businessRating.EMAIL_ADDRESS = "";
+                        this.businessRating.FEEDBACK = "";
+                        this.businessRating.NAME = "";    
+                        this.businessRating.SAVE_INFORMATION_OR_NOT = false;
                         this.businessRatingList = response;
                         this.reviewsCount = this.businessRatingList.length;
                         this.averageRating = this.businessRatingList[0].AVG_RATING
@@ -274,6 +285,7 @@ export class ListingsDetailsComponent implements OnInit {
       this.halfStar = Number(this.averageRating) % 1 !== 0; // Check if there's a half star
       this.emptyStars = 5 - this.fullStars - (this.halfStar ? 1 : 0);
                     }
+                    this.isLoading = false;
                      // Calculate remaining empty stars
                  
                     
@@ -288,6 +300,7 @@ export class ListingsDetailsComponent implements OnInit {
     
     getBusinessList()
     {
+        this.isLoading = true;
         console.log(this.businessDetail);
         console.log("click on RegisterNow");
         this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
@@ -309,6 +322,7 @@ const summaries: BusinessDetailCountList[] = [
   console.log(summaries);
 
   this.summaries = summaries;
+  this.isLoading = false;
                     //this.listCount = this.businessDetailsList.length;
                     //this.businessFilteredList = this.businessDetailsList;
                    // this._spinner.hide();

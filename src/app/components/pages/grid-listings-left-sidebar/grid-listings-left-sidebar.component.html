@@ -23,7 +23,7 @@
                 <div class="col-lg-3 col-md-6 p-0">
                     <div class="form-group category-select">
                         <label><i class="flaticon-category"></i></label>
-                        <ngx-select-dropdown (searchChange)="searchChange($event)" name="category-select" tabindex="0" [multiple]="false" [(ngModel)]="singleSelect" [config]="config" [options]="options"></ngx-select-dropdown>
+                        <ngx-select-dropdown (searchChange)="searchChange($event)" name="category-select" tabindex="0" [multiple]="false" [(ngModel)]="singleSelect"  [options]="options"></ngx-select-dropdown>
                     </div>
                 </div>
 
@@ -48,10 +48,10 @@
                         <h3 class="widget-title">Filters</h3>
 
                         <ul>
-                            <li><button type="button">$</button></li>
-                            <li><button type="button">$$</button></li>
-                            <li><button type="button">$$$</button></li>
-                            <li><button type="button">$$$$</button></li>
+                            <li><button type="button" id="applyCategoryFIlter" (click)="applyCategoryFIlter()">Apply Filter</button></li>
+                            <li><button type="button" id="clearCategoryFilters" (click)="clearCategoryFilters()">Clear All Filters</button></li>
+                            <!-- <li><button type="button">$$$</button></li>
+                            <li><button type="button">$$$$</button></li> --> 
                         </ul>
                     </section>
 
@@ -182,56 +182,62 @@
             <div class="col-lg-8 col-md-12">
                 <div class="listings-grid-sorting row align-items-center">
                     <div class="col-lg-5 col-md-6 result-count">
-                        <p>We found <span class="count">9</span> listings available for you</p>
+                        <p>We found <span class="count">{{this.listCount}}</span> listings available for you</p>
                     </div>
 
                     <div class="col-lg-7 col-md-6 ordering">
                         <div class="d-flex justify-content-end">
                             <div class="select-box">
                                 <label>Sort By:</label>
-                                <ngx-select-dropdown (searchChange)="searchChange($event)" name="ordering-select" tabindex="0" [multiple]="false" [(ngModel)]="singleSelect" [config]="config" [options]="options2"></ngx-select-dropdown>
+                                <ngx-select-dropdown (searchChange)="searchChange($event)" name="ordering-select" tabindex="0" [multiple]="false" [(ngModel)]="singleSelect"  [options]="options2"></ngx-select-dropdown>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-6" *ngFor="let Content of singleListingsBox | paginate: { itemsPerPage: 6, currentPage: gridListings }">
+                    <!-- <div class="col-lg-12 col-md-12" *ngFor="let Content of businessFilteredList | paginate: { itemsPerPage: 4, currentPage: verticalListings }"> -->
+
+                    <div class="col-xl-6 col-lg-6 col-md-6" *ngFor="let Content of businessFilteredList | paginate: { itemsPerPage: 6, currentPage: gridListings }">
                         <div class="single-listings-box">
                             <div class="listings-image">
                                 <div class="listings-image-slides">
                                     <owl-carousel-o [options]="customOptions">
-                                        <ng-template carouselSlide *ngFor="let Image of Content.mainImg;">
+                                        <ng-template carouselSlide *ngFor="let Image of Content.uploadedFilesName                                        ;">
                                             <div class="single-image">
-                                                <img [src]="Image.img" alt="image">
-                                                <a routerLink="/{{Content.detailsLink}}" class="link-btn"></a>
+                                                <img [src]="Image" alt="image">
+                                                <a  class="link-btn"></a>
                                             </div>
                                         </ng-template>
                                     </owl-carousel-o>
                                 </div>
-                                <a routerLink="/{{Content.bookmarkLink}}" class="bookmark-save"><i class="flaticon-heart"></i></a>
-                                <a routerLink="/{{Content.categoryLink}}" class="category"><i class="flaticon-cooking"></i></a>
+                                <a class="bookmark-save"><i class="flaticon-heart"></i></a>
+                                <a  class="category"><i class="flaticon-cooking"></i></a>
                             </div>
                             <div class="listings-content">
                                 <div class="author">
                                     <div class="d-flex align-items-center">
-                                        <img [src]="Content.authorImg" alt="image">
-                                        <span>{{Content.authorName}}</span>
+                                        <!-- <img [src]="Content.authorImg" alt="image"> -->
+                                        <!-- <span>{{Content.authorName}}</span> -->
+                                        <span>Test</span>
                                     </div>
                                 </div>
                                 <ul class="listings-meta">
-                                    <li><a routerLink="/{{Content.categoryLink}}"><i class="flaticon-furniture-and-household"></i> Restaurant</a></li>
-                                    <li><i class="flaticon-pin"></i> {{Content.location}}</li>
+                                    <li><a ><i class="flaticon-furniture-and-household"></i> {{Content.BUSINESS_NAME}}</a></li>
+                                    <li><i class="flaticon-pin"></i> {{Content.BUSINESS_ADDRESS}}</li>
                                 </ul>
-                                <h3><a routerLink="/{{Content.detailsLink}}">{{Content.title}}</a></h3>
-                                <span class="status {{Content.extraClass}}"><i class="flaticon-save"></i> {{Content.openORclose}}</span>
+                                <h3><a >{{Content.BUSINESS_NAME}}</a></h3>
+                                <!-- <span class="status {{Content.extraClass}}"><i class="flaticon-save"></i> {{Content.openORclose}}</span> -->
+                                <span class="status {{'status-open'}}"><i class="flaticon-save"></i> {{Content.OpenClose}}</span>
+
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <div class="rating">
+                                    <!-- <div class="rating">
                                         <i class='{{Star.icon}}' *ngFor="let Star of Content.rating;"></i>
-                                        <span class="count">({{Content.ratingCount}})</span>
-                                    </div>
+                                        <span class="count">(5)</span>
+                                    </div> -->
                                     <div class="price">
-                                        {{Content.price}}
+                                        <!-- {{Content.price}} -->
+                                        200
                                     </div>
                                 </div>
                             </div>

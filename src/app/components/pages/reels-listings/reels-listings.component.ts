@@ -1,28 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { AddBusinessService } from '../../../../services/AddBusiness/AddBusiness.service'
-import { BusinessDetail, TimeSlots, WeeklyTimeSlots, UserAccount } from "../../../../models/AddBusiness/AddBusiness.model";
+import { Component, OnInit, AfterViewInit, ViewChildren, ElementRef, QueryList, ChangeDetectorRef, Renderer2, ViewChild,   } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { AddBusinessService } from '../../../services/AddBusiness/AddBusiness.service'
+import { BusinessDetail, TimeSlots, WeeklyTimeSlots, ReelsDetails, ReelsCommentsDetails, UserAccount, UserFollowDetails,
+    ReelSaved
+ } from "../../../models/AddBusiness/AddBusiness.model";
 import { Observable } from 'rxjs';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { DropzoneConfig } from 'ngx-dropzone-wrapper';
-import { GlobalSettingService } from '../../../../services/Global/global-setting.service';
-import { GenericUtility } from '../../../../utilities/generic-utility';
+import { GlobalSettingService } from '../../../services/Global/global-setting.service';
+import { GenericUtility } from '../../../utilities/generic-utility';
 //declare var $: any;
 import * as $ from 'jquery'; // Import jQuery
 import { Router } from '@angular/router';
-import { NgZone } from '@angular/core';
-import { ChangeDetectorRef } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { OwlOptions } from 'ngx-owl-carousel-o';
+
+
 
 
 @Component({
-    selector: 'app-dashboard-user-details',
-    templateUrl: './dashboard-user-details.component.html',
-    styleUrls: ['./dashboard-user-details.component.scss']
+    selector: 'app-reels-listings',
+    templateUrl: './reels-listings.component.html',
+    styleUrls: ['./reels-listings.component.scss']
 })
-export class DashboardUserDetailsComponent implements OnInit {
-
+export class ReelsVertical implements OnInit, AfterViewInit {
     config: DropzoneConfig;
-    
-    businessDetail: BusinessDetail; 
+    reelsDetails: ReelsDetails
+    businessDetail: BusinessDetail;
+    userFollowDetail: UserFollowDetails; 
+    reelSaved: ReelSaved;
     selectedFiles?: FileList;
   progressInfos: any[] = [];
   message: string[] = [];
@@ -37,165 +43,717 @@ export class DashboardUserDetailsComponent implements OnInit {
      TimeSlots: string[];
      timeSlots: string[] = [];
      weeklyTimeSlots: WeeklyTimeSlots;
-     items: any[]
-     userAccount: UserAccount;
+     reelsDetailsList: ReelsDetails[] = [];
+     reelsCommentsDetails: ReelsCommentsDetails[] = [];
+     reelsCommentsModel: ReelsCommentsDetails;
+     allReelsCommentsDetails: ReelsCommentsDetails[] = [];
+     isReplyVisible: { [key: number]: boolean } = {};
+     reelsCommentsLikeModel: ReelsCommentsDetails;
      userAccountList: UserAccount[];
-    slectedUser: number;
-    gridListings: number = 1;
-    isLoading: boolean = true;
+     userAccount: UserAccount;
+     isShowStories : boolean;
 
-    constructor(private zone: NgZone, private _addBusinessService: AddBusinessService, public _globalSettingService: GlobalSettingService, private _genericUtilities: GenericUtility, private router: Router, private cdr: ChangeDetectorRef) 
-    { 
-     this.businessDetail = new BusinessDetail();
-     this.config = new DropzoneConfig();
-     this.config.url = this._genericUtilities.getBaseIp()+'UploadFiles/UploadFilesAPI';
-     //this.config.url = "http://localhost:4200";
-     
-        this.config.headers = { 'Authorization': `Bearer ${this._globalSettingService.getAuthToken}` };
-        // this.config.acceptedFiles = '.pdf, .png, .jpg, .JPG, .jpeg, .tiff, .tif, .docx';//.pdf .png .jpg .JPG .jpeg .tiff .tif .docx
-        this.config.acceptedFiles = '.pdf, .jpg, .jpeg, .png, .tif, .gif, .tiff, .bmp'; //, .docx, .txt
-        this.config.maxFiles = 5;
-        this.config.maxFilesize = 20;
-        this.config.addRemoveLinks = true;
-        this.config.dictCancelUploadConfirmation = "Are you sure you want to cancel upload?";
 
-        this.uploadedFilesName = [];
-        this.uploadedFilesNameClient = [];
-        this.weeklyTimeSlots = new WeeklyTimeSlots();
-        this.userAccount = new UserAccount();
-        this.userAccountList = [];
-        this.items = []
-        this.list = 
-      [
-        {name :'India',checked : false},
-        {name :'US',checked : false},
-        {name :'China',checked : false},
-        {name :'France',checked : false}
-      ] 
 
-      this.items = [
-        { col1: 'Item 1-1', col2: 'Item 1-2', col3: 'Item 1-3' },
-        { col1: 'Item 2-1', col2: 'Item 2-2', col3: 'Item 2-3' },
-        { col1: 'Item 3-1', col2: 'Item 3-2', col3: 'Item 3-3' },
-        // Add more items as needed
-      ];
-      this.isLoading = true;
+    // @ViewChildren('videoElement') videoElements!: QueryList<ElementRef<HTMLVideoElement>>;
+     currentPlayingIndex: number | null = null;
+
+    @ViewChildren('videoElement') videoElements: QueryList<ElementRef<HTMLVideoElement>>;
+
+
+    @ViewChild('commentInput') commentInput!: ElementRef;
+
+    videos = [
+        {
+            videoSrc: '../../../../assets/video/video1.mp4',
+            authorImg: '../../../../assets/images/profile_img.jpg',
+            authorName: 'zineb',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.Officiis...',
+            musicName: 'nameOfMusic',
+            location: 'casablanca',
+            liked: false,
+            likesCount: 900,
+            isBookmarked: false,
+            isPlaying: false,
+            isMuted: false
+        },
+        {
+            videoSrc: '../../../../assets/video/video1.mp4',
+            authorImg: '../../../../assets/images/profile_img.jpg',
+            authorName: 'zineb',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.Officiis...',
+            musicName: 'nameOfMusic',
+            location: 'casablanca',
+            liked: false,
+            likesCount: 850,
+            isBookmarked: false,
+            isPlaying: false,
+            isMuted: false
+        }
+    ];
+    authorImg: string;
+    videoSrc: string;
+    isSelectedReel: number;
+    selectedUserForComment: Number;
+    isShowComments: boolean;
+    wantToReplayTest: boolean;
+    isLiked = false; // State to track if liked
+    likeCount = 55;  // Initial like count
+    LikeOrDislike: boolean;
+    isLikeOrDislikeReel: boolean;
+    users: { id: number; username: string; profilePicture: string; isFollowing: boolean; }[];
+    posts: { id: number; image: string; }[];
+    selectedTab: string;
+    currentOption: string;
+    userReelsAccount: UserAccount;
+    profileTab: string;
+    showStory: boolean = false;
+  currentStory: any;
+    activeStoryIndex: number = 0;
+    selectedStory: number;
+    stories: { id: number; user: string; videoUrl: string; }[];
+    selectedIndex: number = 1;
+    showComment: boolean;
+    commentText: any;
+    showCommentIndex: number;
+
+
+
+    @ViewChild('carousel', { static: false }) carousel: ElementRef;
+
+  profiles = [
+    { image: 'assets/img/user1.jpg', name: 'Add Story', isAddStory: true },
+    { image: 'assets/img/user1.jpg', name: 'Alex', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Sam', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    { image: 'assets/img/user1.jpg', name: 'Taylor', isAddStory: false },
+    // other profiles
+    { image: 'assets/img/user1.jpg', name: 'Jordan', isAddStory: false }
+  ];
+
+  customOptionsT: OwlOptions = {
+    nav: false,
+    dots: false,
+    responsive: {
+      0: {
+        items: 4
+      },
+      375: {
+        items: 5
+      },
+      600: {
+        items: 10
+      },
+      1000: {
+        items: 4
+      }
     }
+  };
+
+  outerSliderOptions = {
+    loop: false,
+    margin: 10,
+    nav: true,
+    navText: ['<', '>'],
+    responsive: {
+      0: {
+        items: 1
+      },
+      600: {
+        items: 2
+      },
+      1000: {
+        items: 3
+      }
+    }
+  };
+
+  innerSliderOptions = {
+    loop: false,
+    items: 1,
+    margin: 10,
+    nav: false,
+    dots: true
+  };
+  
+
+
+
+    constructor(private cdr: ChangeDetectorRef, private _addBusinessService: AddBusinessService, 
+        public _globalSettingService: GlobalSettingService, 
+        private _genericUtilities: GenericUtility, private router: Router, 
+        private toastr: ToastrService, private renderer: Renderer2, private datePipe: DatePipe) { 
+
+            this.reelsCommentsModel = new ReelsCommentsDetails();
+            this.userFollowDetail = new UserFollowDetails();
+            this.reelsDetails = new ReelsDetails();
+            this.reelsDetailsList = [];
+            this.reelsCommentsDetails = [];
+            this.allReelsCommentsDetails = [];
+            this.userAccount = new UserAccount();
+            this.reelSaved = new ReelSaved();
+            this.isShowStories = false;
+
+
+
+            this.businessDetail = new BusinessDetail();
+            this.config = new DropzoneConfig();
+            this.config.url = this._genericUtilities.getBaseIp()+'UploadFiles/UploadFilesAPI';
+            //this.config.url = "http://localhost:4200";
+            
+               this.config.headers = { 'Authorization': `Bearer ${this._globalSettingService.getAuthToken}` };
+               // this.config.acceptedFiles = '.pdf, .png, .jpg, .JPG, .jpeg, .tiff, .tif, .docx';//.pdf .png .jpg .JPG .jpeg .tiff .tif .docx
+               this.config.acceptedFiles = '.pdf, .jpg, .jpeg, .png, .tif, .gif, .tiff, .bmp';
+               this.config.acceptedFiles = ".pdf, .png, .jpg, .jpeg, .tif, .tiff, .bmp, .mp4, .mov, .avi", // Add video formats here
+
+               //, .docx, .txt
+               this.config.maxFiles = 5;
+               this.config.maxFilesize = 20;
+               this.config.addRemoveLinks = true;
+               this.config.dictCancelUploadConfirmation = "Are you sure you want to cancel upload?";
+       
+               this.uploadedFilesName = [];
+               this.uploadedFilesNameClient = [];
+               this.weeklyTimeSlots = new WeeklyTimeSlots();
+               this.userAccountList = [];
+       
+               this.list = 
+             [
+               {name :'India',checked : false},
+               {name :'US',checked : false},
+               {name :'China',checked : false},
+               {name :'France',checked : false}
+             ]
+             
+
+             this.users = [
+                { id: 1, username: 'user1', profilePicture: 'assets/user1.jpg', isFollowing: false },
+                { id: 2, username: 'user2', profilePicture: 'assets/user2.jpg', isFollowing: false },
+                { id: 3, username: 'user3', profilePicture: 'assets/user3.jpg', isFollowing: true },
+                // Add more users as needed
+              ];
+
+              this.posts = [
+                { id: 1, image: 'assets/post1.jpg' },
+                { id: 2, image: 'assets/post2.jpg' },
+                { id: 3, image: 'assets/post3.jpg' },
+                { id: 4, image: 'assets/post4.jpg' },
+                // Add more posts as needed
+              ];
+              this.selectedTab = 'posts';
+              this.stories = [
+                { id: 1, user: 'User1', videoUrl: 'path/to/video1.mp4' },
+                { id: 2, user: 'User2', videoUrl: 'path/to/video2.mp4' },
+                // Add more stories as needed
+              ];
+              this.selectedStory = 0;
+              
+              
+
+              
+
+        }
+
+        getReelsUser()
+        {
+            this.userAccount.APPLICATION_USER_ACCOUNTS_ID = Number(localStorage.getItem("Temp"));
+    
+            this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+            //if (this.businessDetail) {
+                //this._spinner.show();
+                this._addBusinessService.getUserReels(this.userAccount).subscribe(
+                    response => {
+                        console.log(response);
+                        this.userAccountList = response;
+                        this.reelsDetails.USER_ID = Number(localStorage.getItem("Temp"));
+                        this.userAccountList = this.userAccountList.filter(user => user.APPLICATION_USER_ACCOUNTS_ID !== this.reelsDetails.USER_ID);
+
+                       // this._spinner.hide();
+                       //this.ShowToast("Alert", response.Message, response.success);
+                       //this.toastr.success(response.Message, 'Toastr fun!');
+                       //this.ShowToast("Xplore", response.Message, response.Success);
+                     
+                    });
+        }
+
+        getReelsUserProfile()
+        {
+            this.userAccount.APPLICATION_USER_ACCOUNTS_ID = Number(localStorage.getItem("Temp"));
+    
+            this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+            //if (this.businessDetail) {
+                //this._spinner.show();
+                this._addBusinessService.getReelsUserProfile(this.userAccount).subscribe(
+                    response => {
+                        console.log(response);
+                        this.userReelsAccount = response;
+                       // this._spinner.hide();
+                       //this.ShowToast("Alert", response.Message, response.success);
+                       //this.toastr.success(response.Message, 'Toastr fun!');
+                       //this.ShowToast("Xplore", response.Message, response.Success);
+                     
+                    });
+        }
+    
+    
+        addUpdateFollower()
+        {
+            
+            let selectedIdForEdit = localStorage.getItem("selectedIdForEdit");
+            console.log(this.businessDetail);
+            this.businessDetail.BUSINESS_DETAIL_ID = Number(selectedIdForEdit);
+            console.log(this.businessDetail);
+            console.log("click on RegisterNow");
+    
+            this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+           // this.userAccountList = response;
+            this.userFollowDetail.USER_ID = Number(localStorage.getItem("Temp"));
+            //if (this.businessDetail) {
+                //this._spinner.show();
+                this._addBusinessService.addUpdateFollower(this.userFollowDetail).subscribe(
+                    response => {
+                        console.log(response);
+                        this.userFollowDetail = response;
+                        this.reelsDetails.USER_ID = Number(localStorage.getItem("Temp"));
+                        this.ShowToast("Xplore", "Your Reels has been successfully added.", true); 
+                        this.getReelsUser();
+                //this.ShowToast("Alert", response.Message, response.success);
+
+                       // this._spinner.hide();
+                       //this.ShowToast("Alert", response.Message, response.success);
+                       //this.toastr.success(response.Message, 'Toastr fun!');
+                       //this.ShowToast("Xplore", response.Message, response.Success);
+                     
+                    });
+        }
+        selectTab(tab: string) {
+            this.selectedTab = tab;
+          }
+          onClick()
+          {
+            this.isShowStories == true;
+          }
+          onClose()
+          {
+            this.isShowStories == false;
+            //showStory
+          }
+
+          
+
+          
+
+
+
+
+ openStory() {
+    this.showStory = true;
+    document.body.style.overflow = 'hidden'; // Prevent scrolling
+}
+
+closeReel() {
+    this.showStory = false;
+  }
+  
+
+  
+
+  previousStory() {
+    if (this.selectedIndex > 0) {
+      this.selectedIndex--;
+    }
+  }
+
+  nextStory() {
+    if (this.selectedIndex < this.reelsDetailsList.length - 1) {
+      this.selectedIndex++;
+    }
+  }
+
+  showCommentInput() {
+    this.showComment = !this.showComment;
+  }
+
+  postComments() {
+    console.log('Comment Posted:', this.commentText);
+    this.commentText = '';
+    this.showComment = false;
+  }
+
+  likeReel() {
+    console.log('Reel Liked:', this.reelsDetailsList[this.selectedIndex]);
+  }
+
+  shareReel() {
+    console.log('Reel Shared:', this.reelsDetailsList[this.selectedIndex]);
+  }
+          
+        toggleFollow(user: any) {
+            user.isFollowing = !user.isFollowing;
+            this.userFollowDetail.USER_FOLLOWERS_ID = user.APPLICATION_USER_ACCOUNTS_ID;
+            this.addUpdateFollower();
+
+          }
+          toggleMenuOption(selectedOption: string)
+          {
+            if(selectedOption == 'Home')
+            {
+                this.isShowStories = true;
+                this.currentOption = 'HomeTab';
+                this.openStory()
+            }
+            else if(selectedOption == 'Reels')
+            {
+                this.currentOption = 'ReelsTab';
+            }
+            else if(selectedOption == 'Profile')
+                {
+                    this.currentOption = 'ProfileTab';
+                    this.getReelsUserProfile()
+                }
+
+          }
+
+          toggleProfileTab(profileTab: string)
+          {
+            if(profileTab == 'Post')
+            {
+                this.profileTab = 'PostTab';
+            }
+            else if(profileTab == 'Save')
+            {
+                this.profileTab = 'SaveReelsTab';
+            }
+
+          }
 
     ngOnInit(): void {
-        this.timeSlots = TimeSlots;
-        // this.zone.run(() => {
-        //     this.isLoading = true;
-        //   });
-        //   this.isLoading = true;
-        //   this.cdr.detectChanges();
-        // console.log('isLoading value:', this.isLoading);
-        this.getUserDetails();
+        this.videoSrc = '../../../../assets/video/video1.mp4',
+        this.authorImg ='../../../../assets/images/profile_img.jpg',
+        // Scroll to the top when the component initializes
+        window.scrollTo(0, 0);
+        this.getReels();
+        this.getReelsUser();
+        //this.getReelsStatus();
     }
-    
-    breadcrumb = [
+
+    getTimeAgo(date: Date) {
+        const now = new Date();
+        const commentDate = new Date(date);
+        const diffInSeconds = Math.floor((now.getTime() - commentDate.getTime()) / 1000);
+      
+        if (diffInSeconds < 60) {
+          return `${diffInSeconds} seconds ago`;
+        } else if (diffInSeconds < 3600) {
+          return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+        } else if (diffInSeconds < 86400) {
+          return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+        } else if (diffInSeconds < 604800) {
+          return `${Math.floor(diffInSeconds / 86400)} days ago`;
+        } else if (diffInSeconds < 2419200) {
+          return `${Math.floor(diffInSeconds / 604800)} weeks ago`;
+        } else {
+          return this.datePipe.transform(date, 'MMM d, y');
+        }
+    }
+    toggleLikeTest(comment: any, index: number, isCallFromReplay: boolean = false) {
+
+        const currentReel = comment;
+  // Toggle the liked state
+  if(isCallFromReplay == true)
+  {
+    if (currentReel.IS_LIKED) {
+        currentReel.IS_LIKED = false;
+        currentReel.IS_REPLAY_LIKED = false;
+        currentReel.isLiked = false;
+        currentReel.isClickOnLike = false;
+        currentReel.IS_REPLAY_LIKES -= 1;
+      } else {
+        currentReel.IS_REPLAY_LIKED = true;
+        currentReel.IS_LIKED = true;
+        currentReel.isLiked = true;
+        currentReel.isClickOnLike = true;
+        currentReel.IS_REPLAY_LIKES += 1;
+      }
+  }
+  else
+  {
+    if (currentReel.IS_LIKED) {
+        currentReel.IS_LIKED = false;
+        currentReel.isLiked = false;
+        currentReel.isClickOnLike = false;
+        currentReel.COMMENT_LIKE -= 1;
+      } else {
+        currentReel.IS_LIKED = true;
+        currentReel.isLiked = true;
+        currentReel.isClickOnLike = true;
+        currentReel.COMMENT_LIKE += 1;
+      }
+
+  }
+   this.LikeOrDislike = true;
+  
+   this.reelsCommentsLikeModel = comment;
+
+        this.postLikeComment();
+        // Toggle the like state
+        // comment.isLiked = !comment.isLiked;
+        
+        // // Update the like count
+        // comment.COMMENT_LIKE = comment.isLiked ? comment.COMMENT_LIKE + 1 : comment.COMMENT_LIKE - 1;
+        // console.log(this.allReelsCommentsDetails);  
+        // this.reelsCommentsLikeModel = comment;
+
+        //this.postLikeComment();
+    }
+    toggleReplies(index: number) {
+        this.isReplyVisible[index] = !this.isReplyVisible[index];
+      }
+
+      updateWidth(selector: string, newWidth: string) {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(element => {
+          if (element instanceof HTMLElement) {
+            element.style.removeProperty('width');
+            element.style.width = newWidth;
+          }
+        });
+      }
+
+    ngAfterViewInit(): void {
+        setTimeout(() => {
+            this.updateWidth('.owl-item', '68.8px');
+          }, 1000); // Adjust the delay as needed
+        this.wantToReplay(0, 0);
+        const options = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.75
+        };
+
+        const observer = new IntersectionObserver(this.handleIntersection.bind(this), options);
+
+        this.videoElements.forEach((videoElement, index) => {
+            observer.observe(videoElement.nativeElement);
+        });
+
+        // Play the first video when the page loads
+        if (this.videoElements.first) {
+            this.playFirstVideo();
+        }
+        setTimeout(() => {
+            document.getElementById('comment-input')?.focus();
+          }, 200);
+    }
+    selectedReel(selectedReel: number)
+    {
+      this.isSelectedReel = selectedReel;
+      this.isShowComments = true;
+      this.reelsCommentsModel.USER_ID = Number(localStorage.getItem("Temp"));
+      this.reelsCommentsModel.REELS_DETAILS_ID = this.isSelectedReel;
+      this.getCommentsByReel();
+    }
+    getCommentsByReel()
+    {
+             this.reelsCommentsModel.REELS_DETAILS_ID = this.isSelectedReel;
+             if (this.reelsCommentsModel) {
+                 this._addBusinessService.getCommentsByReel(this.reelsCommentsModel).subscribe(
+                     response => {
+                        this.reelsCommentsDetails = response;
+                    // this.reelsCommentsDetails = this.reelsDetailsList
+                    //                             .map(item => item.reelsCommentsModelList)
+                    //                             .reduce((acc, val) => acc.concat(val), []);
+
+                            this.allReelsCommentsDetails = this.reelsCommentsDetails.filter(comment => !comment.IS_REPLAY_COMMENT);
+                              this.allReelsCommentsDetails.forEach(mainComment => {
+                                mainComment.replies = this.reelsCommentsDetails.filter(reply => reply.IS_REPLAY_COMMENT && reply.                              REPLAY_COMMENT_HEADER_ID === mainComment.REELS_COMMENTS_DETAILS_ID);
+                              });
+
+                        this.wantToReplayTest = false;
+                         this.ShowToast("Xplore", "Your Reels has been successfully added.", true);            
+                     });
+             }
+
+    }
+
+    postComment()
+    {
+        
+             console.log(this.reelsDetails);
+             console.log("click on RegisterNow");
+             this.reelsCommentsModel.USER_ID = Number(localStorage.getItem("Temp"));
+             this.reelsCommentsModel.REELS_DETAILS_ID = this.isSelectedReel;
+             
+             if(this.wantToReplayTest == true)
+             {
+                this.reelsCommentsModel.IS_REPLAY_COMMENT = true;
+                this.reelsCommentsModel.REPLAY_COMMENT = this.reelsCommentsModel.COMMENT;
+             }
+             if (this.reelsCommentsModel) {
+
+                 ///this.reelsDetails.uploadedFilesName = this.uploadedFilesName;
+                 //this._spinner.show();
+                 this._addBusinessService.postComment(this.reelsCommentsModel).subscribe(
+                     response => {
+                        this.wantToReplayTest = false;
+                        this.getCommentsByReel();
+                         this.ShowToast("Xplore", "Your Reels has been successfully added.", true);            
+                     });
+             }
+
+    }
+
+    postLikeComment()
+    {
+        
+             console.log(this.reelsDetails);
+             console.log("click on RegisterNow");
+             this.reelsCommentsModel.USER_ID = Number(localStorage.getItem("Temp"));
+             this.reelsCommentsModel.REELS_DETAILS_ID = this.isSelectedReel;
+            // this.reelsCommentsLikeModel = 
+             if(this.LikeOrDislike == true)
+             {
+                this.reelsCommentsLikeModel.LIKE_OR_DISLIKE = true;
+                this.LikeOrDislike = false
+             }
+             this.reelsCommentsLikeModel.USER_ID = Number(localStorage.getItem("Temp"));
+             this.reelsCommentsLikeModel.REELS_DETAILS_ID = this.isSelectedReel;
+             if (this.reelsCommentsLikeModel) {
+
+                 ///this.reelsDetails.uploadedFilesName = this.uploadedFilesName;
+                 //this._spinner.show();
+                 this._addBusinessService.postComment(this.reelsCommentsLikeModel).subscribe(
+                     response => {
+                        this.wantToReplayTest = false;
+                        this.getCommentsByReel();
+                         this.ShowToast("Xplore", "Your Reels has been successfully added.", true);            
+                     });
+             }
+
+    }
+    addUpdateReels()
+    {
+        
+           if(this.uploadedFilesName.length == 0)
+           {
+            this.ShowToast("Xplore", "At least one picture is required. Please upload one.", false);
+           }
+           else
+           {
+            console.log(this.reelsDetails);
+            console.log("click on RegisterNow");
+            this.reelsDetails.USER_ID = Number(localStorage.getItem("Temp"));
+
+            if (this.reelsDetails) {
+                this.reelsDetails.uploadedFilesName = this.uploadedFilesName;
+                //this._spinner.show();
+                this._addBusinessService.addUpdateReels(this.reelsDetails).subscribe(
+                    response => {
+                        this.ShowToast("Xplore", "Your Reels has been successfully added.", true);
+                        //this.router.navigate(['/dashboard-my-listings']);
+                       // this._spinner.hide();
+                       //this.ShowToast("Alert", response.Message, response.success);
+                       //this.toastr.success(response.Message, 'Toastr fun!');
+                       //this.ShowToast("Xplore", response.Message, response.Success);
+                     
+                    });
+            }
+           }
+    //   }
+    }
+
+    addUpdateReelsStatus()
+    {
+        
+           if(this.uploadedFilesName.length == 0)
+           {
+            this.ShowToast("Xplore", "At least one picture is required. Please upload one.", false);
+           }
+           else
+           {
+            console.log(this.reelsDetails);
+            console.log("click on RegisterNow");
+            this.reelsDetails.USER_ID = Number(localStorage.getItem("Temp"));
+            this.reelsDetails.REEL_STATUS = true;
+
+            if (this.reelsDetails) {
+                this.reelsDetails.uploadedFilesName = this.uploadedFilesName;
+                //this._spinner.show();
+                this._addBusinessService.addUpdateReelsStatus(this.reelsDetails).subscribe(
+                    response => {
+                        this.ShowToast("Xplore", "Your reels status has been successfully added.", true);
+                        //this.router.navigate(['/dashboard-my-listings']);
+                       // this._spinner.hide();
+                       //this.ShowToast("Alert", response.Message, response.success);
+                       //this.toastr.success(response.Message, 'Toastr fun!');
+                       //this.ShowToast("Xplore", response.Message, response.Success);
+                     
+                    });
+            }
+           }
+    //   }
+    }
+
+    wantToReplay(selectedUser: Number, selectedComment: number)
+    {
+        if(selectedUser != 0)
         {
-            title: 'Review User',
-            subTitle: 'Dashboard'
+            this.wantToReplayTest = true;
+            this.selectedUserForComment = selectedUser;
+            this.reelsCommentsModel.REPLAY_COMMENT_HEADER_ID = selectedComment;
+            this.reelsCommentsModel.COMMENT = this.selectedUserForComment.toString();
+    
+            setTimeout(() => {
+                this.commentInput.nativeElement.focus();
+              }, 0);
         }
-    ]
+        // document.getElementById('comment-input')?.focus();
+        // setTimeout(() =>  document.getElementById('comment-input')?.focus(), 500);
+        
+        // setTimeout(() => this.commentInput.nativeElement.focus(), 0);
+        
 
 
-    getUserDetails()
-    {
-        this.isLoading = true;
-        let selectedIdForEdit = localStorage.getItem("selectedIdForEdit");
-        console.log(this.businessDetail);
-        this.businessDetail.BUSINESS_DETAIL_ID = Number(selectedIdForEdit);
-        console.log(this.businessDetail);
-        console.log("click on RegisterNow");
-
-        this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
-        //if (this.businessDetail) {
-            //this._spinner.show();
-            this._addBusinessService.getUserDetails(this.userAccountList).subscribe(
-                response => {
-                    console.log(response);
-                    console.log('isLoading value:', this.isLoading);
-                    this.isLoading = false;
-                    this.userAccountList = response;
-                   // this._spinner.hide();
-                   //this.ShowToast("Alert", response.Message, response.success);
-                   //this.toastr.success(response.Message, 'Toastr fun!');
-                   //this.ShowToast("Xplore", response.Message, response.Success);
-                 
-                });
-        //}
     }
-    selectUser(selectedUser: number)
+    getReels()
     {
-        console.log(selectedUser);
-        this.slectedUser = selectedUser;
-        const selectedUsertemp = this.userAccountList.find(item => item.APPLICATION_USER_ACCOUNTS_ID === selectedUser) || null;
-
-        this.userAccount = this.userAccountList.find(item => item.APPLICATION_USER_ACCOUNTS_ID === selectedUser) || null;
-
-        //this.userAccount.Blocked = true;
-
-
-    }   
-    deleteUser()
-    {
-
-        this.isLoading = true;
-        this.userAccount.APPLICATION_USER_ACCOUNTS_ID = this.slectedUser;
-        //if (this.businessDetail) {
-            //this._spinner.show();
-            this._addBusinessService.deleteUser(this.userAccount).subscribe(
-                response => {
-                    console.log(response);
-                    this.getUserDetails();
-                    //this.userAccountList = response;
-                   // this._spinner.hide();
-                   //this.ShowToast("Alert", response.Message, response.success);
-                   //this.toastr.success(response.Message, 'Toastr fun!');
-                   //this.ShowToast("Xplore", response.Message, response.Success);
-                 
-                });
-
-    } 
-    editUser()
-    {
-        this.isLoading = true;
-        this.userAccount.APPLICATION_USER_ACCOUNTS_ID = this.slectedUser;
-        //if (this.businessDetail) {
-            //this._spinner.show();
-            this._addBusinessService.editUser(this.userAccount).subscribe(
-                response => {
-                    console.log(response);
-                    this.getUserDetails();
-                    //this.userAccountList = response;
-                   // this._spinner.hide();
-                   //this.ShowToast("Alert", response.Message, response.success);
-                   //this.toastr.success(response.Message, 'Toastr fun!');
-                   //this.ShowToast("Xplore", response.Message, response.Success);
-                 
-                });
-
-    } 
-    shareCheckedList(item:any[]){
-        console.log(item);
-      }
-      shareIndividualCheckedList(item:{}){
-        console.log(item);
-      }
-    addUpdateBusiness()
-    {
-        this.isLoading = true;
         console.log(this.businessDetail);
         console.log("click on RegisterNow");
-        if (this.businessDetail) {
-            this.businessDetail.uploadedFilesName = this.uploadedFilesName;
+        this.reelsDetails.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+        this.reelsDetails.USER_ID = Number(localStorage.getItem("Temp"));
+        if (this.reelsDetails) {
             //this._spinner.show();
-            this._addBusinessService.addUpdateBusiness(this.businessDetail).subscribe(
+            this._addBusinessService.getReelsDetails(this.reelsDetails).subscribe(
                 response => {
-                    this.router.navigate(['/dashboard-my-listings']);
-                    this.isLoading = false;
+                    console.log(response);
+                    this.reelsDetailsList = response;
+                    //this.reelsDetailsList
+                    // this.reelsCommentsDetails = this.reelsDetailsList.map(item => item.reelsCommentsModelList).flat();
+                    this.reelsCommentsDetails = this.reelsDetailsList
+                                                .map(item => item.reelsCommentsModelList)
+                                                .reduce((acc, val) => acc.concat(val), []);
+
+
+
+                            // this.allReelsCommentsDetails = this.reelsCommentsDetails.filter(comment => !comment.IS_REPLAY_COMMENT);
+                            // this.allReelsCommentsDetails.forEach(mainComment => {
+                            //   mainComment.replies = this.reelsCommentsDetails.filter(reply => reply.IS_REPLAY_COMMENT && reply.REPLAY_COMMENT_HEADER_ID === mainComment.REELS_COMMENTS_DETAILS_ID);
+                            // });
+
+                            this.allReelsCommentsDetails = this.reelsCommentsDetails.filter(comment => !comment.IS_REPLAY_COMMENT);
+this.allReelsCommentsDetails.forEach(mainComment => {
+  mainComment.replies = this.reelsCommentsDetails.filter(reply => reply.IS_REPLAY_COMMENT && reply.REPLAY_COMMENT_HEADER_ID === mainComment.REELS_COMMENTS_DETAILS_ID);
+});
+                    console.log(response);
                    // this._spinner.hide();
                    //this.ShowToast("Alert", response.Message, response.success);
                    //this.toastr.success(response.Message, 'Toastr fun!');
@@ -203,6 +761,286 @@ export class DashboardUserDetailsComponent implements OnInit {
                  
                 });
         }
+  }
+  getReelsStatus()
+    {
+        console.log(this.businessDetail);
+        console.log("click on RegisterNow");
+        this.reelsDetails.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+        this.reelsDetails.USER_ID = Number(localStorage.getItem("Temp"));
+        if (this.reelsDetails) {
+            //this._spinner.show();
+            this._addBusinessService.getReelsStatus(this.reelsDetails).subscribe(
+                response => {
+                    console.log(response);
+                    this.reelsDetailsList = response;
+                    // this.reelsCommentsDetails = this.reelsDetailsList.map(item => item.reelsCommentsModelList).flat();
+                    this.reelsCommentsDetails = this.reelsDetailsList
+                                                .map(item => item.reelsCommentsModelList)
+                                                .reduce((acc, val) => acc.concat(val), []);
+
+
+
+                            // this.allReelsCommentsDetails = this.reelsCommentsDetails.filter(comment => !comment.IS_REPLAY_COMMENT);
+                            // this.allReelsCommentsDetails.forEach(mainComment => {
+                            //   mainComment.replies = this.reelsCommentsDetails.filter(reply => reply.IS_REPLAY_COMMENT && reply.REPLAY_COMMENT_HEADER_ID === mainComment.REELS_COMMENTS_DETAILS_ID);
+                            // });
+
+                            this.allReelsCommentsDetails = this.reelsCommentsDetails.filter(comment => !comment.IS_REPLAY_COMMENT);
+this.allReelsCommentsDetails.forEach(mainComment => {
+  mainComment.replies = this.reelsCommentsDetails.filter(reply => reply.IS_REPLAY_COMMENT && reply.REPLAY_COMMENT_HEADER_ID === mainComment.REELS_COMMENTS_DETAILS_ID);
+});
+                    console.log(response);
+                   // this._spinner.hide();
+                   //this.ShowToast("Alert", response.Message, response.success);
+                   //this.toastr.success(response.Message, 'Toastr fun!');
+                   //this.ShowToast("Xplore", response.Message, response.Success);
+                 
+                });
+        }
+  }
+
+    NullCheckFun(obj: any): boolean {
+        if (obj != null && obj !== undefined && obj != 'NaN' && obj !== '') {
+            return true;
+        }
+        return false;
+    }
+    ShowToast(message: string, title: string, success: boolean) {
+        let timeOut: number = success ? 2000 : 4000;
+        //let toastOptions: ToastOptions = { title: title, msg: message, timeout: timeOut };
+        if (success)
+          this.toastr.success(title, message);
+        else {
+          this.toastr.error(title, message);
+        }
+      }
+    addU
+
+    playFirstVideo() {
+        if (this.videoElements.first) {
+            this.currentPlayingIndex = 0;
+            const firstVideoElement = this.videoElements.first.nativeElement;
+            firstVideoElement.play().catch(error => {
+                console.log('Autoplay prevented:', error);
+            });
+            this.videos[0].isPlaying = true;
+            this.cdr.detectChanges();
+        }
+    }
+
+    handleIntersection(entries: IntersectionObserverEntry[], observer: IntersectionObserver) {
+        entries.forEach(entry => {
+            const index = parseInt(entry.target.id.split('-')[1], 10);
+            if (entry.isIntersecting) {
+                if (this.currentPlayingIndex !== index) {
+                    this.playVideo(index);
+                }
+            } else {
+                if (this.currentPlayingIndex === index) {
+                    this.pauseVideo(index);
+                }
+            }
+        });
+    }
+
+    playVideo(index: number) {
+        if (this.currentPlayingIndex !== null && this.currentPlayingIndex !== index) {
+            this.pauseVideo(this.currentPlayingIndex);
+        }
+
+        const videoElement = this.videoElements.toArray()[index].nativeElement;
+        this.videos[index].isPlaying = true;
+        this.currentPlayingIndex = index;
+
+        videoElement.play().catch(error => {
+            console.log('Autoplay prevented:', error);
+        });
+
+        this.cdr.detectChanges();
+    }
+
+    pauseVideo(index: number) {
+        const videoElement = this.videoElements.toArray()[index].nativeElement;
+        this.videos[index].isPlaying = false;
+
+        videoElement.pause();
+
+        this.cdr.detectChanges();
+    }
+
+    togglePlay(index: number) {
+        const videoElement = this.videoElements.toArray()[index].nativeElement;
+        const video = this.reelsDetailsList[index];
+        
+        if (video.isPlaying) {
+            video.isPlaying = false;
+            videoElement.pause();
+        } else {
+            video.isPlaying = true;
+            videoElement.play().catch(error => {
+                console.log('Autoplay prevented:', error);
+            });
+        }
+        this.reelsDetailsList[index].isPlaying = video.isPlaying;
+
+        this.cdr.detectChanges();
+    }
+
+    toggleLike(index: number, selectedReel: any) {
+        this.videos[index].liked = !this.videos[index].liked;
+        this.videos[index].likesCount += this.videos[index].liked ? 1 : -1;
+        const reel = this.reelsDetailsList.find(item => item.REELS_DETAILS_ID === selectedReel.REELS_DETAILS_ID);
+        if (reel) {
+            // Increase the likesCount
+            //reel.likesCount = (reel.likesCount || 0) + 1;
+            reel.likesCount = this.videos[index].likesCount;
+          } else {
+            console.log('Reel not found!');
+          }
+          console.log(this.reelsDetailsList);
+        //   if (this.videos[index].liked == true) {
+        //     selectedReel.IS_REEL_LIKED = false;
+        //     selectedReel.is_REEL_Liked = false;
+        //     selectedReel.isClickOnReelLike = false;
+        //     selectedReel.REEL_LIKES_COUNT -= 1;
+        //     this.reelsDetails.IS_REEL_LIKED = false;
+        //   } else {
+        //     selectedReel.IS_REPLAY_LIKED = true;
+        //     selectedReel.IS_LIKED = true;
+        //     selectedReel.isLiked = true;
+        //     selectedReel.isClickOnReelLike = true;
+        //     selectedReel.REEL_LIKES_COUNT += 1;
+        //     this.reelsDetails.IS_REEL_LIKED = true;
+        //   }
+          if (reel.IS_REEL_LIKED == true) {
+            selectedReel.IS_REEL_LIKED = false;
+            selectedReel.isClickOnReelLike = false;
+            selectedReel.REEL_LIKES_COUNT -= 1;
+            this.reelsDetails.IS_REEL_LIKED = false;
+          } else {
+            selectedReel.IS_REPLAY_LIKED = true;
+            selectedReel.IS_LIKED = true;
+            selectedReel.isLiked = true;
+            selectedReel.isClickOnReelLike = true;
+            selectedReel.REEL_LIKES_COUNT += 1;
+            this.reelsDetails.IS_REEL_LIKED = true;
+          }
+          this.reelsDetails = selectedReel;
+          this.reelsDetails.REELS_DETAILS_ID = selectedReel.REELS_DETAILS_ID;
+          
+          this.isLikeOrDislikeReel = true;
+          this.postReelsLike();
+
+    }
+    getLikeByReel()
+    {
+             this.reelsCommentsModel.REELS_DETAILS_ID = this.isSelectedReel;
+             if (this.reelsDetails) {
+                 this._addBusinessService.getLikeByReel(this.reelsDetails).subscribe(
+                     response => {
+                        this.reelsDetails = response;
+                        //this.reelsDetails.forEach((reel: any) => {
+                            // Find the index of the reelID in reelsDetailsList
+                            const index = this.reelsDetailsList.findIndex((item: any) => item.REELS_DETAILS_ID === this.reelsDetails.REELS_DETAILS_ID);
+                          
+                            // If the reelID is found, replace the IS_like bit in reelsDetailsList at the found index
+                            if (index !== -1) {
+                              this.reelsDetailsList[index].IS_REEL_LIKED_OR_NOT = 
+                              this.reelsDetailsList[index].IS_REEL_LIKED = this.reelsDetails.IS_REEL_LIKED_OR_NOT;
+                             
+                              this.reelsDetailsList[index].IS_REEL_SAVED_OR_NOT =
+                              this.reelsDetailsList[index].isBookmarked
+                              = this.reelsDetails.IS_REEL_SAVED_OR_NOT;
+                            }
+                      
+
+                        this.wantToReplayTest = false;
+                         this.ShowToast("Xplore", "Your Reels has been successfully added.", true);            
+                     });
+             }
+
+    }
+    postReelsLike()
+    {
+        console.log(this.reelsDetails);
+            console.log("click on RegisterNow");
+            this.reelsDetails.USER_ID = Number(localStorage.getItem("Temp"));
+          
+
+            if (this.reelsDetails) {
+                //this.reelsDetails.uploadedFilesName = this.uploadedFilesName;
+                //this._spinner.show();
+                this.reelsDetails.isLikeUnlikeReel = true;
+                
+                this._addBusinessService.addUpdateReels(this.reelsDetails).subscribe(
+                    response => {
+                        this.isLikeOrDislikeReel = false;
+                        this.getLikeByReel();
+                        this.ShowToast("Xplore", "Your Reels like or dislike has been successfully added.", true);
+
+                        //this.router.navigate(['/dashboard-my-listings']);
+                       // this._spinner.hide();
+                       //this.ShowToast("Alert", response.Message, response.success);
+                       //this.toastr.success(response.Message, 'Toastr fun!');
+                       //this.ShowToast("Xplore", response.Message, response.Success);
+                     
+                    });
+            }
+    }
+
+    toggleBookmark(index: number, selectedReel: any) {
+        this.reelsDetailsList[index].isBookmarked = !this.reelsDetailsList[index].isBookmarked;
+        if(this.reelsDetailsList[index].isBookmarked == true)
+        {
+            this.reelSaved.isClickOnSave = true;
+        }
+        else
+        {
+            this.reelSaved.isClickOnSave = false;
+        }
+        this.isSelectedReel = selectedReel.REELS_DETAILS_ID;
+        this.reelSaved.REELS_DETAILS_ID = selectedReel.REELS_DETAILS_ID;
+        this.postSaved();
+    }
+
+    postSaved()
+    {
+        console.log(this.reelsDetails);
+            console.log("click on RegisterNow");
+            this.reelSaved.USER_ID = Number(localStorage.getItem("Temp"));
+            this.reelsDetails.REELS_DETAILS_ID = this.isSelectedReel;
+            
+
+            if (this.reelSaved) {                
+                this._addBusinessService.savedPost(this.reelSaved).subscribe(
+                    response => {
+                        this.isLikeOrDislikeReel = false;
+                       // this.getLikeByReel();
+                       this.getLikeByReel();
+                        this.ShowToast("Xplore", "Your Reels like or dislike has been successfully added.", true);
+
+                        //this.router.navigate(['/dashboard-my-listings']);
+                       // this._spinner.hide();
+                       //this.ShowToast("Alert", response.Message, response.success);
+                       //this.toastr.success(response.Message, 'Toastr fun!');
+                       //this.ShowToast("Xplore", response.Message, response.Success);
+                     
+                    });
+            }
+    }
+
+    toggleMute(index: number) {
+        const video = this.videos[index];
+        video.isMuted = !video.isMuted;
+        const videoElement = this.videoElements.toArray()[index].nativeElement;
+        videoElement.muted = video.isMuted;
+    }
+
+    isSearchVisible: boolean = false;
+
+    toggleSearch() {
+        this.isSearchVisible = !this.isSearchVisible;
     }
 
     onRemoveFile($event) {
@@ -262,25 +1100,323 @@ export class DashboardUserDetailsComponent implements OnInit {
     //     }
     }
 
-    // new code 
-    selectFiles(event: any): void {
-        this.message = [];
-        this.progressInfos = [];
-        this.selectedFiles = event.target.files;
-    
-        this.previews = [];
-        if (this.selectedFiles && this.selectedFiles[0]) {
-          const numberOfFiles = this.selectedFiles.length;
-          for (let i = 0; i < numberOfFiles; i++) {
-            const reader = new FileReader();
-    
-            reader.onload = (e: any) => {
-              this.previews.push(e.target.result);
-            };
-    
-            reader.readAsDataURL(this.selectedFiles[i]);
-          }
-        }
+    /// stories page 
 
+    
+    mainBannerContent = [
+        {
+            title: 'Find Nearby',
+            paragraph: 'Expolore top-rated attractions, activities and more...',
+            popularSearchList: [
+                {
+                    title: 'Restaurants',
+                    link: 'grid-listings-left-sidebar'
+                },
+                {
+                    title: 'Events',
+                    link: 'grid-listings-left-sidebar'
+                },
+                {
+                    title: 'Clothing',
+                    link: 'grid-listings-left-sidebar'
+                },
+                {
+                    title: 'Bank',
+                    link: 'grid-listings-left-sidebar'
+                },
+                {
+                    title: 'Fitness',
+                    link: 'grid-listings-left-sidebar'
+                },
+                {
+                    title: 'Bookstore',
+                    link: 'grid-listings-left-sidebar'
+                }
+            ]
+        }
+    ]
+
+    // Category Select
+    singleSelect: any = [];
+    multiSelect: any = [];
+    stringArray: any = [];
+    objectsArray: any = [];
+    resetOption: any;
+    configg:any = {
+        displayKey: "name",
+        search: true
+    };
+    options = [
+        // Type here your category name
+        {
+            name: "Restaurants",
+        },
+        {
+            name: "Events",
+        },
+        {
+            name: "Clothing",
+        },
+        {
+            name: "Bank",
+        },
+        {
+            name: "Fitness",
+        },
+        {
+            name: "Bookstore",
+        }
+    ];
+    searchChange($event) {
+        console.log($event);
+    }
+    reset() {
+        this.resetOption = [];
+    }
+    sectionTitle = [
+        {
+            title: 'Trending Listings Right Now',
+            paragraph: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra.'
+        }
+    ]
+    singleListingsBox = [
+        
+        {
+            mainImg: [
+                {
+                    img: 'assets/img/listings/listings2.jpg'
+                },
+                {
+                    img: 'assets/img/listings/listings4.jpg'
+                }
+            ],
+            categoryLink: 'single-listings',
+            category: 'Hotel',
+            bookmarkLink: 'single-listings',
+            location: 'Los Angeles, USA',
+            title: 'The Beverly Hills Hotel',
+            price: 'Start From: $200',
+            detailsLink: 'single-listings',
+            authorImg: 'assets/img/user2.jpg',
+            openORclose: 'Open Now',
+            extraClass: 'status-open',
+            authorName: 'Sarah',
+            rating: [
+                {
+                    icon: 'bx bxs-star'
+                },
+                {
+                    icon: 'bx bxs-star'
+                },
+                {
+                    icon: 'bx bxs-star'
+                },
+                {
+                    icon: 'bx bxs-star'
+                },
+                {
+                    icon: 'bx bx-star'
+                }
+            ],
+            ratingCount: '10'
+        },
+         
+        {
+            mainImg: [
+                {
+                    img: 'assets/img/listings/listings5.jpg'
+                },
+                {
+                    img: 'assets/img/listings/listings6.jpg'
+                }
+            ],
+            categoryLink: 'single-listings',
+            category: 'Beauty',
+            bookmarkLink: 'single-listings',
+            location: 'Suwanee, USA',
+            title: 'Vesax Beauty Center',
+            price: 'Start From: $100',
+            detailsLink: 'single-listings',
+            authorImg: 'assets/img/user4.jpg',
+            openORclose: 'Open Now',
+            extraClass: 'status-open',
+            authorName: 'Andy',
+            rating: [
+                {
+                    icon: 'bx bxs-star'
+                },
+                {
+                    icon: 'bx bxs-star'
+                },
+                {
+                    icon: 'bx bxs-star'
+                },
+                {
+                    icon: 'bx bx-star'
+                },
+                {
+                    icon: 'bx bx-star'
+                }
+            ],
+            ratingCount: '15'
+        },
+        {
+          mainImg: [
+              {
+                  img: 'assets/img/listings/listings5.jpg'
+              },
+              {
+                  img: 'assets/img/listings/listings6.jpg'
+              }
+          ],
+          categoryLink: 'single-listings',
+          category: 'Beauty',
+          bookmarkLink: 'single-listings',
+          location: 'Suwanee, USA',
+          title: 'Vesax Beauty Center',
+          price: 'Start From: $100',
+          detailsLink: 'single-listings',
+          authorImg: 'assets/img/user4.jpg',
+          openORclose: 'Open Now',
+          extraClass: 'status-open',
+          authorName: 'Andy',
+          rating: [
+              {
+                  icon: 'bx bxs-star'
+              },
+              {
+                  icon: 'bx bxs-star'
+              },
+              {
+                  icon: 'bx bxs-star'
+              },
+              {
+                  icon: 'bx bx-star'
+              },
+              {
+                  icon: 'bx bx-star'
+              }
+          ],
+          ratingCount: '15'
+      },
+      {
+        mainImg: [
+            {
+                img: 'assets/img/listings/listings5.jpg'
+            },
+            {
+                img: 'assets/img/listings/listings6.jpg'
+            }
+        ],
+        categoryLink: 'single-listings',
+        category: 'Beauty',
+        bookmarkLink: 'single-listings',
+        location: 'Suwanee, USA',
+        title: 'Vesax Beauty Center',
+        price: 'Start From: $100',
+        detailsLink: 'single-listings',
+        authorImg: 'assets/img/user4.jpg',
+        openORclose: 'Open Now',
+        extraClass: 'status-open',
+        authorName: 'Andy',
+        rating: [
+            {
+                icon: 'bx bxs-star'
+            },
+            {
+                icon: 'bx bxs-star'
+            },
+            {
+                icon: 'bx bxs-star'
+            },
+            {
+                icon: 'bx bx-star'
+            },
+            {
+                icon: 'bx bx-star'
+            }
+        ],
+        ratingCount: '15'
+    },
+    {
+      mainImg: [
+          {
+              img: 'assets/img/listings/listings5.jpg'
+          },
+          {
+              img: 'assets/img/listings/listings6.jpg'
+          }
+      ],
+      categoryLink: 'single-listings',
+      category: 'Beauty',
+      bookmarkLink: 'single-listings',
+      location: 'Suwanee, USA',
+      title: 'Vesax Beauty Center',
+      price: 'Start From: $100',
+      detailsLink: 'single-listings',
+      authorImg: 'assets/img/user4.jpg',
+      openORclose: 'Open Now',
+      extraClass: 'status-open',
+      authorName: 'Andy',
+      rating: [
+          {
+              icon: 'bx bxs-star'
+          },
+          {
+              icon: 'bx bxs-star'
+          },
+          {
+              icon: 'bx bxs-star'
+          },
+          {
+              icon: 'bx bx-star'
+          },
+          {
+              icon: 'bx bx-star'
+          }
+      ],
+      ratingCount: '15'
+  }
+    ]
+    customOptions: OwlOptions = {
+        loop: false,
+        nav: true,
+        dots: false,
+        autoplayHoverPause: false,
+        autoplay: false,
+        margin: 30,
+        navText: [
+            "<i class='flaticon-left-chevron'></i>",
+            "<i class='flaticon-right-chevron'></i>"
+        ],
+        responsive: {
+            0: {
+                items: 1,
+            },
+            425:{
+                items: 2,
+            },
+            768: {
+                items: 3,
+            },
+            1200: {
+                items: 3,
+            }
+        }
+    }
+    customOptions2: OwlOptions = {
+		loop: true,
+		nav: true,
+		dots: false,
+		animateOut: 'fadeOut',
+		animateIn: 'fadeIn',
+		autoplayHoverPause: true,
+		autoplay: true,
+		mouseDrag: false,
+		items: 1,
+        navText: [
+            "<i class='flaticon-left-chevron'></i>",
+            "<i class='flaticon-right-chevron'></i>"
+        ]
     }
 }

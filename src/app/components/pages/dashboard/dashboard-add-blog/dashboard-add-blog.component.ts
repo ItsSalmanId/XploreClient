@@ -9,6 +9,7 @@ import { GenericUtility } from '../../../../utilities/generic-utility';
 //declare var $: any;
 import Dropzone from 'dropzone';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { Router } from '@angular/router';
 import * as $ from 'jquery'; // Import jQuery
 
 @Component({
@@ -23,8 +24,9 @@ export class DashboardAddBlogComponent implements OnInit {
   disableTreatmentLocation: boolean;
   selectedImagesList: BusinessFilesDetailList[];
   businessBlogDetail: BusinessBlogDetail;
+    isLoading: boolean;
 
-    constructor(private _addBusinessService: AddBusinessService, public _globalSettingService: GlobalSettingService, private _genericUtilities: GenericUtility) {
+    constructor(private router: Router, private _addBusinessService: AddBusinessService, public _globalSettingService: GlobalSettingService, private _genericUtilities: GenericUtility) {
       this.config = new DropzoneConfig();
       this.config.url = this._genericUtilities.getBaseIp()+'UploadFiles/UploadFilesAPI';
       //this.config.url = "http://localhost:4200";
@@ -51,14 +53,15 @@ export class DashboardAddBlogComponent implements OnInit {
     {
         console.log(this.businessBlogDetail);
         console.log("click on RegisterNow");
-        
+        this.isLoading = true;
         if (this.businessBlogDetail) {
             this.businessBlogDetail.uploadedFilesName = this.uploadedFilesName;
             //this._spinner.show();
             this._addBusinessService.addUpdateBlogBusiness(this.businessBlogDetail).subscribe(
                 response => {
                   console.log("test");
-                    //this.router.navigate(['/dashboard-my-listings']);
+                  this.isLoading = true;
+                    this.router.navigate(['/dashboard-user-details']);
                    // this._spinner.hide();
                    //this.ShowToast("Alert", response.Message, response.success);
                    //this.toastr.success(response.Message, 'Toastr fun!');

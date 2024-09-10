@@ -17,11 +17,13 @@ export class DashboardAllListingsComponent implements OnInit {
     modal='modal';
     name = 'Angular';
     selectedId: number;
+  isLoading: boolean;
     constructor(private _addBusinessService: AddBusinessService, private toastr: ToastrService) { 
     this.businessDetail = new BusinessDetail();
     this.businessDetailsList = [];
     this.isShownDelete = true;
     this.selectedId = 0;
+    this.isLoading = false;
     
     
 
@@ -85,6 +87,7 @@ export class DashboardAllListingsComponent implements OnInit {
       }
     getBusiness()
     {
+      this.isLoading = true;
         console.log(this.businessDetail);
         console.log("click on RegisterNow");
         this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
@@ -94,6 +97,7 @@ export class DashboardAllListingsComponent implements OnInit {
                 response => {
                     console.log(response);
                     this.businessDetailsList = response;
+                    this.isLoading = false;
                    // this._spinner.hide();
                    //this.ShowToast("Alert", response.Message, response.success);
                    //this.toastr.success(response.Message, 'Toastr fun!');

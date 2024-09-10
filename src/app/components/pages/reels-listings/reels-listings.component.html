@@ -346,6 +346,406 @@
       </div>
     </div>
   </div>
+  <!-- reels -->
+  <!-- <div class="d-flex flex-column" style="overflow: hidden;">
+    <div class="" style="width: 100%; max-width: 800px; margin: 0 170px 0 auto;">
+      <app-category></app-category>
+    </div>
+    <div class="reels">
+       <div *ngFor="let video of reelsDetailsList; let i = index" class="reel">
+        <div>
+          <div class="video">
+            <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" autoplay loop></video>
+            <div class="content">
+              <div class="sound" (click)="toggleMute(i)">
+                <img class="volume-up" src="../../../../assets/images/volume-up.png" *ngIf="!video.isMuted">
+                <img class="volume-mute" src="../../../../assets/images/volume-mute.png" *ngIf="video.isMuted">
+              </div>
+              <div class="play" [ngClass]="{'opac_1': false}" (click)="togglePlay(i)">
+                <img src="../../../../assets/images/play-button-arrowhead.png">
+              </div>
+              <div class="info">
+                <div class="profile">
+                  <h4>
+                    <a href="#">
+                      <img [src]="video.authorImg">
+                      {{ video.authorName }}
+                    </a>
+                  </h4>
+                  <span>.</span>
+                  <button class="follow_text">Follow</button>
+                </div>
+                <div class="desc">
+                  <p>
+                    {{ video.description }}
+                    <span class="show_text">more</span>
+                  </p>
+                  <div class="more">
+                    <div class="music">
+                      <img src="../../../../assets/images/music.png">
+                      <span>{{ video.musicName }}</span>
+                    </div>
+                    <div class="position">
+                      <img src="../../../../assets/images/map.png">
+                      <span>Islamabad</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="likes">
+            <div class="like" (click)="toggleLike(i)">
+              <img *ngIf="!video.liked" class="not_loved" src="../../../../assets/images/love.png" alt="Not Loved">
+              <img *ngIf="video.liked" class="loved" src="../../../../assets/images/heart.png" alt="Loved">
+              <p>{{ video.likesCount }}</p>
+            </div>
+  
+            <div class="message">
+              <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#message_modal">
+                <img src="../../../../assets/images/bubble-chat.png">
+                <p class="m-0">555</p>
+              </button>
+            </div>
+            <div class="send">
+              <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#send_message_modal">
+                <img src="../../../../assets/images/send.png">
+              </button>
+            </div>
+            <div class="save" (click)="toggleBookmark(i)">
+              <i *ngIf="!video.isBookmarked" class="bi bi-bookmark" style="font-size: 21px;"></i>
+              <i *ngIf="video.isBookmarked" class="bi bi-bookmark-fill" style="font-size: 21px;"></i>
+            </div>
+            <div class="more">
+              <img src="../../../../assets/images/show_more.png">
+            </div>
+            <div class="profile">
+              <img src="../../../../assets/images/profile_img.jpg">
+            </div>
+          </div>
+        </div>
+      </div> 
+      
+      
+
+       <!-- <div *ngFor="let video of videos; let i = index" class="reel">
+        <div class="video">
+          <video #videoElement [id]="'video-' + i" [src]="video.videoSrc" autoplay loop></video>
+          <div class="content">
+            <div class="sound" (click)="toggleMute(i)">
+              <img class="volume-up" src="../../../../assets/images/volume-up.png" *ngIf="!video.isMuted">
+              <img class="volume-mute" src="../../../../assets/images/volume-mute.png" *ngIf="video.isMuted">
+            </div>
+            <div class="play" [ngClass]="{'opac_1': !video.isPlaying}" (click)="togglePlay(i)">
+              <img src="../../../../assets/images/play-button-arrowhead.png">
+            </div>
+            <div class="info">
+              <div class="profile">
+                <h4>
+                  <a href="#">
+                    <img [src]="video.authorImg">
+                    {{ video.authorName }}
+                  </a>
+                </h4>
+                <span>.</span>
+                <button class="follow_text">Follow</button>
+              </div>
+              <div class="desc">
+                <p>
+                  {{ video.description }}
+                  <span class="show_text">more</span>
+                </p>
+                <div class="more">
+                  <div class="music">
+                    <img src="../../../../assets/images/music.png">
+                    <span>{{ video.musicName }}</span>
+                  </div>
+                  <div class="position">
+                    <img src="../../../../assets/images/map.png">
+                    <span>{{ video.location }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="likes">
+          <div class="like" (click)="toggleLike(i)">
+            <img *ngIf="!video.liked" class="not_loved" src="../../../../assets/images/love.png" alt="Not Loved">
+            <img *ngIf="video.liked" class="loved" src="../../../../assets/images/heart.png" alt="Loved">
+            <p>{{ video.likesCount }}</p>
+          </div>
+
+          <div class="message">
+            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#message_modal">
+              <img src="../../../../assets/images/bubble-chat.png">
+              <p class="m-0">555</p>
+            </button>
+          </div>
+          <div class="send">
+            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#send_message_modal">
+              <img src="../../../../assets/images/send.png">
+            </button>
+          </div>
+          <div class="save" (click)="toggleBookmark(i)">
+            <i *ngIf="!video.isBookmarked" class="bi bi-bookmark" style="font-size: 21px;"></i>
+            <i *ngIf="video.isBookmarked" class="bi bi-bookmark-fill" style="font-size: 21px;"></i>
+          </div>
+          <div class="more">
+            <img src="../../../../assets/images/show_more.png">
+          </div>
+          <div class="profile">
+            <img src="../../../../assets/images/profile_img.jpg">
+          </div>
+        </div>
+      </div>  -->
+    
+    <!-- </div>
+
+
+
+
+
+
+  </div>  -->
+
+  <!-- <div class="reels-container">
+    <div class="main-content">
+        <app-category></app-category>
+    </div>
+    <div class="reels">
+        <div *ngFor="let video of reelsDetailsList; let i = index" class="reel-item">
+            <div class="video-wrapper">
+                <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" autoplay loop></video>
+                <div class="video-controls">
+                    <div class="sound-toggle" (click)="toggleMute(i)">
+                        <img class="volume-on-icon" src="../../../../assets/images/volume-up.png" *ngIf="!video.isMuted">
+                        <img class="volume-off-icon" src="../../../../assets/images/volume-mute.png" *ngIf="video.isMuted">
+                    </div>
+                    <div class="play-toggle" [ngClass]="{'show': true}" (click)="togglePlay(i)">
+                        <img src="../../../../assets/images/play-button-arrowhead.png">
+                    </div>
+                    <div class="video-details">
+                        <div class="author-info">
+                            <h4>
+                                <a href="#">
+                                    <img [src]="video.authorImg" class="author-img">
+                                    {{ video.authorName }}
+                                </a>
+                            </h4>
+                            <span>.</span>
+                            <button class="follow-action">Follow</button>
+                        </div>
+                        <div class="video-description">
+                            <p>
+                                {{ video.description }}
+                                <span class="more-info">more</span>
+                            </p>
+                            <div class="extra-info">
+                                <div class="music-info">
+                                    <img src="../../../../assets/images/music.png">
+                                    <span>{{ video.musicName }}</span>
+                                </div>
+                                <div class="location-info">
+                                    <img src="../../../../assets/images/map.png">
+                                    <span>Islamabad</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="reel-actions">
+                <div class="like-button" (click)="toggleLike(i)">
+                    <img *ngIf="!video.liked" class="like-icon" src="../../../../assets/images/love.png" alt="Not Loved">
+                    <img *ngIf="video.liked" class="liked-icon" src="../../../../assets/images/heart.png" alt="Loved">
+                    <p>{{ video.likesCount }}</p>
+                </div>
+                <div class="comment-button">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#message_modal">
+                        <img src="../../../../assets/images/bubble-chat.png">
+                        <p class="m-0">555</p>
+                    </button>
+                </div>
+                <div class="share-button">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#send_message_modal">
+                        <img src="../../../../assets/images/send.png">
+                    </button>
+                </div>
+                <div class="bookmark-button" (click)="toggleBookmark(i)">
+                    <i *ngIf="!video.isBookmarked" class="bi bi-bookmark"></i>
+                    <i *ngIf="video.isBookmarked" class="bi bi-bookmark-fill"></i>
+                </div>
+                <div class="more-options">
+                    <img src="../../../../assets/images/show_more.png">
+                </div>
+                <div class="profile-button">
+                    <img src="../../../../assets/images/profile_img.jpg">
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="reels-container">
+  <div class="main-content">
+      <app-category></app-category>
+  </div>
+  <div class="reels" *ngIf="this.currentOption == 'ReelsTab'">
+      <div *ngFor="let video of reelsDetailsList; let i = index" class="reel-item">
+          <div class="video-wrapper">
+              <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" autoplay loop></video>
+              <div class="video-controls">
+                  <div class="sound-toggle" (click)="toggleMute(i)">
+                      <img class="volume-on-icon" src="../../../../assets/images/volume-up.png" *ngIf="!video.isMuted">
+                      <img class="volume-off-icon" src="../../../../assets/images/volume-mute.png" *ngIf="video.isMuted">
+                  </div>
+                  <div class="play-toggle" [ngClass]="{'visible': true}" (click)="togglePlay(i)">
+                      <!-- <img src="../../../../assets/images/play-button-arrowhead.png"> -->
+                      <i class="bi" [ngClass]="video.isPlaying ? 'bi-pause-fill' : 'bi-play-fill'"></i>
+                  </div>
+              </div>
+          </div>
+          <div class="video-details">
+              <div class="author-info">
+                  <img [src]="video.authorImg" class="author-img">
+                  <a href="#" class="author-name">{{ video.authorName }}</a>
+                  <button class="follow-action">Follow</button>
+              </div>
+              <div class="video-description">
+                  <p>
+                      {{ video.description }}
+                      <span class="more-info">more</span>
+                  </p>
+                  <div class="extra-info">
+                      <div class="music-info">
+                          <img src="../../../../assets/images/music.png">
+                          <span>{{ video.musicName }}</span>
+                      </div>
+                      <div class="location-info">
+                          <img src="../../../../assets/images/map.png">
+                          <span>Islamabad</span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="reel-actions">
+              <!-- <div class="like-action" (click)="toggleLike(i, video)">
+                  <img *ngIf="!video.liked" class="like-icon" src="../../../../assets/images/love.png" alt="Not Loved">
+                  <img *ngIf="video.liked" class="liked-icon" src="../../../../assets/images/heart.png" alt="Loved">
+                  <p>{{ video.likesCount }}</p>
+              </div> -->
+              <div class="like" (click)="toggleLike(i, video)">
+                <img [ngClass]="{ 'not_loved': !video.IS_REEL_LIKED, 'loved': video.IS_REEL_LIKED }" src="../../../../assets/images/heart.png" alt="Like">
+                <p>{{ video.REEL_LIKES_COUNT }}</p>
+              </div>
+              <div class="comment-action">
+                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#message_modal" (click)="selectedReel(video.REELS_DETAILS_ID)">
+                      <img src="../../../../assets/images/bubble-chat.png">
+                      <p class="m-0">{{video.reelsCommentsModelList.length}}</p>
+                  </button>
+              </div>
+              <div class="send-action">
+                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#send_message_modal">
+                      <img src="../../../../assets/images/send.png">
+                  </button>
+              </div>
+              <div class="bookmark-action" (click)="toggleBookmark(i, video)">
+                  <i *ngIf="!video.isBookmarked" class="bi bi-bookmark"></i>
+                  <i *ngIf="video.isBookmarked" class="bi bi-bookmark-fill"></i>
+              </div>
+              <div class="more-actions">
+                  <img src="../../../../assets/images/show_more.png">
+              </div>
+              <div class="profile-action">
+                  <img src="../../../../assets/images/profile_img.jpg">
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="follow-page-container" *ngIf="this.currentOption == 'HomeTab'">
+    <h2 class="page-title">Suggested for You</h2>
+    <div class="user-list">
+      <div class="user-item" *ngFor="let user of userAccountList">
+        <img src="assets/img/user1.jpg" alt="{{user.User_Name}}" class="profile-picture" />
+        <div class="user-info">
+          <h3 class="username">{{ user.User_Name }}</h3>
+          <button class="follow-button" (click)="toggleFollow(user)"
+          [ngClass]="user.IS_FOLLOWING ? 'following' : 'follow-button'" 
+          >
+            {{ user.IS_FOLLOWING ? 'Following' : 'Follow' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- profile page -->
+
+  <div class="profile-page-container" *ngIf="this.currentOption == 'ProfileTab'">
+    <div class="profile-header">
+      <div class="profile-header-box">
+        <img src="assets/img/user1.jpg" alt="Profile Picture" class="profile-picture" />
+        <div class="profile-info">
+          <h1 class="username">{{this.userReelsAccount[0].User_Name}}</h1>
+          <div class="profile-stats">
+            <div class="stat">
+              <span class="stat-number">{{this.userReelsAccount[0].ReelsCount}}</span>
+              <span class="stat-label">Posts</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">{{this.userReelsAccount[0].FollowersCount}}</span>
+              <span class="stat-label">Followers</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">{{this.userReelsAccount[0].FollowingCount}}</span>
+              <span class="stat-label">Following</span>
+            </div>
+          </div>
+          <button class="edit-profile-button">Edit Profile</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="profile-content">
+      <div class="profile-tabs">
+        <button class="tab-button active" 
+        [ngClass]="{ '': this.profileTab == 'SaveReelsTab', 'active': this.profileTab == 'PostTab' }"
+        (click)="toggleProfileTab('Post')">Posts</button>
+        <button class="tab-button" 
+        [ngClass]="{ '': this.profileTab == 'PostTab', 'active': this.profileTab == 'SaveReelsTab' }"
+        (click)="toggleProfileTab('Save')">Saved Posts</button>
+      </div>
+      <div class="profile-posts">
+        <div class="posts-grid">
+          <div *ngIf="this.profileTab == 'PostTab'">
+            <div *ngFor="let video of userReelsAccount[0].UserReelsDetails; let i = index" class="reel-item">
+              <div class="video-wrapper">
+                  <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" autoplay loop></video>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="this.profileTab == 'SaveReelsTab'">
+            <div *ngFor="let video of userReelsAccount[0].UserSavedReelsDetails; let i = index" class="reel-item">
+              <div class="video-wrapper">
+                  <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" autoplay loop></video>
+              </div>
+            </div>
+          </div>
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
+
+
+
 
   <!-- comment model -->
   <div *ngIf="this.isShowComments == true" class="modal fade" id="message_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -356,7 +756,7 @@
           <h1 class="modal-title fs-5" id="exampleModalLabel">Comments</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+        <div class="modal-body">
           <div class="comments" *ngFor="let comment of allReelsCommentsDetails; let index = index">
             <!-- *ngFor="let comment of reelsDetailsList.reelsCommentsDetailsList" -->
             <div class="comment">
@@ -399,63 +799,59 @@
             </div>
             <div *ngIf="isReplyVisible[index]">
               <div class="responses" *ngFor="let replay of comment.replies; let indexC = index">
-              <div class="response comment">
-                <div class="d-flex">
-                  <div class="img">
-                    <img src="../../../../assets/images/profile_img.jpg" alt="">
-                  </div>
-                  <div class="content">
-                    <div class="person">
-                      <h4>namePerson</h4>
+                <div class="response comment">
+                  <div class="d-flex">
+                    <div class="img">
+                      <img src="../../../../assets/images/profile_img.jpg" alt="">
+                    </div>
+                    <div class="content">
+                      <div class="person">
+                        <h4>namePerson</h4>
                         <span>{{ getTimeAgo(replay.CREATED_DATE) }}</span>
-                    </div>
+                      </div>
                       <p>{{replay.REPLAY_COMMENT}}</p>
-                    <div class="replay">
-                      <button>replay</button>
-                      <button>see translation</button>
+                      <div class="replay">
+                        <button>replay</button>
+                        <button>see translation</button>
+                      </div>
                     </div>
                   </div>
-                </div>
                   <!-- <div class="like">
-                  <img class="not_loved" src="../../../../assets/images/love.png" alt="">
-                  <img class="loved" src="../../../../assets/images/heart.png" alt="">
-                  <p> 55</p>
+                    <img class="not_loved" src="../../../../assets/images/love.png" alt="">
+                    <img class="loved" src="../../../../assets/images/heart.png" alt="">
+                    <p> 55</p>
                   </div> -->
                   <div class="like" (click)="toggleLikeTest(replay, indexC, true)">
                     <img [ngClass]="{ 'not_loved': !replay.IS_LIKED, 'loved': replay.IS_LIKED }" src="../../../../assets/images/heart.png" alt="Like">
                     <p>{{ replay.IS_REPLAY_LIKES }}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
             
+          </div>
         </div>
-        </div>
-        <div class="modal-footer">
+        <!-- <div class="modal-footer">
           <form method="post">
             <div class="input">
               <img src="../../../../assets/images/profile_img.jpg" alt="">
-              <!-- <input type="text" id="emoji_comment" 
-              [(ngModel)]="this.reelsCommentsModel.COMMENT"
-              placeholder="Add a comment..." /> -->
-          <input type="text" #commentInput name="comment-input" [(ngModel)]="this.reelsCommentsModel.COMMENT" id="emoji_comment" placeholder="Add a comment..." />
-
-              <button type="button" class="comment-btn" (click)="postComment()">
-                <i class="fa fa-paper-plane"></i> <!-- or use an appropriate send icon -->
-              </button>
+              <input type="text" id="emoji_comment" placeholder="Add a comment..." />
             </div>
           </form>
-        </div>
-        <!-- <div class="input">
+        </div> -->
+        <div class="input">
           <img src="../../../../assets/images/profile_img.jpg" alt="Profile Picture">
           <input type="text" #commentInput name="comment-input" [(ngModel)]="this.reelsCommentsModel.COMMENT" id="emoji_comment" placeholder="Add a comment..." />
           <button type="button" class="comment-btn" (click)="postComment()">
-            <i class="fa fa-paper-plane"></i> 
+            <i class="fa fa-paper-plane"></i> <!-- or use an appropriate send icon -->
           </button>
-        </div> -->
+        </div>
+        
       </div>
     </div>
   </div>
+
+  
   <!-- next model -->
 
   <div class="modal fade" id="send_message_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -532,7 +928,7 @@
           <button class="btn btn-primary btn_upload custom-btn-upload" (click)="addUpdateReelsStatus()">
             Post
           </button>
-                <div>
+          <div>
             <div class="add-listings-box">
               <h3>Gallery</h3>
               <dropzone id="p-uploadimg-dropzone" [config]="config" [message]="'Drag photos and videos here'" 
@@ -544,7 +940,7 @@
               (success)="onUploadSuccess($event)" 
               (canceled)="onCanceled($event)">
             </dropzone> 
-                  </div>
+          </div>
             <!-- <div class="col-md-12">
               <ol id="ol-uploadimg-imgname" class="custom-file-list">
                 <li *ngFor="let fileName of uploadedFilesName; let ndx=index" [id]="'opt-uploadimg-imgname-'+ndx">
@@ -562,11 +958,11 @@
               (success)="onUploadSuccess($event)" 
               (canceled)="onCanceled($event)">
             </dropzone> -->
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   
   <!-- story model -->
@@ -693,191 +1089,6 @@
     </div>
   </div>
 </div>
-
-
-  <!-- reels -->
-  <div class="d-flex flex-column" style="overflow: hidden;" >
-    <div class="" style="width: 100%; max-width: 800px; margin: 0 170px 0 auto;">
-      <app-category></app-category>
-    </div>
-    <div class="reels" *ngIf="this.currentOption == 'ReelsTab'">
-      <div *ngFor="let video of reelsDetailsList; let i = index" class="reel">
-        <div class="video">
-          <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" autoplay loop></video>
-          <div class="content">
-            <div class="sound" (click)="toggleMute(i)">
-              <img class="volume-up" src="../../../../assets/images/volume-up.png" *ngIf="!video.isMuted">
-              <img class="volume-mute" src="../../../../assets/images/volume-mute.png" *ngIf="video.isMuted">
-            </div>
-            <div class="play" [ngClass]="{'opac_1': !video.isPlaying}" (click)="togglePlay(i)">
-              <img src="../../../../assets/images/play-button-arrowhead.png">
-            </div>
-            <div class="info">
-              <div class="profile">
-                <h4>
-                  <a href="#">
-                    <img [src]="video.authorImg">
-                    {{ video.authorName }}
-                  </a>
-                </h4>
-                <span>.</span>
-                <button class="follow_text">Follow</button>
-              </div>
-              <div class="desc">
-                <p>
-                  {{ video.description }}
-                  <span class="show_text">more</span>
-                </p>
-                <div class="more">
-                  <div class="music">
-                    <img src="../../../../assets/images/music.png">
-                    <span>{{ video.musicName }}</span>
-                  </div>
-                  <div class="position">
-                    <img src="../../../../assets/images/map.png">
-                    <span>Islamabad</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="likes">
-          <div class="like" (click)="toggleLike(i, video)" >
-            <!-- <img *ngIf="!video.liked" class="not_loved" src="../../../../assets/images/love.png" alt="Not Loved">
-            <img *ngIf="video.liked" class="loved" src="../../../../assets/images/heart.png" alt="Loved">
-            <p>{{ video.likesCount }}</p> -->
-            <img [ngClass]="{ 'not_loved': !video.IS_REEL_LIKED, 'loved': video.IS_REEL_LIKED }" src="../../../../assets/images/heart.png" alt="Like">
-                <p>{{ video.REEL_LIKES_COUNT }}</p>
-          </div>
-
-          <div class="message">
-            <!-- <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#message_modal">
-              <img src="../../../../assets/images/bubble-chat.png">
-              <p class="m-0">555</p>
-            </button> -->
-            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#message_modal" (click)="selectedReel(video.REELS_DETAILS_ID)">
-              <img src="../../../../assets/images/bubble-chat.png">
-              <p class="m-0">{{video.reelsCommentsModelList.length}}</p>
-          </button>
-          </div>
-          <div class="send">
-            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#send_message_modal">
-              <img src="../../../../assets/images/send.png">
-            </button>
-          </div>
-          <!-- <div class="save" (click)="toggleBookmark(i, video)">
-            <i *ngIf="!video.isBookmarked" class="bi bi-bookmark" style="font-size: 21px;"></i>
-            <i *ngIf="video.isBookmarked" class="bi bi-bookmark-fill" style="font-size: 21px;"></i>
-          </div> -->
-          <div class="bookmark-action" (click)="toggleBookmark(i, video)">
-            <i *ngIf="!video.isBookmarked" class="bi bi-bookmark"></i>
-            <i *ngIf="video.isBookmarked" class="bi bi-bookmark-fill"></i>
-        </div>
-          <div class="more">
-            <img src="../../../../assets/images/show_more.png">
-          </div>
-          <div class="profile">
-            <img src="../../../../assets/images/profile_img.jpg">
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="follow-page-container" *ngIf="this.currentOption == 'HomeTab'">
-      <h2 class="page-title">Suggested for You</h2>
-      <div class="user-list">
-        <div class="user-item" *ngFor="let user of userAccountList">
-          <img src="assets/img/user1.jpg" alt="{{user.User_Name}}" class="profile-picture" />
-          <div class="user-info">
-            <h3 class="username">{{ user.User_Name }}</h3>
-            <button class="follow-button" (click)="toggleFollow(user)"
-            [ngClass]="user.IS_FOLLOWING ? 'following' : 'follow-button'" 
-            >
-              {{ user.IS_FOLLOWING ? 'Following' : 'Follow' }}
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- profile page -->
-
-  <div class="profile-page-container" *ngIf="this.currentOption == 'ProfileTab'">
-    <div class="profile-header">
-      <div class="profile-header-box">
-        <img src="assets/img/user1.jpg" alt="Profile Picture" class="profile-picture" />
-        <div class="profile-info">
-          <h1 class="username">{{this.userReelsAccount[0].User_Name}}</h1>
-          <div class="profile-stats">
-            <div class="stat">
-              <span class="stat-number">{{this.userReelsAccount[0].ReelsCount}}</span>
-              <span class="stat-label">Posts</span>
-            </div>
-            <div class="stat">
-              <span class="stat-number">{{this.userReelsAccount[0].FollowersCount}}</span>
-              <span class="stat-label">Followers</span>
-            </div>
-            <div class="stat">
-              <span class="stat-number">{{this.userReelsAccount[0].FollowingCount}}</span>
-              <span class="stat-label">Following</span>
-            </div>
-          </div>
-          <button class="edit-profile-button">Edit Profile</button>
-        </div>
-      </div>
-    </div>
-  
-    <div class="profile-content">
-      <div class="profile-tabs">
-        <button class="tab-button active" 
-        [ngClass]="{ '': this.profileTab == 'SaveReelsTab', 'active': this.profileTab == 'PostTab' }"
-        (click)="toggleProfileTab('Post')">Posts</button>
-        <button class="tab-button" 
-        [ngClass]="{ '': this.profileTab == 'PostTab', 'active': this.profileTab == 'SaveReelsTab' }"
-        (click)="toggleProfileTab('Save')">Saved Posts</button>
-      </div>
-      <div class="profile-posts">
-        <div class="posts-grid">
-          <div *ngIf="this.profileTab == 'PostTab'">            
-            <!-- <div *ngFor="let video of userReelsAccount[0].UserReelsDetails; let i = index" class="reel-item">
-              <div class="video-wrapper">
-                  <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" autoplay loop></video>
-              </div>
-            </div> -->
-
-            <div *ngFor="let video of userReelsAccount[0].UserReelsDetails; let i = index" class="reel-item new-reel-item">
-              <div class="video-wrapper new-video-wrapper">
-                <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" class="new-video" autoplay loop></video>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="this.profileTab == 'SaveReelsTab'">
-            <div *ngFor="let video of userReelsAccount[0].UserSavedReelsDetails; let i = index" class="reel-item">
-              <div class="video-wrapper">
-                  <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" autoplay loop></video>
-              </div>
-            </div>
-          </div>
-          
-          
-        </div>
-      </div>
-    </div>
-  </div>
-  
-
-
-
-  
-  
-
-
-
-
-
-
-  </div>
 </div>
 
 

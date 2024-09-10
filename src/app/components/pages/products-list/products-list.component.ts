@@ -24,6 +24,7 @@ export class ProductsListComponent implements OnInit {
     errorConfirmPassword: any = { isError: false, errorMessage: "" };
     errorUserNameEmail: any = { isError: false, errorMessage: "" };
     errorLoginPassword: any = { isError: false, errorMessage: "" };
+    isLoading: boolean;
     
 
     constructor(private router: Router, private authService: AuthService, private _accountServiceService: AccountService, private toastr: ToastrService, private _accountTestService: AccountTestService ) { 
@@ -52,6 +53,7 @@ export class ProductsListComponent implements OnInit {
     
     registerNow()
     {
+        this.isLoading = true;
         if(!this.NullCheckFun(this.userAccount.User_Name))
         {
             this.errorRegisterUserName = { isError: true, errorMessage: "Please Provide Username." };
@@ -66,6 +68,7 @@ export class ProductsListComponent implements OnInit {
                    //this.ShowToast("Alert", response.Message, response.success);
                    //this.toastr.success(response.Message, 'Toastr fun!');
                    this.ShowToast("Xplore", response.Message, response.Success);
+                   this.isLoading = true;
                    if(response.Success)
                    {
                     this.currentTab = 'tab1';
@@ -76,13 +79,15 @@ export class ProductsListComponent implements OnInit {
 
     Login()
     {
+        this.isLoading = true;
 console.log("click on login");
 
 if (this.userAccount) {
     //this._spinner.show();
     this._accountServiceService.loginUser(this.userAccount).subscribe(
         response => {
-            this.userAccount = response
+            this.userAccount = response;
+            this.isLoading = false;
             if(response != null)
             {
                 localStorage.setItem('Temp', this.userAccount.APPLICATION_USER_ACCOUNTS_ID.toString());
@@ -131,9 +136,11 @@ if (this.userAccount) {
 
 
     login() {
+        this.isLoading = true;
         this.userAccount
         this.authService.logintest(this.userAccount).subscribe(
             response => {
+                this.isLoading = false;
                 if (response.token) {
                     localStorage.setItem('token', response.token);
                     this.ShowToast("Xplore", "login successfully", true);

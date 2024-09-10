@@ -2,8 +2,11 @@
 
 <!-- Start Main Content Wrapper Area -->
 <div class="main-content d-flex flex-column">
-
     <app-dashboard-navbar></app-dashboard-navbar>
+    
+    <div class="spinner-overlay" *ngIf="isLoading">
+        <div class="spinner"></div>
+      </div>
 
     <!-- Breadcrumb Area -->
     <div class="breadcrumb-area" *ngFor="let Content of breadcrumb;">
@@ -240,6 +243,8 @@ aria-hidden="true">
    </div>
 </div>
 </div>
+
+
 
 
 

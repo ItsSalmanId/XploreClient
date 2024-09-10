@@ -296,10 +296,16 @@ export class EnvironmentUrl {
     }
     else
     {
+      // let domainWithoutHttp = clientDomain.split('https://');
+      // let domainWithEnvironment = (domainWithoutHttp[1].split('.mtbc.com'));
+      // let domainConcate= domainWithEnvironment[0]+ "api"
+      // _url  = `https://${domainConcate}.mtbc.com/api/`;
+
       let domainWithoutHttp = clientDomain.split('https://');
-      let domainWithEnvironment = (domainWithoutHttp[1].split('.mtbc.com'));
-      let domainConcate= domainWithEnvironment[0]+ "api"
-      _url  = `https://${domainConcate}.mtbc.com/api/`;
+      let domainWithEnvironment = (domainWithoutHttp[1].split('.xplore.com'));
+      let domainConcate= domainWithEnvironment[0]+ ":81"
+      _url  = `https://${domainConcate}/api/`;
+
     }
     return _url;
   }

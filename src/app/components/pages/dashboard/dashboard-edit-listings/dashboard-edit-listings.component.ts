@@ -37,6 +37,7 @@ export class DashboardEditListingsComponent implements OnInit {
     selectedImagesList: BusinessFilesDetailList[];
     selectedListStr: string;
     timeSlots: string[] = [];
+    isLoading: boolean;
      
 
     constructor(private _addBusinessService: AddBusinessService, public _globalSettingService: GlobalSettingService, private _genericUtilities: GenericUtility, private toastr: ToastrService
@@ -161,6 +162,7 @@ this.getBusiness();
 
     getBusiness()
     {
+        this.isLoading = true;
         let selectedIdForEdit = localStorage.getItem("selectedIdForEdit");
         console.log(this.businessDetail);
         this.businessDetail.BUSINESS_DETAIL_ID = Number(selectedIdForEdit);
@@ -175,6 +177,7 @@ this.getBusiness();
                 response => {
                     console.log(response);
                     this.businessDetail = response;
+                    this.isLoading = false;
                    // this._spinner.hide();
                    //this.ShowToast("Alert", response.Message, response.success);
                    //this.toastr.success(response.Message, 'Toastr fun!');
@@ -186,6 +189,7 @@ this.getBusiness();
 
     deleteSelectedRecord()
     {
+        this.isLoading = true;
         this.selectedListStr  = '';
         for (const entry of this.selectedImages) {
             const id = entry;
@@ -211,6 +215,7 @@ console.log(this.selectedImagesList);
             this._addBusinessService.deleteSelectedImage(this.selectedImagesList).subscribe(
                 response => {
                     console.log(response);
+                    this.isLoading = true;
                     //this.getBusiness();
                     //this.businessDetailsList = response;
                    // this._spinner.hide();

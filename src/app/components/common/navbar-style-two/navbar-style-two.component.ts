@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-navbar-style-two',
@@ -7,7 +8,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 })
 export class NavbarStyleTwoComponent implements OnInit {
 
-    constructor() { }
+    constructor(private router: Router) { }
 
     ngOnInit(): void {}
 
@@ -31,7 +32,8 @@ export class NavbarStyleTwoComponent implements OnInit {
     // Signin/Signup Popup
     isSigninSignupOpen = false;
     openSigninSignupPopup(): void {
-        this.isSigninSignupOpen = true;
+        //this.isSigninSignupOpen = true;
+        this.router.navigate(['/products-list']);
     }
     closeSigninSignupPopup(): void {
         this.isSigninSignupOpen = false;

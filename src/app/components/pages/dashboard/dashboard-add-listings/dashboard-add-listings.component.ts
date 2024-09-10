@@ -36,6 +36,7 @@ export class DashboardAddListingsComponent implements OnInit {
      TimeSlots: string[];
      timeSlots: string[] = [];
      weeklyTimeSlots: WeeklyTimeSlots;
+  isLoading: boolean;
 
     constructor(private _addBusinessService: AddBusinessService, public _globalSettingService: GlobalSettingService, private _genericUtilities: GenericUtility, private router: Router, private toastr: ToastrService) 
     { 
@@ -55,6 +56,7 @@ export class DashboardAddListingsComponent implements OnInit {
         this.uploadedFilesName = [];
         this.uploadedFilesNameClient = [];
         this.weeklyTimeSlots = new WeeklyTimeSlots();
+        this.isLoading = false;
 
         this.list = 
       [
@@ -124,6 +126,7 @@ export class DashboardAddListingsComponent implements OnInit {
            }
            else
            {
+            this.isLoading = true;
             console.log(this.businessDetail);
             console.log("click on RegisterNow");
             if (this.businessDetail) {
@@ -131,6 +134,7 @@ export class DashboardAddListingsComponent implements OnInit {
                 //this._spinner.show();
                 this._addBusinessService.addUpdateBusiness(this.businessDetail).subscribe(
                     response => {
+                      this.isLoading = false;
                         this.ShowToast("Xplore", "Your business has been successfully added.", true);
                         this.router.navigate(['/dashboard-my-listings']);
                        // this._spinner.hide();

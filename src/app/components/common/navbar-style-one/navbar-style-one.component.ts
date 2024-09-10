@@ -3,6 +3,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { SurveyAutomation, SurveyQuestions, SurveyLink, NavigationAndToggle, UserAccount } from "../../../models/login/login.model";
 import { AccountService } from '../../../services/login/login.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-navbar-style-one',
@@ -22,7 +23,7 @@ export class NavbarStyleOneComponent implements OnInit {
     errorLoginPassword: any = { isError: false, errorMessage: "" };
     
 
-    constructor(private _accountServiceService: AccountService, private toastr: ToastrService) { 
+    constructor(private router: Router, private _accountServiceService: AccountService, private toastr: ToastrService) { 
    this.surveyLink = new SurveyLink();
    this.userAccount = new UserAccount();
    this.isDisableRegisterBtn = false;
@@ -55,7 +56,9 @@ export class NavbarStyleOneComponent implements OnInit {
     // Signin/Signup Popup
     isSigninSignupOpen = false;
     openSigninSignupPopup(): void {
-        this.isSigninSignupOpen = true;
+        //this.isSigninSignupOpen = true;
+        //this.router.navigate(['/dashboard-user-details']);
+        this.router.navigate(['/products-list']);
     }
     closeSigninSignupPopup(): void {
         this.isSigninSignupOpen = false;

@@ -2,6 +2,9 @@
 
 <!-- Start Listings Details Area -->
 <section class="listings-details-area">
+    <div class="spinner-overlay" *ngIf="isLoading">
+        <div class="spinner"></div>
+      </div>
     <div class="listings-details-image">
         <img src="assets/img/listings-details.jpg" alt="image" style="height: 60dvh; width: 100%;">
         <div class="container">
@@ -211,7 +214,7 @@
                             <div class="col-lg-6 col-md-6">
                                 <div class="row m-0">
                                     <div class="side">
-                                        <div>Cleanliness</div>
+                                        <div>Rating</div>
                                     </div>
                                     <div class="middle">
                                         <div class="bar-container">
@@ -222,7 +225,7 @@
                                         <div>{{this.averageRating}}</div>
                                     </div>
 
-                                    <div class="side">
+                                    <!-- <div class="side">
                                         <div>Accuracy</div>
                                     </div>
                                     <div class="middle">
@@ -244,12 +247,12 @@
                                     </div>
                                     <div class="side right">
                                         <div>5.0</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="row m-0">
-                                    <div class="side">
+                                    <!-- <div class="side">
                                         <div>Check-in</div>
                                     </div>
                                     <div class="middle">
@@ -283,7 +286,7 @@
                                     </div>
                                     <div class="side right">
                                         <div>5.0</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -352,7 +355,7 @@
                                                        
                                                             <div *ngFor="let rating of ratings" class="col-lg-4 col-md-4 col-6 col-sm-6">
                                                                 <div class="add-sub-rating">
-                                                                    <h4>{{ rating.label }}</h4>
+                                                                    <h4>Rating</h4>
                                                                     <div  class="cleanliness-rating"  (change)="onRatingChange(rating)">
                                                                       <ng-container *ngFor="let star of stars; let i = index">
                                                                         <input

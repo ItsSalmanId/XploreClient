@@ -56,7 +56,7 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
 
 
     // @ViewChildren('videoElement') videoElements!: QueryList<ElementRef<HTMLVideoElement>>;
-     currentPlayingIndex: number | null = null;
+    currentPlayingIndex: number | null = null;
 
     @ViewChildren('videoElement') videoElements: QueryList<ElementRef<HTMLVideoElement>>;
 
@@ -66,6 +66,19 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
     videos = [
         {
             videoSrc: '../../../../assets/video/video1.mp4',
+            authorImg: '../../../../assets/images/profile_img.jpg',
+            authorName: 'zineb',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.Officiis...',
+            musicName: 'nameOfMusic',
+            location: 'casablanca',
+            liked: false,
+            likesCount: 900,
+            isBookmarked: false,
+            isPlaying: false,
+            isMuted: false
+        },
+        {
+            videoSrc: '../../../../assets/video/reel.mp4',
             authorImg: '../../../../assets/images/profile_img.jpg',
             authorName: 'zineb',
             description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.Officiis...',
@@ -409,7 +422,7 @@ closeReel() {
             {
                 this.isShowStories = true;
                 this.currentOption = 'HomeTab';
-                this.openStory()
+                //this.openStory()
             }
             else if(selectedOption == 'Reels')
             {
@@ -527,7 +540,7 @@ closeReel() {
             element.style.width = newWidth;
           }
         });
-      }
+    }
 
     ngAfterViewInit(): void {
         setTimeout(() => {
@@ -870,6 +883,7 @@ this.allReelsCommentsDetails.forEach(mainComment => {
     }
 
     togglePlay(index: number) {
+        //const video = this.videos[index];
         const videoElement = this.videoElements.toArray()[index].nativeElement;
         const video = this.reelsDetailsList[index];
         
