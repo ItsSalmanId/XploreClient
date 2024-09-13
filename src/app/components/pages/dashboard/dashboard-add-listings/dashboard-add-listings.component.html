@@ -114,16 +114,26 @@
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
-                    <label><i class='bx bx-duplicate'></i> All Category
+                    <label><i class='bx bx-duplicate'></i> Select Category
                         <span style="color: red;"> *</span>
                     </label>
                     <select  [(ngModel)]="businessDetail.BUSINESS_CATEGORY">
-                        <option>Select Category</option>
+                        <!-- <option>Select Category</option> -->
+                        <option value="" disabled selected>Choose an option</option>
                         <option>Agency</option>
                         <option>Home Services</option>
                         <option>Restaurants</option>
                         <option>Car Service</option>
-                        <option>Others (submit request for other category)</option>
+                        <option>Fitness</option>
+                        <option>Shopping</option>
+                        <option>Beauty & Spa</option>
+                        <option>Events</option>
+                        <option>Health Care</option>
+                        <option>Travel and Public</option>
+                        <option>Auto Insurance</option>
+                        <option>Attorney</option>
+                        <option>Plumbers</option>
+                        <!-- <option>Others (submit request for other category)</option> -->
                     </select>
                 </div>
             </div>

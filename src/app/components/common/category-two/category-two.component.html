@@ -12,8 +12,8 @@
                   <i class="{{Content.icon}}"></i>
               </div>
               <h3 style="color: white;">{{Content.title}}</h3>
-              <span style="color: rgba(255, 255, 255, 0.9);">{{Content.numberOfPlaces}}</span>
-              <a routerLink="/{{Content.link}}" class="link-btn"></a>
+              <span style="color: rgba(255, 255, 255, 0.9);">{{Content.count}} {{Content.numberOfPlaces}}</span>
+              <a routerLink="/{{Content.link}}" class="link-btn" (click)="selectCatogory(Content.title)"></a>
           </div>
       </div>
   </div>

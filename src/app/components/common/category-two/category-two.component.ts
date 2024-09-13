@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AddBusinessService } from '../../../services/AddBusiness/AddBusiness.service'
+import { BusinessDetail, BusinessBlogDetail, BusinessCategoryList } from "../../../models/AddBusiness/AddBusiness.model";
 
 @Component({
     selector: 'app-category-two',
@@ -6,11 +8,52 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./category-two.component.scss']
 })
 export class CategorytwoComponent implements OnInit {
+    businessDetail: BusinessDetail;
+    businessDetailsList: BusinessDetail[] = [];
+    businessCategoryList: BusinessCategoryList[] = [];
+    
 
-    constructor() { }
+    constructor(private _addBusinessService: AddBusinessService) {
+        this.businessDetail = new BusinessDetail();
+        this.businessDetailsList = [];
+        this.businessCategoryList = [];
+     }
 
     ngOnInit(): void {
+        this.getBusinessByCategory();
     }
+    selectCatogory(selectedCatogory: string = "")
+    {
+        localStorage.setItem('selectedCatogory', selectedCatogory);
+    }
+
+    getBusinessByCategory()
+    {
+        console.log(this.businessDetail);
+        console.log("click on RegisterNow");
+        this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+        if (this.businessDetail) {
+            //this._spinner.show();
+            this._addBusinessService.getBusinessByCategory(this.businessDetail).subscribe(
+                response => {
+                    console.log(response);
+                    this.businessCategoryList = response;
+                    for (let singleCategoryBox of this.singleCategoryBox) {
+                        // Inner loop: iterate through businessCategoryList
+                        for (let businessCategory of this.businessCategoryList) {
+                          // Check if the title matches the BUSINESS_CATEGORY
+                          if (singleCategoryBox.title === businessCategory.BUSINESS_CATEGORY) {
+                            // Update the numberOfPlaces with the count from businessCategoryList
+                            singleCategoryBox.count = businessCategory.CategoryCount;
+                            break; // Break the inner loop once the match is found to optimize performance
+                          }
+                        }
+                      }
+                 
+                });
+        }
+
+  }
 
     sectionTitle = [
         {
@@ -21,74 +64,86 @@ export class CategorytwoComponent implements OnInit {
     singleCategoryBox = [
         {
             icon: 'flaticon-cooking',
-            title: 'Restaurant',
-            numberOfPlaces: '16 Places',
-            link: 'grid-listings-left-sidebar'
+            title: 'Restaurants',
+            numberOfPlaces: ' Places',
+            link: 'grid-listings-left-sidebar',
+            count: 0
         },
         {
             icon: 'flaticon-hotel',
             title: 'Hotel',
-            numberOfPlaces: '42 Places',
-            link: 'grid-listings-left-sidebar'
+            numberOfPlaces: ' Places',
+            link: 'grid-listings-left-sidebar',
+            count: 0
         },
         {
             icon: 'flaticon-exercise',
             title: 'Fitness',
-            numberOfPlaces: '11 Places',
-            link: 'grid-listings-left-sidebar'
+            numberOfPlaces: ' Places',
+            link: 'grid-listings-left-sidebar',
+            count: 0
         },
         {
             icon: 'flaticon-commerce',
             title: 'Shopping',
-            numberOfPlaces: '24 Places',
-            link: 'grid-listings-left-sidebar'
+            numberOfPlaces: ' Places',
+            link: 'grid-listings-left-sidebar',
+            count: 0
         },
         {
             icon: 'flaticon-cleansing',
             title: 'Beauty & Spa',
-            numberOfPlaces: '8 Places',
-            link: 'grid-listings-left-sidebar'
+            numberOfPlaces: ' Places',
+            link: 'grid-listings-left-sidebar',
+            count: 0
         },
         {
             icon: 'flaticon-calendar',
             title: 'Events',
-            numberOfPlaces: '12 Places',
-            link: 'grid-listings-left-sidebar'
+            numberOfPlaces: ' Places',
+            link: 'grid-listings-left-sidebar',
+            count: 0
         },
         {
             icon: 'flaticon-heart-1',
             title: 'Health Care',
-            numberOfPlaces: '16 Places',
-            link: 'grid-listings-left-sidebar'
+            numberOfPlaces: ' Places',
+            link: 'grid-listings-left-sidebar',
+            count: 0
         },
         {
             icon: 'flaticon-airport',
             title: 'Travel & Public',
-            numberOfPlaces: '8 Places',
-            link: 'grid-listings-left-sidebar'
+            numberOfPlaces: ' Places',
+            link: 'grid-listings-left-sidebar',
+            count: 0
         },
         {
             icon: 'flaticon-car-insurance',
             title: 'Auto Insurance',
-            numberOfPlaces: '10 Places',
+            numberOfPlaces: ' Places',
             link: 'grid-listings-left-sidebar'
+            ,count: 0
         },
         {
             icon: 'flaticon-attorney',
             title: 'Attorneys',
-            numberOfPlaces: '25 Places',
+            numberOfPlaces: ' Places',
             link: 'grid-listings-left-sidebar'
+            ,count: 0
         },
         {
             icon: 'flaticon-plumber',
             title: 'Plumbers',
-            numberOfPlaces: '5 Places',
+            numberOfPlaces: ' Places',
             link: 'grid-listings-left-sidebar'
+            ,count: 0
         },
         {
             icon: 'flaticon-more-1',
             title: 'More Categories',
             link: 'grid-listings-left-sidebar'
+            ,count: 0
         }
     ]
 

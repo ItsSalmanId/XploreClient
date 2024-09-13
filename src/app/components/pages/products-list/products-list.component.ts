@@ -68,7 +68,7 @@ export class ProductsListComponent implements OnInit {
                    //this.ShowToast("Alert", response.Message, response.success);
                    //this.toastr.success(response.Message, 'Toastr fun!');
                    this.ShowToast("Xplore", response.Message, response.Success);
-                   this.isLoading = true;
+                   this.isLoading = false;
                    if(response.Success)
                    {
                     this.currentTab = 'tab1';
@@ -86,12 +86,16 @@ if (this.userAccount) {
     //this._spinner.show();
     this._accountServiceService.loginUser(this.userAccount).subscribe(
         response => {
-            this.userAccount = response;
             this.isLoading = false;
             if(response != null)
             {
+                this.userAccount = response;
                 localStorage.setItem('Temp', this.userAccount.APPLICATION_USER_ACCOUNTS_ID.toString());
                 this.login();
+            }
+            else
+            {
+                this.ShowToast("Xplore", "The username or password is incorrect.", false);
             }
           
            // this._spinner.hide();

@@ -9,14 +9,19 @@
                 <div class="col-lg-4 col-md-12 p-0">
                     <div class="form-group">
                         <label><i class="flaticon-search"></i></label>
-                        <input type="text" class="form-control" placeholder="What are you looking for?">
+                        <input type="text" 
+                        [(ngModel)]="businessFilters.isCategory"
+                        name="isCategory    "
+                        class="form-control" placeholder="What are you looking for?">
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-6 p-0">
                     <div class="form-group">
                         <label><i class="flaticon-pin"></i></label>
-                        <input type="text" class="form-control" placeholder="Location">
+                        <input type="text" class="form-control"  name="isLocation" placeholder="Location"
+                        [(ngModel)]="businessFilters.isLocation"
+                        >
                     </div>
                 </div>
 
@@ -29,7 +34,7 @@
 
                 <div class="col-lg-2 col-md-12 p-0">
                     <div class="submit-btn">
-                        <button type="submit">Search Now</button>
+                        <button type="submit" (click)="SearchNow(businessFilters)">Search Now</button>
                     </div>
                 </div>
             </div>
@@ -60,35 +65,55 @@
 
                         <ul>
                             <li>
-                                <input id="categories1" type="checkbox">
+                                <input id="categories1" type="checkbox" [(ngModel)]="businessFilters.isCheckRestaurant">
                                 <label for="categories1">Restaurant</label>
                             </li>
                             <li>
-                                <input id="categories2" type="checkbox">
+                                <input id="categories2" type="checkbox" [(ngModel)]="businessFilters.isCheckHomeServices">
+                                <label for="categories2">Home Service</label>
+                            </li>
+                            <li>
+                                <input id="categories3" type="checkbox" [(ngModel)]="businessFilters.isCheckAgency">
+                                <label for="categories3">Agency</label>
+                            </li>
+                            <li>
+                                <input id="categories2" type="checkbox"  [(ngModel)]="businessFilters.isCheckHotel">
                                 <label for="categories2">Hotel</label>
                             </li>
                             <li>
-                                <input id="categories3" type="checkbox">
+                                <input id="categories3" type="checkbox"
+                                [(ngModel)]="businessFilters.isCheckBeautySpa"
+                                >
                                 <label for="categories3">Beauty & Spa</label>
                             </li>
                             <li>
-                                <input id="categories4" type="checkbox">
+                                <input id="categories4" type="checkbox"
+                                [(ngModel)]="businessFilters.isCheckFitness"
+                                >
                                 <label for="categories4">Fitness</label>
                             </li>
                             <li>
-                                <input id="categories5" type="checkbox">
+                                <input id="categories5" type="checkbox"
+                                [(ngModel)]="businessFilters.isCheckShopping"
+                                >
                                 <label for="categories5">Shopping</label>
                             </li>
                             <li class="hide">
-                                <input id="categories6" type="checkbox">
+                                <input id="categories6" type="checkbox"
+                                [(ngModel)]="businessFilters.isCheckHospital"
+                                >
                                 <label for="categories6">Hospital</label>
                             </li>
                             <li class="hide">
-                                <input id="categories7" type="checkbox">
+                                <input id="categories7" type="checkbox"
+                                [(ngModel)]="businessFilters.isCheckEvents"
+                                >
                                 <label for="categories7">Events</label>
                             </li>
                             <li class="hide">
-                                <input id="categories8" type="checkbox">
+                                <input id="categories8" type="checkbox"
+                                [(ngModel)]="businessFilters.isCheckClothing"
+                                >
                                 <label for="categories8">Clothing</label>
                             </li>
                             <li class="see-all-btn">
@@ -223,7 +248,7 @@
                                     </div>
                                 </div>
                                 <ul class="listings-meta">
-                                    <li><a ><i class="flaticon-furniture-and-household"></i> {{Content.BUSINESS_NAME}}</a></li>
+                                    <li><a ><i class="flaticon-furniture-and-household"></i> {{Content.BUSINESS_CATEGORY}}</a></li>
                                     <li><i class="flaticon-pin"></i> {{Content.BUSINESS_ADDRESS}}</li>
                                 </ul>
                                 <h3><a >{{Content.BUSINESS_NAME}}</a></h3>

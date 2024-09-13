@@ -45,11 +45,11 @@ padding-bottom: 0px;">
                         </div>
                         <button type="submit" (click)="Login()">Login Now</button>
                     </form>
-                    <span class="dont-account">Don't have an account? <a href="#">Register Now</a></span>
-                    <div class="other-links">
+                    <span class="dont-account">Don't have an account? <a (click)="switchTab($event, 'tab2')">Register Now</a></span>
+                    <!-- <div class="other-links">
                         <div class="text pb-2">Or login with</div>
                         <a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i class="bi bi-google"></i></a><a href="#"><i class="bi bi-linkedin"></i></a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="tab-pane fade show active" *ngIf="currentTab === 'tab2'">
@@ -81,7 +81,7 @@ padding-bottom: 0px;">
                         <button type="submit" (click)="registerNow()" [disabled]="isDisableRegisterBtn">Register Now</button>
                         
                     </form>
-                    <span class="already-account">Already have an account? <a href="#">Login Now</a></span>
+                    <span class="already-account">Already have an account? <a (click)="switchTab($event, 'tab1')">Login Now</a></span>
                     <!-- <div class="register-with-account">
                         <span>Or Register with</span>
                         <ul>
@@ -89,10 +89,10 @@ padding-bottom: 0px;">
                             <li><a href="#" class="twitter"><i class='bx bxl-twitter'></i> Twitter</a></li>
                         </ul>
                     </div> -->
-                    <div class="other-links">
+                    <!-- <div class="other-links">
                         <div class="text pb-2">Or login with</div>
                         <a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i class="bi bi-google"></i></a><a href="#"><i class="bi bi-linkedin"></i></a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

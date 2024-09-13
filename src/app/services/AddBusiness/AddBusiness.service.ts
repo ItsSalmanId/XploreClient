@@ -38,6 +38,11 @@ export class AddBusinessService {
   getBusinessDetails(data: BusinessDetail) {
     return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/GetBusiness', data);
   }
+
+  getBusinessByCategory(data: BusinessDetail) {
+    return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/GetBusinessByCategory', data);
+  }
+  
   getSelectedBusiness(data: BusinessDetail) {
     return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/GetSelectedBusiness', data);
   }

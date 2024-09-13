@@ -422,7 +422,7 @@ closeReel() {
             {
                 this.isShowStories = true;
                 this.currentOption = 'HomeTab';
-                //this.openStory()
+                this.openStory()
             }
             else if(selectedOption == 'Reels')
             {
@@ -577,6 +577,7 @@ closeReel() {
     }
     getCommentsByReel()
     {
+        this.reelsCommentsModel.COMMENT = "";
              this.reelsCommentsModel.REELS_DETAILS_ID = this.isSelectedReel;
              if (this.reelsCommentsModel) {
                  this._addBusinessService.getCommentsByReel(this.reelsCommentsModel).subscribe(
@@ -902,13 +903,13 @@ this.allReelsCommentsDetails.forEach(mainComment => {
     }
 
     toggleLike(index: number, selectedReel: any) {
-        this.videos[index].liked = !this.videos[index].liked;
-        this.videos[index].likesCount += this.videos[index].liked ? 1 : -1;
+        this.reelsDetailsList[index].liked = !this.reelsDetailsList[index].liked;
+        this.reelsDetailsList[index].likesCount += this.reelsDetailsList[index].liked ? 1 : -1;
         const reel = this.reelsDetailsList.find(item => item.REELS_DETAILS_ID === selectedReel.REELS_DETAILS_ID);
         if (reel) {
             // Increase the likesCount
             //reel.likesCount = (reel.likesCount || 0) + 1;
-            reel.likesCount = this.videos[index].likesCount;
+            reel.likesCount = this.reelsDetailsList[index].likesCount;
           } else {
             console.log('Reel not found!');
           }

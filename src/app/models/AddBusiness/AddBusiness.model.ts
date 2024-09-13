@@ -43,6 +43,11 @@ export class  BusinessFilesDetailList {
     BUSINESS_FILES_DTEAIL_ID: number;
 }
 
+export class  BusinessCategoryList {
+    BUSINESS_CATEGORY: string;
+    CategoryCount: number;
+}
+
 
 export class BusinessFilesDetail {
     BUSINESS_FILES_DTEAIL_ID: number;
@@ -147,6 +152,15 @@ export class BusinessFilters {
     isCheckRestaurant: boolean;
     isCheckHomeServices: boolean;
     isCheckAgency: boolean;
+    isCheckHotel: boolean;
+    isCheckBeautySpa: boolean;
+    isCheckFitness: boolean;
+    isCheckShopping: boolean;
+    isCheckHospital: boolean;
+    isCheckEvents: boolean;
+    isCheckClothing: boolean;
+    isLocation: string;
+    isCategory: string;
 }
 export class  BusinessDetailCountList {
     //id: number;

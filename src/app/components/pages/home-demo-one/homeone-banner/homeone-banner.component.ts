@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AddBusinessService } from '../../../../services/AddBusiness/AddBusiness.service'
-import { BusinessDetail, BusinessBlogDetail } from "../../../../models/AddBusiness/AddBusiness.model";
+import { BusinessDetail, BusinessBlogDetail, BusinessCategoryList } from "../../../../models/AddBusiness/AddBusiness.model";
 
 @Component({
     selector: 'app-homeone-banner',
@@ -11,6 +11,8 @@ import { BusinessDetail, BusinessBlogDetail } from "../../../../models/AddBusine
 export class HomeoneBannerComponent implements OnInit {
     businessDetail: BusinessDetail;
     businessDetailsList: BusinessDetail[] = [];
+    businessCategoryList: BusinessCategoryList[] = [];
+    BusinessCategoryList
     businessBlogDetails: BusinessBlogDetail;
     businessBlogDetailsList: BusinessBlogDetail[] = [];
 
@@ -19,12 +21,14 @@ export class HomeoneBannerComponent implements OnInit {
         this.businessDetailsList = [];
         this.businessBlogDetails = new BusinessBlogDetail();
         this.businessBlogDetailsList = [];
+        this.businessCategoryList = [];
      }
 
     ngOnInit(): void {
         this.resetOption = [this.options[0]];
         this.getBusiness();
         this.getBlogsDetails();
+        this.getBusinessByCategory();
     }
 
     getBusiness()
@@ -38,6 +42,27 @@ export class HomeoneBannerComponent implements OnInit {
                 response => {
                     console.log(response);
                     this.businessDetailsList = response;
+                   // this._spinner.hide();
+                   //this.ShowToast("Alert", response.Message, response.success);
+                   //this.toastr.success(response.Message, 'Toastr fun!');
+                   //this.ShowToast("Xplore", response.Message, response.Success);
+                 
+                });
+        }
+
+  }
+
+    getBusinessByCategory()
+    {
+        console.log(this.businessDetail);
+        console.log("click on RegisterNow");
+        this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+        if (this.businessDetail) {
+            //this._spinner.show();
+            this._addBusinessService.getBusinessByCategory(this.businessDetail).subscribe(
+                response => {
+                    console.log(response);
+                    this.businessCategoryList = response;
                    // this._spinner.hide();
                    //this.ShowToast("Alert", response.Message, response.success);
                    //this.toastr.success(response.Message, 'Toastr fun!');

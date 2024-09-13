@@ -110,7 +110,7 @@ export class GridListingsLeftSidebarComponent implements OnInit {
         this.businessDetailCountList = [];
         this.businessRating = new BusinessRating();
         this.businessRatingList = [];
-
+        this.businessFilters = new BusinessFilters();
         
         
         }
@@ -122,7 +122,13 @@ export class GridListingsLeftSidebarComponent implements OnInit {
         this.getBusinessList();
         this.getBusinessRating();
     }
-
+    SearchNow(businessFilters: BusinessFilters)
+    {
+        const filteredList = this.businessFilteredList.filter((item) => 
+            item.BUSINESS_CATEGORY.toLowerCase().includes(businessFilters.isCategory.toLowerCase()) &&
+            item.BUSINESS_ADDRESS.toLowerCase().includes(businessFilters.isLocation.toLowerCase())
+          );
+    }
     onRatingChange(rating: any): void {
         console.log(`${rating.label} Rating:`, rating.value, rating.modal);
         if(rating.label == 'Cleanliness')
@@ -264,6 +270,24 @@ export class GridListingsLeftSidebarComponent implements OnInit {
                          this.businessFilteredList = filteredList;
                          localStorage.removeItem("selectBusinessCategoryList");
                       }
+                      let selectedCatogory = localStorage.getItem("selectedCatogory");
+                      if(selectedCatogory != null)
+                        {
+                         const filteredList = this.businessFilteredList.filter((item) =>
+                           item.BUSINESS_CATEGORY === selectedCatogory
+                         );
+                         if(filteredList.length > 0)
+                         {
+                            this.businessFilteredList = filteredList;
+                         }
+                         else
+                         {
+                            
+                         }
+                           
+                           localStorage.removeItem("selectedCatogory");
+                           localStorage.removeItem("selectBusinessCategoryList");
+                        }
                       console.log(selectedIdForEdit);
                      // this._spinner.hide();
                      //this.ShowToast("Alert", response.Message, response.success);
@@ -375,7 +399,14 @@ const summaries: BusinessDetailCountList[] = [
             return (
               (this.businessFilters.isCheckRestaurant && item.BUSINESS_CATEGORY === 'Restaurants') ||
               (this.businessFilters.isCheckHomeServices && item.BUSINESS_CATEGORY === 'Home Services') ||
-              (this.businessFilters.isCheckAgency && item.BUSINESS_CATEGORY === 'Agency')
+              (this.businessFilters.isCheckAgency && item.BUSINESS_CATEGORY === 'Agency') ||
+              (this.businessFilters.isCheckHotel && item.BUSINESS_CATEGORY === 'Hotel') ||
+              (this.businessFilters.isCheckBeautySpa && item.BUSINESS_CATEGORY === 'Beauty & Spa') ||
+              (this.businessFilters.isCheckFitness && item.BUSINESS_CATEGORY === 'Fitness') ||
+              (this.businessFilters.isCheckShopping && item.BUSINESS_CATEGORY === 'Shopping') ||
+              (this.businessFilters.isCheckHospital && item.BUSINESS_CATEGORY === 'Hospital') ||
+              (this.businessFilters.isCheckEvents && item.BUSINESS_CATEGORY === 'Events') ||
+              (this.businessFilters.isCheckClothing && item.BUSINESS_CATEGORY === 'Clothing') 
             );
           });
     console.log(this.businessFilteredList);

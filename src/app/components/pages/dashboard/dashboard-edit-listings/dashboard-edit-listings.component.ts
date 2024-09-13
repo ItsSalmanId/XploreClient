@@ -196,9 +196,6 @@ this.getBusiness();
             const detail = new BusinessFilesDetailList();
             detail.BUSINESS_FILES_DTEAIL_ID = id;
             this.selectedImagesList.push(detail);
-
-            //this.selectedListStr = this.selectedListStr + id + ',';
-            //this.selectedImagesList.push({ BUSINESS_FILES_DETAIL_ID: Number(id });
           }
 
 console.log(this.selectedImagesList);
@@ -215,7 +212,7 @@ console.log(this.selectedImagesList);
             this._addBusinessService.deleteSelectedImage(this.selectedImagesList).subscribe(
                 response => {
                     console.log(response);
-                    this.isLoading = true;
+                    this.isLoading = false;
                     //this.getBusiness();
                     //this.businessDetailsList = response;
                    // this._spinner.hide();
