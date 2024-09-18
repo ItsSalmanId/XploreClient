@@ -42,6 +42,10 @@ export class HomeoneBannerComponent implements OnInit {
                 response => {
                     console.log(response);
                     this.businessDetailsList = response;
+                    if(this.businessDetailsList.length > 0)
+                    {
+                        localStorage.setItem('selectedBusinessId', this.businessDetailsList[0].BUSINESS_DETAIL_ID.toString() );
+                    }
                    // this._spinner.hide();
                    //this.ShowToast("Alert", response.Message, response.success);
                    //this.toastr.success(response.Message, 'Toastr fun!');
