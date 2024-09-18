@@ -124,10 +124,14 @@ export class GridListingsLeftSidebarComponent implements OnInit {
     }
     SearchNow(businessFilters: BusinessFilters)
     {
+        this.businessFilteredList = this.businessDetailsList;
         const filteredList = this.businessFilteredList.filter((item) => 
             item.BUSINESS_CATEGORY.toLowerCase().includes(businessFilters.isCategory.toLowerCase()) &&
             item.BUSINESS_ADDRESS.toLowerCase().includes(businessFilters.isLocation.toLowerCase())
           );
+          this.businessFilteredList = filteredList;
+          this.listCount = this.businessFilteredList.length;
+          console.log(this.listCount);
     }
     onRatingChange(rating: any): void {
         console.log(`${rating.label} Rating:`, rating.value, rating.modal);
@@ -172,6 +176,11 @@ export class GridListingsLeftSidebarComponent implements OnInit {
           this.toastr.error(title, message);
         }
       }
+      selectBusiness(selectedBusinessId: number)
+  {
+    console.log(selectedBusinessId);
+    localStorage.setItem('selectedBusinessId', selectedBusinessId.toString());
+  }
       submitRating(isCallFromAddReview: boolean = false)
       {
         this.isLoading = true;
@@ -288,6 +297,7 @@ export class GridListingsLeftSidebarComponent implements OnInit {
                            localStorage.removeItem("selectedCatogory");
                            localStorage.removeItem("selectBusinessCategoryList");
                         }
+                        this.listCount = this.businessFilteredList.length;
                       console.log(selectedIdForEdit);
                      // this._spinner.hide();
                      //this.ShowToast("Alert", response.Message, response.success);

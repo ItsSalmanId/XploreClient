@@ -159,8 +159,8 @@ export class BusinessFilters {
     isCheckHospital: boolean;
     isCheckEvents: boolean;
     isCheckClothing: boolean;
-    isLocation: string;
-    isCategory: string;
+    isLocation: string = "";
+    isCategory: string = "";
 }
 export class  BusinessDetailCountList {
     //id: number;
@@ -222,7 +222,7 @@ export class ReelsDetails {
   IS_REEL_LIKED_OR_NOT: boolean;
   isLikeUnlikeReel: boolean;
   IS_REEL_SAVED_OR_NOT: boolean;
-  isPlaying: boolean;
+  isPlaying: boolean = false;
   REEL_STATUS: boolean;
 }
 
