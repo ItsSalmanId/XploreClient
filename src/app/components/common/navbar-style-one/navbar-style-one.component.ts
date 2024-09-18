@@ -35,6 +35,10 @@ export class NavbarStyleOneComponent implements OnInit {
         this.surveyLink.ENCRYPTED_PATIENT_ACCOUNT = "123456";
     }
 
+    isCallFromNavBar()
+    {
+        localStorage.setItem('isCallFromNavBar', "true" );
+    }
 
     classApplied = false;
     toggleClass() {

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit  } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AddBusinessService } from '../../../../services/AddBusiness/AddBusiness.service'
 import { BusinessDetail, BusinessBlogDetail } from "../../../../models/AddBusiness/AddBusiness.model";
-
+import { CommonCall } from '../../../../components/common/commonCall/commonCall.component';
 
 @Component({
     selector: 'app-homeone-blog',
@@ -15,6 +15,7 @@ export class HomeoneBlogComponent implements OnInit {
   businessDetailsList: BusinessDetail[] = [];
   businessBlogDetails: BusinessBlogDetail;
   businessBlogDetailsList: BusinessBlogDetail[] = [];
+  @ViewChild(CommonCall, { static: false }) childComponent!: CommonCall;
 
   constructor(private _addBusinessService: AddBusinessService) {
       this.businessDetail = new BusinessDetail();
@@ -25,6 +26,15 @@ export class HomeoneBlogComponent implements OnInit {
 
     ngOnInit(): void {
       this.getBlogsDetails();
+    }
+    ngAfterViewInit() {
+        if (this.childComponent) {
+          this.childComponent.userToken();
+        }
+      }
+    SubscribePlan(selectedPlan: string = "")
+    {
+
     }
     getBlogsDetails()
     {
