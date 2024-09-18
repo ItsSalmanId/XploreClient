@@ -20,7 +20,7 @@
                     </form>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="javascript:void(0)" class="dropdown-toggle nav-link">
+                            <a href="#" routerLink="/" class="dropdown-toggle nav-link">
                                 Home <i class="bi bi-house-door-fill"></i>
                             </a>
                             <!-- <ul class="dropdown-menu">
@@ -30,7 +30,7 @@
                             </ul> -->
                         </li>
                         <li class="nav-item">
-                            <a href="javascript:void(0)" class="dropdown-toggle nav-link">
+                            <a class="dropdown-toggle nav-link" routerLink="/grid-listings-left-sidebar">
                                 Discovered <i class="bi bi-globe-americas"></i>
                             </a>
                             <!-- <ul class="dropdown-menu">
@@ -64,7 +64,7 @@
                             </ul> -->
                         </li>
                         <li class="nav-item">
-                            <a href="javascript:void(0)" class="dropdown-toggle nav-link">
+                            <a routerLink="/single-listings" class="dropdown-toggle nav-link" (click)="isCallFromNavBar()">
                                 Xplore <i class="bi bi-briefcase-fill"></i>
                             </a>
                             <!-- <ul class="dropdown-menu">

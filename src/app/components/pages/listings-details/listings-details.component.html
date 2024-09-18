@@ -686,5 +686,5 @@
     </div>
 </section>
 <!-- End Listings Details Area -->
-<app-vertical-listings-left-sidebar *ngIf="currentTab === 'tab6'"></app-vertical-listings-left-sidebar>
+<app-vertical-listings-left-sidebar (tabChange)="onTabChange($event)" *ngIf="currentTab === 'tab6'"></app-vertical-listings-left-sidebar>
 <app-footer-style-one></app-footer-style-one>

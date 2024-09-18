@@ -99,36 +99,67 @@
               <h3>Basic</h3>
               <p class="price">$10/month</p>
               <ul class="features">
-                <li>Feature 1</li>
-                <li>Feature 2</li>
-                <li>Feature 3</li>
+                <li>UNLIMITED POSTS</li>
+                <li>UNLIMITED LISTINGS</li>
+                <li>CCESS TO SEE YOUR REVIEWS</li>
+                <li>INVITATIONS TO EVENTS</li>
               </ul>
-              <button class="subscribe-btn">Subscribe</button>
+              <button class="subscribe-btn" (click)="SubscribePlan('Basic')">Subscribe</button>
             </div>
           
             <div class="subscription-card enterprise">
               <h3>Enterprise</h3>
-              <p class="price">$50/month</p>
+              <p class="price">$50/month (10% off)</p>
               <ul class="features">
-                <li>Feature 1</li>
-                <li>Feature 2</li>
-                <li>Feature 3</li>
-                <li>Feature 4</li>
+                    <li>STANDARD</li>
+                    <li>
+                      <span>XPLORADOOR BLOG</span>
+                      <ul>
+                        <li>XPLORADOOR REVIEW</li>
+                        <li>ADVERTISE YOUR ADVERTISEMENT ON XPLORADOOR</li>
+                        <li>
+                          DON'T HAVE AN ADVERTISEMENT,
+                          <a href="#">PURCHASE HERE</a>
+                        </li>
+                      </ul>
+                      <span>EMAIL MARKETING</span>
+                      <ul>
+                        <li>
+                            VIDEO TO BE PLAYED ON PROFILE SLIDESHOW (AUTOMATIC START)
+                        </li>
+                      </ul>
+                    </li>
               </ul>
-              <button class="subscribe-btn">Subscribe</button>
+              <button class="subscribe-btn" (click)="SubscribePlan('Enterprise')">Subscribe</button>
             </div>
           
             <div class="subscription-card premium">
               <h3>Premium</h3>
               <p class="price">$100/month</p>
               <ul class="features">
-                <li>Feature 1</li>
-                <li>Feature 2</li>
-                <li>Feature 3</li>
-                <li>Feature 4</li>
-                <li>Feature 5</li>
+                    <li>XPLORER (STANDARD AND BASIC INCLUDED)</li>
+                    <li>
+                      <span>ADVERTISEMENTS</span>
+                      <ul>
+                        <li>CAMPAIGNS</li>
+                        <li>XPOLORADOORS SOCIAL MEDIA</li>
+                        <li>WEBPAGE</li>
+                        <li>NOTIFICATION</li>  
+                      </ul>
+                    </li>
+                    <li>
+                      <span>VIDEO PROMO</span>
+                      <ul>
+                        <!-- <li>TIKTOK</li>
+                        <li>INSTA REEL</li>
+                        <li>FACEBOOK</li> -->
+                        <li>STORY</li>
+                      </ul>
+                    </li>
+                    <li>MONTHLY ASSESSMENTS/ANALYTICS</li>
+                    <li>EMAIL MARKETING</li>
               </ul>
-              <button class="subscribe-btn">Subscribe</button>
+              <button class="subscribe-btn" (click)="SubscribePlan('Premium')">Subscribe</button>
             </div>
           </div>
           

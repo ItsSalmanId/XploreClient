@@ -1,5 +1,10 @@
 <!-- <app-navbar-style-two></app-navbar-style-two> -->
 <div class="post_page">
+
+  <div class="spinner-overlay" *ngIf="isLoading">
+    <div class="spinner"></div>
+  </div>
+  
   <!-- nav-menu -->
 
   <div class="nav_menu">
@@ -197,29 +202,37 @@
   <div id="search" class="search_section" [ngClass]="{'show': isSearchVisible}">
     <h2>Search</h2>
     <form method="post">
-      <input type="text" placeholder="Search">
+      <input type="text" placeholder="Search" name="searchQuery" (ngModelChange)="filterUserAccounts()"
+       [(ngModel)]="searchQuery">
     </form>
     <div class="find">
       <div class="desc">
         <h4>Recent</h4>
         <p><a href="#">Clear all</a></p>
       </div>
-      <div class="account">
-        <div class="cart">
-          <div>
-            <div class="img">
-              <img src="../../../../assets/images/profile_img.jpg" alt="">
-            </div>
-            <div class="info">
-              <p class="name">Zineb_essoussi</p>
-              <p class="second_name">Zim Ess</p>
-            </div>
-          </div>
-          <div class="clear">
-            <a href="#">X</a>
-          </div>
-        </div>
+      <div style="max-height: 400px;
+    overflow-y: auto;">
+
+<div class="account" *ngFor="let user of filteredUserAccounts" >
+  <div class="cart">
+    <div>
+      <div >
+      <div class="img">
+        <img src="../../../../assets/images/profile_img.jpg" alt="">
       </div>
+      <div class="info">
+        <p class="name">{{user.User_Name}}</p>
+        <p class="second_name">Zim Ess</p>
+      </div>
+    </div>
+    </div>
+    <div class="clear">
+      <a href="#">X</a>
+    </div>
+  </div>
+</div>
+      </div>
+      
     </div>
   </div>
 
@@ -700,10 +713,12 @@
     <div class="" style="width: 100%; max-width: 800px; margin: 0 170px 0 auto;">
       <app-category></app-category>
     </div>
-    <div class="reels" *ngIf="this.currentOption == 'ReelsTab'">
-      <div *ngFor="let video of reelsDetailsList; let i = index" class="reel">
+    <div class="reels" *ngIf="this.currentOption == 'ReelsTab'" 
+    (window:keydown)="onKeydown($event)" (wheel)="onScroll($event)"
+    >
+      <div *ngFor="let video of reelsDetailsList; let i = index" class="reel" [id]="'reel-' + i">
         <div class="video">
-          <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" autoplay loop></video>
+          <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" loop></video>
           <div class="content">
             <div class="sound" (click)="toggleMute(i)">
               <img class="volume-up" src="../../../../assets/images/volume-up.png" *ngIf="!video.isMuted">
