@@ -719,7 +719,557 @@
     </div>
   </div>
 </div>
+ <!-- post-detail-model -->
+ <div *ngIf="isPopupVisible" class="popup-modal">
+     
+  <button class="prev-button">
+    <i class="flaticon-left-chevron"></i>
+  </button>
+  <button class="next-button"  >
+    <i class="flaticon-right-chevron"></i>
+  </button>
 
+<div class="cross-icon" (click)="togglePopup()">
+  <i class="bi bi-x-lg"></i>
+</div>
+<div class="popup-content">
+   <div class="row">
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="postDetailslider">
+        <owl-carousel-o #carousel [options]="PostDetailSlider">
+          <ng-container *ngFor="let image of postDetailImages; let i = index">
+            <ng-template carouselSlide>
+              <div class="img-container">
+                <img [src]="image.src" [alt]="image.alt">
+              </div>
+            </ng-template>
+          </ng-container>
+        </owl-carousel-o>
+      </div>
+      
+     </div>
+     <div class="col-12 col-md-6 col-lg-6  py-2 d-flex flex-column justify-content-between">
+      <div class="post-detail-top">
+        <div class="info">
+          <div class="person">
+              <img src="https://i.ibb.co/3S1hjKR/account1.jpg">
+              <a href="#">zineb</a>
+              <span class="circle">.</span>
+              <span>45m</span>
+          </div>
+          <div class="more">
+              <img src="../../../../assets/images/show_more.png" alt="show more">
+          </div>
+        </div>
+    <div class="comment-container ">
+      <div class="comments ">
+        <div class="comment" style="padding-right: 10px;">
+            <div class="d-flex">
+                <div class="img">
+                    <img src="../../../../assets/images/profile_img.jpg" alt="">
+                </div>
+                <div class="content">
+                    <div class="person">
+                        <h4>namePerson</h4>
+                        <span>3j</span>
+                    </div>
+                    <p>Wow amzing shot</p>
+                    <div class="replay">
+                        <button class="replay">replay</button>
+                        <button class="translation">see translation</button>
+                    </div>
+                    <div class="answers">
+                        <button class="see_comment">
+                            <span class="hide_com hide">Hide all responses</span>
+                            <span class="show_c"> <span class="line"></span> See the <span> 1
+                                </span> answers</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="like">
+                <img class="not_loved" src=".../../../../assets/images/love.png" alt="">
+                <img class="loved" src="../../../../assets/images/heart.png" alt="">
+                <p> 55</p>
+            </div>
+        </div>
+        <div class="responses hide">
+            <div class="response comment">
+                <div class="d-flex">
+                    <div class="img">
+                        <img src="../../../../assets/images/profile_img.jpg" alt="">
+                    </div>
+                    <div class="content">
+                        <div class="person">
+                            <h4>namePerson</h4>
+                            <span>3j</span>
+                        </div>
+                        <p>Wow amzing shot</p>
+                        <div class="replay">
+                            <button>replay</button>
+                            <button>see translation</button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="like">
+                    <img class="not_loved" src="../../../../assets/images/love.png" alt="">
+                    <img class="loved" src="../../../../assets/images/heart.png" alt="">
+                    <p> 55</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="comments ">
+      <div class="comment" style="padding-right: 10px;">
+          <div class="d-flex">
+              <div class="img">
+                  <img src="../../../../assets/images/profile_img.jpg" alt="">
+              </div>
+              <div class="content">
+                  <div class="person">
+                      <h4>namePerson</h4>
+                      <span>3j</span>
+                  </div>
+                  <p>Wow amzing shot</p>
+                  <div class="replay">
+                      <button class="replay">replay</button>
+                      <button class="translation">see translation</button>
+                  </div>
+                  <div class="answers">
+                      <button class="see_comment">
+                          <span class="hide_com hide">Hide all responses</span>
+                          <span class="show_c"> <span class="line"></span> See the <span> 1
+                              </span> answers</span>
+                      </button>
+                  </div>
+              </div>
+          </div>
+          <div class="like">
+              <img class="not_loved" src=".../../../../assets/images/love.png" alt="">
+              <img class="loved" src="../../../../assets/images/heart.png" alt="">
+              <p> 55</p>
+          </div>
+      </div>
+      <div class="responses hide">
+          <div class="response comment">
+              <div class="d-flex">
+                  <div class="img">
+                      <img src="../../../../assets/images/profile_img.jpg" alt="">
+                  </div>
+                  <div class="content">
+                      <div class="person">
+                          <h4>namePerson</h4>
+                          <span>3j</span>
+                      </div>
+                      <p>Wow amzing shot</p>
+                      <div class="replay">
+                          <button>replay</button>
+                          <button>see translation</button>
+                      </div>
+
+                  </div>
+              </div>
+              <div class="like">
+                  <img class="not_loved" src="../../../../assets/images/love.png" alt="">
+                  <img class="loved" src="../../../../assets/images/heart.png" alt="">
+                  <p> 55</p>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="comments ">
+    <div class="comment" style="padding-right: 10px;">
+        <div class="d-flex">
+            <div class="img">
+                <img src="../../../../assets/images/profile_img.jpg" alt="">
+            </div>
+            <div class="content">
+                <div class="person">
+                    <h4>namePerson</h4>
+                    <span>3j</span>
+                </div>
+                <p>Wow amzing shot</p>
+                <div class="replay">
+                    <button class="replay">replay</button>
+                    <button class="translation">see translation</button>
+                </div>
+                <div class="answers">
+                    <button class="see_comment">
+                        <span class="hide_com hide">Hide all responses</span>
+                        <span class="show_c"> <span class="line"></span> See the <span> 1
+                            </span> answers</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="like">
+            <img class="not_loved" src=".../../../../assets/images/love.png" alt="">
+            <img class="loved" src="../../../../assets/images/heart.png" alt="">
+            <p> 55</p>
+        </div>
+    </div>
+    <div class="responses hide">
+        <div class="response comment">
+            <div class="d-flex">
+                <div class="img">
+                    <img src="../../../../assets/images/profile_img.jpg" alt="">
+                </div>
+                <div class="content">
+                    <div class="person">
+                        <h4>namePerson</h4>
+                        <span>3j</span>
+                    </div>
+                    <p>Wow amzing shot</p>
+                    <div class="replay">
+                        <button>replay</button>
+                        <button>see translation</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="like">
+                <img class="not_loved" src="../../../../assets/images/love.png" alt="">
+                <img class="loved" src="../../../../assets/images/heart.png" alt="">
+                <p> 55</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="comments ">
+  <div class="comment" style="padding-right: 10px;">
+      <div class="d-flex">
+          <div class="img">
+              <img src="../../../../assets/images/profile_img.jpg" alt="">
+          </div>
+          <div class="content">
+              <div class="person">
+                  <h4>namePerson</h4>
+                  <span>3j</span>
+              </div>
+              <p>Wow amzing shot</p>
+              <div class="replay">
+                  <button class="replay">replay</button>
+                  <button class="translation">see translation</button>
+              </div>
+              <div class="answers">
+                  <button class="see_comment">
+                      <span class="hide_com hide">Hide all responses</span>
+                      <span class="show_c"> <span class="line"></span> See the <span> 1
+                          </span> answers</span>
+                  </button>
+              </div>
+          </div>
+      </div>
+      <div class="like">
+          <img class="not_loved" src=".../../../../assets/images/love.png" alt="">
+          <img class="loved" src="../../../../assets/images/heart.png" alt="">
+          <p> 55</p>
+      </div>
+  </div>
+  <div class="responses hide">
+      <div class="response comment">
+          <div class="d-flex">
+              <div class="img">
+                  <img src="../../../../assets/images/profile_img.jpg" alt="">
+              </div>
+              <div class="content">
+                  <div class="person">
+                      <h4>namePerson</h4>
+                      <span>3j</span>
+                  </div>
+                  <p>Wow amzing shot</p>
+                  <div class="replay">
+                      <button>replay</button>
+                      <button>see translation</button>
+                  </div>
+
+              </div>
+          </div>
+          <div class="like">
+              <img class="not_loved" src="../../../../assets/images/love.png" alt="">
+              <img class="loved" src="../../../../assets/images/heart.png" alt="">
+              <p> 55</p>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="comments ">
+<div class="comment" style="padding-right: 10px;">
+    <div class="d-flex">
+        <div class="img">
+            <img src="../../../../assets/images/profile_img.jpg" alt="">
+        </div>
+        <div class="content">
+            <div class="person">
+                <h4>namePerson</h4>
+                <span>3j</span>
+            </div>
+            <p>Wow amzing shot</p>
+            <div class="replay">
+                <button class="replay">replay</button>
+                <button class="translation">see translation</button>
+            </div>
+            <div class="answers">
+                <button class="see_comment">
+                    <span class="hide_com hide">Hide all responses</span>
+                    <span class="show_c"> <span class="line"></span> See the <span> 1
+                        </span> answers</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="like">
+        <img class="not_loved" src=".../../../../assets/images/love.png" alt="">
+        <img class="loved" src="../../../../assets/images/heart.png" alt="">
+        <p> 55</p>
+    </div>
+</div>
+<div class="responses hide">
+    <div class="response comment">
+        <div class="d-flex">
+            <div class="img">
+                <img src="../../../../assets/images/profile_img.jpg" alt="">
+            </div>
+            <div class="content">
+                <div class="person">
+                    <h4>namePerson</h4>
+                    <span>3j</span>
+                </div>
+                <p>Wow amzing shot</p>
+                <div class="replay">
+                    <button>replay</button>
+                    <button>see translation</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="like">
+            <img class="not_loved" src="../../../../assets/images/love.png" alt="">
+            <img class="loved" src="../../../../assets/images/heart.png" alt="">
+            <p> 55</p>
+        </div>
+    </div>
+</div>
+</div>
+<div class="comments ">
+<div class="comment" style="padding-right: 10px;">
+  <div class="d-flex">
+      <div class="img">
+          <img src="../../../../assets/images/profile_img.jpg" alt="">
+      </div>
+      <div class="content">
+          <div class="person">
+              <h4>namePerson</h4>
+              <span>3j</span>
+          </div>
+          <p>Wow amzing shot</p>
+          <div class="replay">
+              <button class="replay">replay</button>
+              <button class="translation">see translation</button>
+          </div>
+          <div class="answers">
+              <button class="see_comment">
+                  <span class="hide_com hide">Hide all responses</span>
+                  <span class="show_c"> <span class="line"></span> See the <span> 1
+                      </span> answers</span>
+              </button>
+          </div>
+      </div>
+  </div>
+  <div class="like">
+      <img class="not_loved" src=".../../../../assets/images/love.png" alt="">
+      <img class="loved" src="../../../../assets/images/heart.png" alt="">
+      <p> 55</p>
+  </div>
+</div>
+<div class="responses hide">
+  <div class="response comment">
+      <div class="d-flex">
+          <div class="img">
+              <img src="../../../../assets/images/profile_img.jpg" alt="">
+          </div>
+          <div class="content">
+              <div class="person">
+                  <h4>namePerson</h4>
+                  <span>3j</span>
+              </div>
+              <p>Wow amzing shot</p>
+              <div class="replay">
+                  <button>replay</button>
+                  <button>see translation</button>
+              </div>
+
+          </div>
+      </div>
+      <div class="like">
+          <img class="not_loved" src="../../../../assets/images/love.png" alt="">
+          <img class="loved" src="../../../../assets/images/heart.png" alt="">
+          <p> 55</p>
+      </div>
+  </div>
+</div>
+</div>
+<div class="comments ">
+<div class="comment" style="padding-right: 10px;">
+  <div class="d-flex">
+      <div class="img">
+          <img src="../../../../assets/images/profile_img.jpg" alt="">
+      </div>
+      <div class="content">
+          <div class="person">
+              <h4>namePerson</h4>
+              <span>3j</span>
+          </div>
+          <p>Wow amzing shot</p>
+          <div class="replay">
+              <button class="replay">replay</button>
+              <button class="translation">see translation</button>
+          </div>
+          <div class="answers">
+              <button class="see_comment">
+                  <span class="hide_com hide">Hide all responses</span>
+                  <span class="show_c"> <span class="line"></span> See the <span> 1
+                      </span> answers</span>
+              </button>
+          </div>
+      </div>
+  </div>
+  <div class="like">
+      <img class="not_loved" src=".../../../../assets/images/love.png" alt="">
+      <img class="loved" src="../../../../assets/images/heart.png" alt="">
+      <p> 55</p>
+  </div>
+</div>
+<div class="responses hide">
+  <div class="response comment">
+      <div class="d-flex">
+          <div class="img">
+              <img src="../../../../assets/images/profile_img.jpg" alt="">
+          </div>
+          <div class="content">
+              <div class="person">
+                  <h4>namePerson</h4>
+                  <span>3j</span>
+              </div>
+              <p>Wow amzing shot</p>
+              <div class="replay">
+                  <button>replay</button>
+                  <button>see translation</button>
+              </div>
+
+          </div>
+      </div>
+      <div class="like">
+          <img class="not_loved" src="../../../../assets/images/love.png" alt="">
+          <img class="loved" src="../../../../assets/images/heart.png" alt="">
+          <p> 55</p>
+      </div>
+  </div>
+</div>
+</div>
+<div class="comments ">
+<div class="comment" style="padding-right: 10px;">
+  <div class="d-flex">
+      <div class="img">
+          <img src="../../../../assets/images/profile_img.jpg" alt="">
+      </div>
+      <div class="content">
+          <div class="person">
+              <h4>namePerson</h4>
+              <span>3j</span>
+          </div>
+          <p>Wow amzing shot</p>
+          <div class="replay">
+              <button class="replay">replay</button>
+              <button class="translation">see translation</button>
+          </div>
+          <div class="answers">
+              <button class="see_comment">
+                  <span class="hide_com hide">Hide all responses</span>
+                  <span class="show_c"> <span class="line"></span> See the <span> 1
+                      </span> answers</span>
+              </button>
+          </div>
+      </div>
+  </div>
+  <div class="like">
+      <img class="not_loved" src=".../../../../assets/images/love.png" alt="">
+      <img class="loved" src="../../../../assets/images/heart.png" alt="">
+      <p> 55</p>
+  </div>
+</div>
+<div class="responses hide">
+  <div class="response comment">
+      <div class="d-flex">
+          <div class="img">
+              <img src="../../../../assets/images/profile_img.jpg" alt="">
+          </div>
+          <div class="content">
+              <div class="person">
+                  <h4>namePerson</h4>
+                  <span>3j</span>
+              </div>
+              <p>Wow amzing shot</p>
+              <div class="replay">
+                  <button>replay</button>
+                  <button>see translation</button>
+              </div>
+
+          </div>
+      </div>
+      <div class="like">
+          <img class="not_loved" src="../../../../assets/images/love.png" alt="">
+          <img class="loved" src="../../../../assets/images/heart.png" alt="">
+          <p> 55</p>
+      </div>
+  </div>
+</div>
+</div>
+    </div>
+    </div>
+      <div class="sending-container">
+      
+        <div class="desc">
+          <div class="icons">
+              <div class="icon_left d-flex justify-content-center align-items-center">
+                  <div class="like">
+                      <img class="not_loved" src="../../../../assets/images/love.png">
+                      <img class="loved" src="../../../../assets/images/heart.png">
+                  </div>
+                  <div class="chat">
+                      <button type="button" class="btn p-0" data-bs-toggle="modal" data-bs-target="#message_modal">
+                          <img src="../../../../assets/images/bubble-chat.png">
+                      </button>
+                  </div>
+                  <div class="send">
+                      <button type="button" class="btn p-0" data-bs-toggle="modal" data-bs-target="#send_message_modal">
+                          <img src="../../../../assets/images/send.png">
+                      </button>
+                  </div>
+              </div>
+              <div class="save not_saved">
+                  <img class="hide saved" src="../../../../assets/images/save_black.png">
+                  <img class="not_saved" src="../../../../assets/images/save-instagram.png">
+              </div>
+          </div>
+          <div class="liked">
+              <a class="bold" href="#">150 likes</a>
+          </div>
+          <div class="post_desc">
+               
+             
+              <input type="text" placeholder="Add a comments...">
+          </div>
+        </div>
+      </div>
+     
+     
+     </div>
+   </div>
+  
+</div>
+</div>
 
   <!-- reels -->
   <div class="d-flex flex-column reel-container-scroll" >
@@ -877,7 +1427,7 @@
               </div>
             </div> -->
 
-            <div *ngFor="let video of userReelsAccount[0].UserReelsDetails; let i = index" class="new-reel-item">
+            <div *ngFor="let video of userReelsAccount[0].UserReelsDetails; let i = index" class="new-reel-item" (click)="togglePopup()">
               <div class="new-video-wrapper">
                 <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" class="new-video" loop></video>
               </div>

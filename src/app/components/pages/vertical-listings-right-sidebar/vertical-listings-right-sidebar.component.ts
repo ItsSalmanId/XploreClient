@@ -1764,4 +1764,41 @@ playVideoOnIndexChange(newIndex: number) {
             "<i class='flaticon-right-chevron'></i>"
         ]
     }
+    postDetailImages = [
+      { src: '../../../../assets/img/listings/listings9.jpg', alt: 'Image 1' },
+      { src: '../../../../assets/img/listings/listings9.jpg', alt: 'Image 2' },
+      { src: '../../../../assets/img/listings/listings9.jpg', alt: 'Image 3' },
+      { src: '../../../../assets/img/listings/listings9.jpg', alt: 'Image 4' },
+    ];
+  PostDetailSlider: OwlOptions = {
+      loop: true,
+      nav: true,
+      dots: false,
+      
+      mouseDrag: true,
+      items: 1, // Number of items that slide at a time
+    
+      navText: [
+        "<i class='flaticon-left-chevron prev-button'></i>",
+        "<i class='flaticon-right-chevron prev-button'></i>"
+      ],
+      responsive: {
+        0: {
+          items: 1
+        },
+        600: {
+          items: 1  
+        },
+        1000: {
+          items: 1  
+        }
+      }
+    };
+ 
+
+  isPopupVisible = false;
+
+togglePopup() {
+  this.isPopupVisible = !this.isPopupVisible;
+}
 }
