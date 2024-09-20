@@ -43,9 +43,12 @@ import { DashboardEditListingsComponent } from './components/pages/dashboard/das
 import { DashboardAddBlogComponent } from './components/pages/dashboard/dashboard-add-blog/dashboard-add-blog.component';
 import { DashboardUserDetailsComponent } from './components/pages/dashboard/dashboard-user-details/dashboard-user-details.component';
 import { DashboardAllListingsComponent } from './components/pages/dashboard/dashboard-all-listings/dashboard-all-listings.component';
-import { AuthGuard } from '../../../Xploradoor/src/app/services/AuthService/auth.guard';
+////import { AuthGuard } from '../../../Xploradoor/src/app/services/AuthService/auth.guard';
+import { AuthGuard } from '../../../XploreClient/src/app/services/AuthService/auth.guard';
 import { ReelsStatusComponent } from './components/pages/reels-status/reels-status.component';
 import { ReelsVertical } from './components/pages/reels-listings/reels-listings.component';
+import { ShowStoriesComponent } from './components/pages/show-stories/show-stories.component';
+import { ShowUsersComponent } from './components/pages/show-users/show-users.component';
 
 const routes: Routes = [
     {path: '', component: HomeDemoOneComponent},
@@ -92,6 +95,8 @@ const routes: Routes = [
     {path: 'dashboard-my-listings', component: DashboardMyListingsComponent},
     {path: 'dashboard-user-details', component: DashboardUserDetailsComponent},
     {path: 'dashboard-all-listings', component: DashboardAllListingsComponent},
+    {path: 'show-stories', component: ShowStoriesComponent},
+    {path: 'show-users', component: ShowUsersComponent},
     // Here add new pages component
 
     {path: '**', component: NotFoundComponent} // This line will remain down from the whole pages component list

@@ -1,0 +1,139 @@
+<div  class="flex flex-col h-screen w-full bg-gray-900">
+    <div class="flex flex-row justify-center items-center my-8 h-screen">
+      <div *ngFor="let story of stories; let index = index"
+        class="absolute mx-2 rounded-lg bg-red-400 transition-transform duration-200 ease-in"
+        [style.width.px]="350"
+        [style.height.px]="580"
+        [ngStyle]="{
+            transform: 
+              index === indexSelected
+                ? 'translateX(0px) scale(1.25)'  
+                : index === indexSelected - 1
+                ? 'translateX(-380px) scale(0.5)'
+                : index === indexSelected + 1
+                ? 'translateX(380px) scale(0.5)'  
+                : 'translateX(' + (index < indexSelected ? -600 : 600) + 'px) scale(0.5)',
+            cursor: index !== indexSelected ? 'pointer' : 'default'
+          }"
+          
+        (click)="index !== indexSelected ? selectSlide(index) : null"
+      >
+        <div class="bg-cover bg-no-repeat h-full rounded-lg">
+          <div class="h-full">
+            <img
+              [src]="index === indexSelected ? story.images[key].url : story.images[0].url"
+              class="h-full w-full rounded-lg"
+            />
+          </div>
+          <div class="w-full pt-4 absolute top-0" *ngIf="index === indexSelected">
+            <div class="w-11/12 flex m-auto">
+              <div
+                class="w-full rounded-lg mr-2 relative h-auto"
+                *ngFor="let elm of story.images; let i = index"
+              >
+                <!-- length slide -->
+                <div
+                  class="absolute w-full rounded-lg"
+                  style="height: 4px; background-color: rgba(255, 255, 255, 0.35)"
+                ></div>
+                <!-- end length -->
+                <div
+                  class="absolute w-full rounded-lg"
+                  style="height: 4px; background-color: white"
+                  [ngStyle]="{
+                    width: i === key ? percent + '%' : key > i ? '100%' : '0%'
+                  }"
+                ></div>
+              </div>
+            </div>
+            <div class="flex w-11/12 mt-4 m-auto">
+              <div class="flex justify-start items-center w-1/2">
+                <div style="width: 35px; height: 35px">
+                  <img [src]="story.picture" class="rounded-full" />
+                </div>
+                <div class="ml-4">
+                  <p class="text-sm text-white font-semibold">{{ story.username }}</p>
+                </div>
+              </div>
+              <div class="flex justify-end items-center w-1/2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6 cursor-pointer"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="#fff"
+                  (click)="isPaused ? playStory() : pauseStory()"
+                >
+                  <ng-container *ngIf="!isPaused; else playIcon">
+                    <path
+                      d="M9 6a1 1 0 0 1 1 1v10a1 1 0 1 1-2 0V7a1 1 0 0 1 1-1zm6 0a1 1 0 0 1 1 1v10a1 1 0 1 1-2 0V7a1 1 0 0 1 1-1z"
+                      fill="#fff"
+                    ></path>
+                  </ng-container>
+                  <ng-template #playIcon>
+                    <path
+                      d="M6 6.741c0-1.544 1.674-2.505 3.008-1.728l9.015 5.26c1.323.771 1.323 2.683 0 3.455l-9.015 5.258C7.674 19.764 6 18.803 6 17.26V6.741zM17.015 12L8 6.741V17.26L17.015 12z"
+                      fill="#fff"
+                    ></path>
+                  </ng-template>
+                </svg>
+              
+                <button (click)="isMuted ? unmuteStory() : muteStory()" class="icon-button ms-2 h-6 w-6 cursor-pointer">
+                  <i class="fas text-white" [ngClass]="isMuted ? 'fa-volume-mute' : 'fa-volume-up'" style="font-size: 17px;"></i>
+                </button>
+              </div>
+              
+            </div>
+          </div>
+          <div *ngIf="index !== indexSelected">
+            <div class="absolute top-1/2 left-1/2 z-50">
+              <div class="flex flex-col items-center">
+                <div
+                  style="width: 50px; height: 50px; transform: translate(-50%, -50%) scale(2.5)"
+                  class="rounded-full border-2 border-indigo-400 transition-transform duration-100"
+                >
+                  <img [src]="story.picture" class="rounded-full" />
+                </div>
+                <div class="mt-2">
+                  <p class="text-sm text-white font-semibold">{{ story.username }}</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="absolute inset-0 rounded-lg z-10"
+              style="background: -webkit-gradient(linear, left top, left bottom, from(rgba(38, 38, 38, 0.6)), to(rgba(38, 38, 38, 0)))"
+            ></div>
+          </div>
+        </div>
+        <div *ngIf="index === indexSelected" class="absolute top-1/2 -left-11">
+          <i
+            (click)="prev(index)"
+            class="fas fa-chevron-circle-left text-gray-500 cursor-pointer hover:text-gray-300 transition-colors duration-150 ease-linear"
+          ></i>
+        </div>
+        <div *ngIf="index === indexSelected" class="absolute top-1/2 -right-11">
+          <i
+            (click)="next(index)"
+            class="fas fa-chevron-circle-right text-gray-500 cursor-pointer hover:text-gray-300 transition-colors duration-150 ease-linear"
+          ></i>
+        </div>
+        <div  *ngIf="index == indexSelected" class="absolute bottom-0 left-0 right-0 p-2 pb-3 flex items-center" style="font-size: 13px;width: 100%!important;">
+            <input 
+              type="text"
+              class="flex-1 bg-transparent border border-black-500 text-white px-3 py-2 rounded-full  placeholder-gray-300 focus:outline-none focus:none focus:none"
+              placeholder="Reply..."
+              style="width: 100%!important;"
+            >
+            <button class="mx-2 rounded-full  transition-colors">
+              <i class="fas fa-heart text-white" style="font-size: 18px;"></i>
+            </button>
+            <button class="mx-2  rounded-full transition-colors">
+              <i class="fas fa-paper-plane text-white" style="font-size: 18px;"></i>
+            </button>
+          </div>
+
+      </div>
+    </div>
+  </div>
+
+  

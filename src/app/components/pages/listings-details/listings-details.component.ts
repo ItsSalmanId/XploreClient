@@ -105,26 +105,10 @@ export class ListingsDetailsComponent implements OnInit {
         }
 
     ngOnInit(): void {
-        let isCallFromNavBar = localStorage.getItem("isCallFromNavBar");
-        if(isCallFromNavBar == 'true')
-        {
-            this.currentTab = 'tab6';
-            localStorage.removeItem('isCallFromNavBar');
-        }
-        let isCallFromVerticalleft = localStorage.getItem("isCallFromVertical-left");
-        if(isCallFromVerticalleft == 'true')
-        {
-            this.currentTab = 'tab1';
-            localStorage.removeItem('isCallFromVertical-left');
-        }
-        
         this.getBusiness();
         this.getBusinessList();
         this.getBusinessRating();
     }
-    onTabChange(newTab: string) {
-        this.currentTab = newTab;
-      }
 
     onRatingChange(rating: any): void {
         console.log(`${rating.label} Rating:`, rating.value, rating.modal);
@@ -258,7 +242,7 @@ export class ListingsDetailsComponent implements OnInit {
                 response => {
                     console.log(response);
                     this.businessDetail = response;
-                    this.isLoading = false;
+                    this.isLoading = true;
                     
                    // this._spinner.hide();
                    //this.ShowToast("Alert", response.Message, response.success);
@@ -329,30 +313,10 @@ export class ListingsDetailsComponent implements OnInit {
                     const restaurantSummary = this.getCategorySummary("Restaurants");
 const homeServiceSummary = this.getCategorySummary("Home Services");
 const agencySummary = this.getCategorySummary("Agency");
-const hotelSummary = this.getCategorySummary("Hotel");
-const fitnessSummary = this.getCategorySummary("Fitness");
-const shoppingSummary = this.getCategorySummary("Shopping");
-const beautySpaSummary = this.getCategorySummary("Beauty & Spa");
-const eventsSummary = this.getCategorySummary("Events");
-const healthCareSummary = this.getCategorySummary("Health Care");
-const travelPublicSummary = this.getCategorySummary("Travel & Public");
-const autoInsuranceSummary = this.getCategorySummary("Attorneys");
-const attorneysSummary = this.getCategorySummary("Hotel");
-const plumbersSummary = this.getCategorySummary("Plumbers");
 const summaries: BusinessDetailCountList[] = [
     restaurantSummary,
     homeServiceSummary,
     agencySummary,
-    hotelSummary,
-    fitnessSummary,
-    shoppingSummary,
-    beautySpaSummary,
-    eventsSummary,
-    healthCareSummary,
-    travelPublicSummary,
-    autoInsuranceSummary,
-    attorneysSummary,
-    plumbersSummary
   ];
 
   console.log(summaries);

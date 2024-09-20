@@ -16,10 +16,6 @@ export class NavbarStyleTwoComponent implements OnInit {
     toggleClass() {
         this.classApplied = !this.classApplied;
     }
-    isCallFromNavBar()
-    {
-        localStorage.setItem('isCallFromNavBar', "true" );
-    }
 
     // Navbar Sticky
     isSticky: boolean = false;

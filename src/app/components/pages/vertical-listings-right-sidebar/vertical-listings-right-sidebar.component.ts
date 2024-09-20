@@ -4,7 +4,7 @@ import { AddBusinessService } from '../../../services/AddBusiness/AddBusiness.se
 import { BusinessDetail, TimeSlots, WeeklyTimeSlots, ReelsDetails, ReelsCommentsDetails, UserAccount, UserFollowDetails,
     ReelSaved
  } from "../../../models/AddBusiness/AddBusiness.model";
-import { Observable, timeout } from 'rxjs';
+import { Observable } from 'rxjs';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { DropzoneConfig } from 'ngx-dropzone-wrapper';
 import { GlobalSettingService } from '../../../services/Global/global-setting.service';
@@ -17,13 +17,38 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 
 
 
-
 @Component({
     selector: 'app-vertical-listings-right-sidebar',
     templateUrl: './vertical-listings-right-sidebar.component.html',
     styleUrls: ['./vertical-listings-right-sidebar.component.scss']
 })
 export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewInit {
+    customStoriesOptions: OwlOptions = {
+        loop: true,
+        mouseDrag: false,
+        touchDrag: false,
+        pullDrag: false,
+        dots: false,
+        navSpeed: 700,
+        navText: ['', ''],
+        responsive: {
+          0: {
+            items: 1
+          },
+          400: {
+            items: 2
+          },
+          740: {
+            items: 3
+          },
+          940: {
+            items: 4
+          }
+        },
+        nav: true
+      }
+
+
     config: DropzoneConfig;
     reelsDetails: ReelsDetails
     businessDetail: BusinessDetail;
@@ -52,7 +77,6 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
      userAccountList: UserAccount[];
      userAccount: UserAccount;
      isShowStories : boolean;
-     isLoading: boolean = false;
 
 
 
@@ -198,10 +222,7 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
     nav: false,
     dots: true
   };
-    searchQuery: any;
-    filteredUserAccounts: UserAccount[];
-    currentReelIndex: number = 0;
-    scrollAmount: number = 0;
+  
 
 
 
@@ -279,72 +300,6 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
               
 
         }
-        ngOnInit(): void {
-            this.videoSrc = '../../../../assets/video/video1.mp4',
-            this.authorImg ='../../../../assets/images/profile_img.jpg',
-            // Scroll to the top when the component initializes
-            window.scrollTo(0, 0);
-            this.getReels();
-            this.getReelsUser();
-            this.pauseAllVideos();
-            //this.getReelsStatus();
-        }
-
-        // Listen for keyboard events (e.g., ArrowDown)
-  onKeydown(event: KeyboardEvent) {
-    this.isLoading = true;
-    if (event.key === 'ArrowDown') {
-      this.scrollToNextReel();
-    }
-    else if (event.key === 'ArrowUp') {
-        event.preventDefault();
-        this.scrollToPreviousReel();
-      }
-  }
-
-  // Handle mouse scroll events (up and down)
-  onScroll(event: WheelEvent) {
-    event.preventDefault();
-    if (event.deltaY > 0) {
-      // Scrolling down
-      this.scrollToNextReel();
-    } else if (event.deltaY < 0) {
-      // Scrolling up
-      this.scrollToPreviousReel();
-    }
-  }
-
-  // Logic to move to the next reel and update the scroll
-  scrollToNextReel() {
-    if (this.currentReelIndex < this.reelsDetailsList.length - 1) {
-        this.pauseAllVideos();
-        this.currentReelIndex++;
-        const nextReel = document.getElementById('reel-' + this.currentReelIndex);
-        if (nextReel) {
-            setTimeout(() => {
-                nextReel.scrollIntoView({ behavior: 'smooth' });
-                this.togglePlay(this.currentReelIndex);
-                this.isLoading = false;
-            }, 500);
-        }
-      }
-  }
-
-   // Scroll to the previous reel
-   scrollToPreviousReel() {
-    if (this.currentReelIndex > 0) {
-        this.pauseAllVideos();
-      this.currentReelIndex--;
-      const prevReel = document.getElementById('reel-' + this.currentReelIndex);
-      if (prevReel) {
-        setTimeout(() => {
-            prevReel.scrollIntoView({ behavior: 'smooth' });
-            this.togglePlay(this.currentReelIndex);
-            this.isLoading = false;
-        }, 500);
-      }
-    }
-  }
 
         getReelsUser()
         {
@@ -359,7 +314,7 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
                         this.userAccountList = response;
                         this.reelsDetails.USER_ID = Number(localStorage.getItem("Temp"));
                         this.userAccountList = this.userAccountList.filter(user => user.APPLICATION_USER_ACCOUNTS_ID !== this.reelsDetails.USER_ID);
-                        this.filteredUserAccounts = this.userAccountList;
+
                        // this._spinner.hide();
                        //this.ShowToast("Alert", response.Message, response.success);
                        //this.toastr.success(response.Message, 'Toastr fun!');
@@ -492,7 +447,7 @@ closeReel() {
             {
                 this.isShowStories = true;
                 this.currentOption = 'HomeTab';
-                //this.openStory()
+                this.openStory()
             }
             else if(selectedOption == 'Reels')
             {
@@ -504,18 +459,6 @@ closeReel() {
                     this.getReelsUserProfile()
                 }
 
-          }
-          filterUserAccounts() {
-            setTimeout(() => {
-                if (!this.searchQuery) {
-                    this.filteredUserAccounts = this.userAccountList; // Reset to full list if search is empty
-                  } else {
-                    this.filteredUserAccounts = this.userAccountList.filter(user =>
-                      user.User_Name.toLowerCase().includes(this.searchQuery.toLowerCase())
-                    );
-                  }
-            }, 500);
-            
           }
 
           toggleProfileTab(profileTab: string)
@@ -531,7 +474,21 @@ closeReel() {
 
           }
 
-    
+    ngOnInit(): void {
+        this.videoSrc = '../../../../assets/video/video1.mp4',
+        this.authorImg ='../../../../assets/images/profile_img.jpg',
+        // Scroll to the top when the component initializes
+        window.scrollTo(0, 0);
+        this.getReels();
+        this.getReelsUser();
+        //this.getReelsStatus();
+
+      
+       
+       
+    }
+
+   
 
     getTimeAgo(date: Date) {
         const now = new Date();
@@ -617,10 +574,12 @@ closeReel() {
     }
 
     ngAfterViewInit(): void {
+
+
         setTimeout(() => {
             this.updateWidth('.owl-item', '68.8px');
           }, 1000); // Adjust the delay as needed
-        this.wantToReplay(0, 0);
+          this.wantToReplay(0, 0);
         const options = {
             root: null,
             rootMargin: '0px',
@@ -640,14 +599,6 @@ closeReel() {
         setTimeout(() => {
             document.getElementById('comment-input')?.focus();
           }, 200);
-
-          setTimeout(() => {
-          this.reelsDetailsList.forEach((reel, index) => {
-            reel.isPlaying = false;
-        });
-        this.pauseAllVideos();
-        this.cdr.detectChanges();
-    }, 500);
     }
     selectedReel(selectedReel: number)
     {
@@ -820,7 +771,6 @@ closeReel() {
 
 
     }
-
     getReels()
     {
         console.log(this.businessDetail);
@@ -833,7 +783,6 @@ closeReel() {
                 response => {
                     console.log(response);
                     this.reelsDetailsList = response;
-                    console.log(this.reelsDetailsList[0].isPlaying);
                     //this.reelsDetailsList
                     // this.reelsCommentsDetails = this.reelsDetailsList.map(item => item.reelsCommentsModelList).flat();
                     this.reelsCommentsDetails = this.reelsDetailsList
@@ -852,7 +801,6 @@ this.allReelsCommentsDetails.forEach(mainComment => {
   mainComment.replies = this.reelsCommentsDetails.filter(reply => reply.IS_REPLAY_COMMENT && reply.REPLAY_COMMENT_HEADER_ID === mainComment.REELS_COMMENTS_DETAILS_ID);
 });
                     console.log(response);
-                    
                    // this._spinner.hide();
                    //this.ShowToast("Alert", response.Message, response.success);
                    //this.toastr.success(response.Message, 'Toastr fun!');
@@ -986,24 +934,6 @@ this.allReelsCommentsDetails.forEach(mainComment => {
 
         this.cdr.detectChanges();
     }
-    pauseAllVideos() {
-        // Check if videoElements exist and loop through each video
-        if (this.videoElements) {
-            this.videoElements.forEach((videoElement, index) => {
-                videoElement.nativeElement.pause();
-                videoElement.nativeElement.currentTime = 0;  // Reset to start from the beginning
-                this.reelsDetailsList[index].isPlaying = false;  // Mark the video as not playing
-            });
-        }
-    }
-    // Auto-play the video when the index is reached
-playVideoOnIndexChange(newIndex: number) {
-    // Pause all videos first
-    this.pauseAllVideos();
-
-    // Auto-play the video at the new index
-    this.togglePlay(newIndex);
-}
 
     toggleLike(index: number, selectedReel: any) {
         this.reelsDetailsList[index].liked = !this.reelsDetailsList[index].liked;
@@ -1149,8 +1079,7 @@ playVideoOnIndexChange(newIndex: number) {
     }
 
     toggleMute(index: number) {
-        //const video = this.videos[index];
-        const video = this.reelsDetailsList[index];
+        const video = this.videos[index];
         video.isMuted = !video.isMuted;
         const videoElement = this.videoElements.toArray()[index].nativeElement;
         videoElement.muted = video.isMuted;

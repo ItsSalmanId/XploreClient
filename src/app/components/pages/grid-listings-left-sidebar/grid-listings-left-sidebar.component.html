@@ -5,7 +5,6 @@
     <div class="container">
         <h2>{{Content.title}}</h2>
         <form>
-            
             <div class="row m-0 align-items-center">
                 <div class="col-lg-4 col-md-12 p-0">
                     <div class="form-group">
@@ -252,7 +251,7 @@
                                     <li><a ><i class="flaticon-furniture-and-household"></i> {{Content.BUSINESS_CATEGORY}}</a></li>
                                     <li><i class="flaticon-pin"></i> {{Content.BUSINESS_ADDRESS}}</li>
                                 </ul>
-                                <h3><a routerLink="/single-listings" (click)="selectBusiness(Content.BUSINESS_DETAIL_ID)">{{Content.BUSINESS_NAME}}</a></h3>
+                                <h3><a >{{Content.BUSINESS_NAME}}</a></h3>
                                 <!-- <span class="status {{Content.extraClass}}"><i class="flaticon-save"></i> {{Content.openORclose}}</span> -->
                                 <span class="status {{'status-open'}}"><i class="flaticon-save"></i> {{Content.OpenClose}}</span>
 

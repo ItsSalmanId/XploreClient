@@ -34,7 +34,6 @@
                             "src/assets/fonts/flaticon.css",
                             "node_modules/boxicons/css/boxicons.min.css",
                             "src/styles.scss"
-
                         ],
                         "scripts": [
                         "node_modules/jquery/dist/jquery.min.js"

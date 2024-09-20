@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AddBusinessService } from '../../../services/AddBusiness/AddBusiness.service'
 import { BusinessDetail, BusinessBlogDetail, BusinessFilters } from "../../../models/AddBusiness/AddBusiness.model";
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-vertical-listings-left-sidebar',
@@ -20,11 +19,9 @@ export class VerticalListingsLeftSidebarComponent implements OnChanges {
     businessFilters: BusinessFilters; 
     businessFilteredListTemp: any[];
     @Input() value: number;
-    @Output() tabChange: EventEmitter<string> = new EventEmitter<string>();
-
     
 
-    constructor(private router: Router, private _addBusinessService: AddBusinessService) {
+    constructor(private _addBusinessService: AddBusinessService) {
         this.businessDetail = new BusinessDetail();
         this.businessDetailsList = [];
         this.businessBlogDetails = new BusinessBlogDetail();
@@ -54,14 +51,6 @@ export class VerticalListingsLeftSidebarComponent implements OnChanges {
         this.listCount = this.businessFilteredList.length;
         this.businessFilters = new BusinessFilters();
     }
-    selectBusiness(selectedBusinessId: number)
-  {
-    console.log(selectedBusinessId);
-    localStorage.setItem('selectedBusinessId', selectedBusinessId.toString());
-    localStorage.setItem('isCallFromVertical-left', "");
-    this.router.navigate(['/single-listings']);
-    this.tabChange.emit('tab1'); 
-  }
     applyCategoryFIlter()
     {
         // if(this.businessFilters.isCheckResturnat == true)
