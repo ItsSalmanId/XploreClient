@@ -978,6 +978,7 @@ button.log_btn:hover {
 .reels {
   display: flex;
   align-items: center;
+  padding-top: 20px !important;
   flex-direction: column;
   overflow-y: hidden;
 }
@@ -985,6 +986,7 @@ button.log_btn:hover {
   position: relative;
   width: 100%;
   display: flex;
+  margin-bottom: 10px;
   justify-content: center;
   height: 100%;
 }
@@ -1003,10 +1005,27 @@ button.log_btn:hover {
     height: 635px !important;
   }  
 }
-@media screen and (max-width: 498px) {
+@media screen and (max-width: 475px) {
   .reels .reel .video {
-    width: 320px;
-    height: 90vh;
+    // width: 242px;
+    height: 80vh;
+  }
+  .reels .reel .video .content {
+    
+    padding: 1em 10px !important;
+   
+  }
+}
+@media screen and (max-width:400px) {
+  .reels .reel .video {
+    width: 242px !important;
+    // height: 80vh;
+  }
+}
+@media screen and (max-width:500px) and (min-width:400px) {
+  .reels .reel .video {
+    width: 320px !important;
+    height: 80vh;
   }
 }
 .reels .reel .video video {
@@ -1023,12 +1042,12 @@ button.log_btn:hover {
   justify-content: space-between;
   height: 99%;
   padding: 1em 2.5em;
-  box-shadow: 5px 5px #16f5f5;
-  border: 1px solid #96e3e3;
+  // box-shadow: 5px 5px #16f5f5;
+  // border: 1px solid #96e3e3;
   border-radius: 5px;
 }
 .reels .reel .video .content:hover {
-  box-shadow: 5px 5px #5ff0f0;
+  // box-shadow: 5px 5px #5ff0f0;
   cursor: pointer;
 }
 .reels .reel .video .content img {
@@ -2150,8 +2169,400 @@ box-shadow: 5px 5px #16f5f5 !important;
   border-radius: 10px;
 }
 
+::ng-deep .dropzone.dz-wrapper .dz-message {
+  position: relative;
+  display: inline-block;
+  overflow: visible !important;
+  width: 260px !important;
+  height: 40px;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  margin:10px 0px !important;
+  border: 2px dashed #aaa;
+  background-color: #eee;
+}
+::ng-deep .dropzone.dz-wrapper {
+  text-align: center !important;
+}
+@media screen and (max-width: 475px) {
+  ::ng-deep .dropzone.dz-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}
+//  story-show css
 
-///
-/// 
-/// 
+ 
+.story-overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.reel-container {
+  position: relative;
+  width: 100%; /* Increased width for a larger reel box */
+  max-width: 100%; /* Adjust as needed */
+  height: 100%; /* Increased height to accommodate video and footer */
+  background: black;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 40px;
+  width: 40px;
+  background-color: white;
+  border-radius: 50%;
+  i {
+    font-size: 15px;
+    font-weight: bold;
+  }
+}
+
+.navigation-buttons {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.reel-item {
+  position: absolute;
+  width: 25%;
+  height: 90%;
+  background-color: black;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+
+  &.active {
+    opacity: 1;
+  }
+
+  .video-wrapper {
+    width: 100%;
+    height: 87%; /* Adjust height as needed */
+  }
+
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .status-bar-wrapper {
+    position: absolute;
+    top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .status-bar {
+      width: 60px;
+      height: 4px;
+      background: white;
+      margin: 0 5px;
+      border-radius: 2px;
+      transition: background 0.5s ease-in-out;
+    }
+
+    .status-bar.active {
+      background: red;
+    }
+  }
+
+  .reel-footer {
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7); /* Darker background for better contrast */
+    position: absolute;
+    bottom: 0;
+    box-sizing: border-box;
+  
+    .reel-actions {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      color: white;
+  
+      button {
+        background: transparent;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+  
+        .heart-icon {
+          font-size: 22px;
+          margin-right: 5px;
+          transition: color 0.3s ease;
+        }
+  
+        .heart-icon.liked {
+          color: red; /* Red color for liked state */
+        }
+  
+        &:hover {
+          opacity: 0.8; /* Slight opacity change on hover */
+        }
+      }
+    }
+  
+    .comment-section {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.7); /* Consistent background color */
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+  
+      input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        color: white; /* Ensure input text is white */
+        padding: 5px;
+        border-radius: 5px;
+        margin-right: 10px;
+        outline: none; /* Remove default input outline */
+      }
+  
+      button {
+        background: transparent;
+        border: none;
+        color: white; /* Ensure button text is white */
+        cursor: pointer;
+        font-size: 16px;
+      }
+    }
+  }
+  
+}
+
+
+
+.prev-button {
+  background-color: white;
+  height: 30px;
+  width: 30px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: absolute;
+  left: 30% !important;
+  z-index: 1000;
+}
+.next-button {
+  background-color: white;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  border: none;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: absolute;
+  right: 30% !important;
+  z-index: 1000;
+}
+.prev-button i {
+  font-size: 11px;
+  padding-left: 1px;
+  font-weight: 900;
+}
+.next-button i {
+  font-size: 11px;
+  font-weight: 900;
+  padding-left: 1px;
+}
+.profile-name {
+  width: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  z-index: 99;
+}
+.profile-name img {
+  height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
+.profile-name h4 {
+  color: white !important;
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+.prev-story-person {
+  width: 151px;
+    height: 229px;
+    position: absolute;
+    left: 22%;
+    top: 29%;
+    border-radius: 10px;
+}
+.prev-story-person img {
+  height: 100%;
+  border-radius: 10px;
+
+}
+.next-story-person {
+  width: 151px;
+    height: 229px;
+    position: absolute;
+    right: 22%;
+    top: 29%;
+    border-radius: 10px;
+}
+.next-story-person img {
+  height: 100%;
+  border-radius: 10px;
+
+}
+
+@media screen and (max-width:1440px) {
+  .prev-story-person {
+    width: 185px !important;
+    height: 295px;
+    
+  }
+  .next-story-person {
+    width: 185px !important;
+    height: 295px;
+    
+  }
+   
+}
+
+@media screen and (max-width:1024px) {
+  .prev-story-person {
+    width: 165px !important;
+    height: 262px;
+    left: 18%;
+  }
+  .next-story-person {
+    width: 165px !important;
+    height: 262px;
+    right: 18%;
+  }
+   
+}
+@media screen and (min-width:1024px) and (max-width:1300px) {
+  .prev-story-person {
+    top: 25%;
+    left: 20% !important;
+  }
+  .next-story-person {
+   top: 25%;
+    right: 20% !important;
+  }
+   
+}
+
+@media screen and (max-width: 768px) {
+  .prev-story-person {
+    width: 150px !important;
+    height: 240px;
+    left: 9% !important;
+    top: 25%;
+  }
+
+  .next-story-person {
+    width: 150px !important;
+    height: 240px;
+    right: 9% !important;
+    top: 25%;
+  }
+
+  .reel-item {
+    width: 35% !important; /* Ensure width is applied here */
+  }
+}
+@media  screen and (max-width:700px) {
+  .prev-story-person {
+    display: none;
+  }
+  .next-story-person {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .reel-item {
+    width:100% !important; /* Override previous width with !important */
+    max-width: 280px;
+  }
+  .next-button {
+    right: 8% !important;
+  }
+  .prev-button  {
+    left: 8% !important;
+  }
+}
+@media screen and (max-width: 500px) {
+   
+  .next-button {
+    right: 3% !important;
+  }
+  .prev-button  {
+    left: 3% !important;
+  }
+  .close-button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 9;
+    height: 30px;
+    width: 30px;
+  }
+  .close-button i {
+    font-size: 12px;
+  }
+}
+
+
+.reel-container-scroll{
+  overflow: hidden !important; /* Hide the scrollbar */
+  height: 100vh !important; /* Set height to full viewport */
+  position: relative !important;
+}
+
+.reel-container-scroll:focus {
+  outline: none !important; /* Remove focus outline */
+}
+
 
