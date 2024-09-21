@@ -4130,4 +4130,57 @@ textarea.form-control {
       transform: rotate(360deg);
     }
   }
+
+  
+  .postDetailslider .owl-theme .owl-nav {
+    position: absolute !important;
+    top: 50% !important;
+    width: 100%;
+  }
+  .postDetailslider .owl-theme .owl-nav .owl-next {
+      position: absolute !important;
+      right: 0px !important;
+      background-color: white;
+      height: 30px;
+      width: 30px;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      
+  }
+  .postDetailslider .owl-theme .owl-nav .owl-prev {
+    position: absolute !important;
+    left: 0px !important;
+    background-color: white;
+    height: 30px;
+    width: 30px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    
+}
+.postDetailslider .owl-theme .owl-nav .owl-prev i {
+    font-size: 11px;
+    font-weight: 900;
+    padding-left: 1px;
+    color: black !important;
+}
+.postDetailslider .owl-theme .owl-nav .owl-next i {
+    font-size: 11px;
+    font-weight: 900;
+    padding-left: 1px;
+    color: black !important;
+}
+.postDetailslider .owl-theme .owl-nav .owl-prev:hover {
+    background-color: rgba(255, 255, 255, 0.484) !important;
+    transition: 0.3s ease-in;
+  }
+  .postDetailslider .owl-theme .owl-nav .owl-next:hover {
+    background-color: rgba(255, 255, 255, 0.484) !important;
+    transition: 0.3s ease-in;
+  }
   

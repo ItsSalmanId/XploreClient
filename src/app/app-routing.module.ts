@@ -43,7 +43,7 @@ import { DashboardEditListingsComponent } from './components/pages/dashboard/das
 import { DashboardAddBlogComponent } from './components/pages/dashboard/dashboard-add-blog/dashboard-add-blog.component';
 import { DashboardUserDetailsComponent } from './components/pages/dashboard/dashboard-user-details/dashboard-user-details.component';
 import { DashboardAllListingsComponent } from './components/pages/dashboard/dashboard-all-listings/dashboard-all-listings.component';
-import { AuthGuard } from '../../../Xploradoor/src/app/services/AuthService/auth.guard';
+// import { AuthGuard } from '../../../Xploradoor/src/app/services/AuthService/auth.guard';
 import { ReelsStatusComponent } from './components/pages/reels-status/reels-status.component';
 import { ReelsVertical } from './components/pages/reels-listings/reels-listings.component';
 
@@ -68,8 +68,8 @@ const routes: Routes = [
     {path: 'categories', component: CategoriesComponent},
     {path: 'destinations', component: TopPlaceComponent},
     {path: 'vertical-listings-left-sidebar', component: VerticalListingsLeftSidebarComponent},
-    {path: 'vertical-listings-right-sidebar', component: VerticalListingsRightSidebarComponent, canActivate: [AuthGuard]},
-    {path: 'reels-vertical', component: ReelsVertical, canActivate: [AuthGuard]},
+    {path: 'vertical-listings-right-sidebar', component: VerticalListingsRightSidebarComponent},
+    {path: 'reels-vertical', component: ReelsVertical},
     {path: 'vertical-listings-full-width', component: VerticalListingsFullWidthComponent},
     {path: 'grid-listings-left-sidebar', component: GridListingsLeftSidebarComponent},
     {path: 'grid-listings-right-sidebar', component: GridListingsRightSidebarComponent},

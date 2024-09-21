@@ -90,7 +90,7 @@ import { DashboardAddBlogComponent } from './components/pages/dashboard/dashboar
 import { DashboardUserDetailsComponent } from './components/pages/dashboard/dashboard-user-details/dashboard-user-details.component';
 import { DashboardAllListingsComponent } from './components/pages/dashboard/dashboard-all-listings/dashboard-all-listings.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from '../../../Xploradoor/src/app/services/AuthService/auth.interceptor';
+// import { AuthInterceptor } from '../../../Xploradoor/src/app/services/AuthService/auth.interceptor';
 import { CommonCall } from './components/common/commonCall/commonCall.component'; // Adjust the path
 import { DatePipe } from '@angular/common';
 import { ReelsStatusComponent } from './components/pages/reels-status/reels-status.component';
@@ -199,8 +199,8 @@ const DROPZONECONFIG: DropzoneConfigInterface = {
         AccountUtility,
         GlobalSettingService,
         GenericUtility,
-        DatePipe,
-        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+        DatePipe
+         
     ],
     bootstrap: [AppComponent]
 })

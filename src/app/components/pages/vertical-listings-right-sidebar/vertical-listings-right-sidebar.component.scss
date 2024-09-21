@@ -2555,6 +2555,185 @@ box-shadow: 5px 5px #16f5f5 !important;
   }
 }
 
+.popup-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0000009c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-content {
+  background-color: white;
+ 
+  height: 100%;
+ max-width: 130vh;
+  max-height: 85vh;
+  width: 100%;
+}
+.img-container {
+  height: 85vh;
+}
+.img-container img {
+  height: 100%;
+}
+.sending-container {
+  padding-right: 10px;
+  
+}
+.sending-container .desc .icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+.sending-container .desc .icons div img {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+.post_page .icon_left img {
+  align-items: center;
+  margin-right: 10px;
+}
+.sending-container .desc a.bold {
+  font-weight: 600;
+  color: rgb(38, 38, 38);
+}
+.sending-container .desc input {
+  border: none;
+  color: rgb(142, 142, 142);
+}
+ .info {
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 10px;
+ 
+}
+ .info .person img {
+  border-radius: 30px;
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+}
+ .info .person a {
+  color: rgb(38, 38, 38);
+  font-weight: 600;
+  
+
+  font-size: 15px;
+}
+ .info .person span {
+  color: rgb(142, 142, 142);
+  list-style: circle;
+  font-weight: 400;
+  font-size: 10px;
+  position: relative;
+  top: -1px;
+}
+ .info .person span {
+  color: rgb(142, 142, 142);
+  list-style: circle;
+  font-weight: 400;
+  position: relative;
+  top: -1px;
+}
+ .info .more img {
+  width: 15px;
+  height: 15px;
+}
+.loved {
+  display: none;
+}
+.comment-container {
+  height: 58vh;
+  overflow-y: scroll;
+}
+ 
+
+/* Webkit-based browsers (Chrome, Safari, Edge) */
+.comment-container::-webkit-scrollbar {
+  width: 4px; /* Set the scrollbar width to 2px */
+}
+
+.comment-container::-webkit-scrollbar-thumb {
+  background-color: #999; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounding the scrollbar thumb */
+}
+
+.comment-container::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Color of the scrollbar track */
+}
+.cross-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.cross-icon i {
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.popup-modal .prev-button {
+  position: absolute;
+  top: 50% !important;
+  left: 10px !important;
+}
+.popup-modal .next-button {
+  position: absolute;
+  top: 50% !important;
+  right: 10px !important;
+}
+.postDetailslider {
+  position: relative;
+}
+.postDetailslider .owl-theme .owl-nav {
+  position: absolute !important;
+  top: 50% !important;
+  
+}
+
+ 
+@media screen and (min-width:1500px)   {
+  .comment-container {
+    height: 71vh !important;
+  }
+}
+@media screen and (max-width:768px) {
+  
+  .comment-container {
+    height: 55vh !important;
+  }
+}
+@media screen and (max-width:767px) {
+  
+  .comment-container {
+    display: none !important;
+  }
+  .img-container {
+    height: 55vh !important;
+  }
+  .info {
+    padding-left: 10px;
+  }
+  .sending-container {
+    padding-left: 10px;
+  }
+}
+@media screen and (max-width:686px) and (min-width:319px) {
+  .popup-content {
+    max-width: 51vh !important;
+  }
+}
 
 .reel-container-scroll{
   overflow: hidden !important; /* Hide the scrollbar */
