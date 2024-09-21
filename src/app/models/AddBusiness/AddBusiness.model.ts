@@ -114,8 +114,8 @@ export class UserAccount {
     ReelsCount: number;
     FollowingCount: number;
     FollowersCount: number;
-    reelsDetailsList: ReelsDetails[] = [];
-    savedReelsDetailsList: ReelsDetails[] = [];
+    UserReelsDetails: ReelsDetails[] = [];
+    UserSavedReelsDetails: ReelsDetails[] = [];
     REEL_STATUS: boolean;
 
 }
