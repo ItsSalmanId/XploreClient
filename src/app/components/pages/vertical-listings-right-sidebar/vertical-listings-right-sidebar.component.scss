@@ -142,10 +142,9 @@ button.log_btn:hover {
 .cart div img {
   margin: auto;
   margin-right: 10px;
-  width: 56px;
+  width: 35px;
   border: 1px solid rgb(142, 142, 142);
-  border-radius: 30px;
-  padding: 1px;
+  border-radius: 50%;
 }
 .cart div .info {
   display: flex;
@@ -182,6 +181,7 @@ button.log_btn:hover {
   align-items: baseline;
   justify-content: space-between;
   color: #262626;
+  padding: 6px 7px 5px 10px;
 }
 .comments .comment button {
   font-size: 12px;
@@ -202,8 +202,9 @@ button.log_btn:hover {
   align-items: baseline;
 }
 .comments .comment .content .person h4 {
-  font-size: 14px;
-  margin: 0;
+  font-size: 15px;
+    margin: 0;
+    font-weight: 500;
 }
 .comments .comment .content .person span {
   margin-left: 10px;
@@ -212,7 +213,8 @@ button.log_btn:hover {
 }
 .comments .comment .content p {
   margin: 0;
-  font-size: 14px;
+  color: #000000d4;
+  font-size: 12px;
 }
 .comments .comment .content .replay {
   display: flex;
@@ -887,11 +889,15 @@ button.log_btn:hover {
   left: -20em;
   height: 100vh;
   padding: 1.5em 1em;
+  position: fixed;
 }
 .search_section.show {
   transition: all 1s ease;
   opacity: 1 !important;
-  left: 12.6em;
+  left: 10.6em;
+  border-radius: 0px 25px 25px 0px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  
 }
 @media screen and (max-width: 991px) {
   .search_section.show {
@@ -913,6 +919,14 @@ button.log_btn:hover {
   border-radius: 5px;
   padding: 5px;
   margin-bottom: 1.5em;
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.search_section form i {
+  color: #00000059;
+    font-size: 14px;
+    padding-right: 8px;
 }
 .search_section form input {
   background: transparent !important;
@@ -2584,7 +2598,11 @@ box-shadow: 5px 5px #16f5f5 !important;
 }
 .sending-container {
   padding-right: 10px;
+  border-top: 1px solid #0000007d;
   
+}
+.sending-container .desc  {
+  padding-left: 15px !important;
 }
 .sending-container .desc .icons {
   display: flex;
@@ -2609,29 +2627,28 @@ box-shadow: 5px 5px #16f5f5 !important;
   border: none;
   color: rgb(142, 142, 142);
 }
- .info {
+ .post-detail-top .info {
   margin-bottom: 5px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding-right: 10px;
+ padding: 12px 7px 12px 10px ;
+ border-bottom: 1px solid rgb(172, 171, 171);
  
 }
- .info .person img {
+ .post-detail-top .info .person img {
   border-radius: 30px;
     width: 32px;
     height: 32px;
     margin-right: 10px;
 }
- .info .person a {
+ .post-detail-top .info .person a {
   color: rgb(38, 38, 38);
-  font-weight: 600;
-  
-
-  font-size: 15px;
+  font-weight: 500;
+  font-size: 19px;
 }
- .info .person span {
+ .post-detail-top .info .person span {
   color: rgb(142, 142, 142);
   list-style: circle;
   font-weight: 400;
@@ -2646,7 +2663,7 @@ box-shadow: 5px 5px #16f5f5 !important;
   position: relative;
   top: -1px;
 }
- .info .more img {
+ .post-detail-top .info .more img {
   width: 15px;
   height: 15px;
 }
@@ -2654,7 +2671,7 @@ box-shadow: 5px 5px #16f5f5 !important;
   display: none;
 }
 .comment-container {
-  height: 58vh;
+  height: 55vh;
   overflow-y: scroll;
 }
  
@@ -2711,7 +2728,7 @@ box-shadow: 5px 5px #16f5f5 !important;
 @media screen and (max-width:768px) {
   
   .comment-container {
-    height: 55vh !important;
+    height: 49vh !important;
   }
 }
 @media screen and (max-width:767px) {
@@ -2722,19 +2739,27 @@ box-shadow: 5px 5px #16f5f5 !important;
   .img-container {
     height: 55vh !important;
   }
-  .info {
-    padding-left: 10px;
+  .post-detail-top .info {
+    padding: 2px 7px 3px 10px;
+    margin-bottom: 0px;
   }
   .sending-container {
     padding-left: 10px;
+    
   }
 }
-@media screen and (max-width:686px) and (min-width:319px) {
+@media screen and (max-width:686px) and (min-width:230px) {
   .popup-content {
     max-width: 51vh !important;
   }
+  .post-detail-top .info {
+    border-bottom: 0px;
+  }
 }
-
+.sending-container {
+  padding-right: 4px !important;
+  padding-left: 0px !important;
+}
 .reel-container-scroll{
   overflow: hidden !important; /* Hide the scrollbar */
   height: 120vh !important; /* Set height to full viewport */
