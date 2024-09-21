@@ -20,6 +20,12 @@
         <div class="menu">
           <ul>
             <li>
+              <a class="active" href="#">
+                <i href="#" class="bi bi-house-door" style="font-size: 17px;" ></i>&nbsp;&nbsp;
+                <span class="d-none d-lg-block">Main Page</span>
+              </a>
+            </li>
+            <li>
               <a class="active">
                 <i class="bi bi-house-door" style="font-size: 17px;" (click)="toggleMenuOption('Home')"></i>&nbsp;&nbsp;
                 <span class="d-none d-lg-block" (click)="toggleMenuOption('Home')">Home</span>
@@ -31,7 +37,7 @@
                 <span class="d-none d-lg-block search">Search</span>
               </a>
             </li>
-            <li>
+            <!-- <li>
               <a>
                 <svg aria-label="Explore" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="20" role="img"
                   viewBox="0 0 24 24" width="18">
@@ -42,7 +48,7 @@
                 </svg>&nbsp;&nbsp;
                 <span class="d-none d-lg-block">Explore</span>
               </a>
-            </li>
+            </li> -->
             <li>
               <a (click)="toggleMenuOption('Reels')">
                 <svg aria-label="Reels" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img"
@@ -65,18 +71,18 @@
                 <span class="d-none d-lg-block" (click)="toggleMenuOption('Reels')">Reels</span>
               </a>
             </li>
-            <li>
+            <!-- <li>
               <a href="./me">
                 <i class="bi bi-chat-left-text" style="font-size: 17px;"></i> &nbsp;&nbsp;
                 <span class="d-none d-lg-block">Messages</span>
               </a>
-            </li>
-            <li class="notification_icon">
+            </li> -->
+            <!-- <li class="notification_icon">
               <a href="#">
                 <i class="bi bi-bell" style="font-size: 17px;"></i>&nbsp;&nbsp;
                 <span class="d-none d-lg-block">Notifications</span>
               </a>
-            </li>
+            </li> -->
             <li>
               <a href="#" data-bs-toggle="modal" data-bs-target="#create_modal">
                 <i class="bi bi-plus-circle" style="font-size: 17px;"></i>&nbsp;&nbsp;
@@ -529,57 +535,60 @@
     </div>
   </div>
 
-  <!-- next model -->
-  <div class="modal fade custom-modal" id="create_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title w-100 fs-5 d-flex align-items-end justify-content-between" id="exampleModalLabel">
-            <span class="title_create">Create new post</span>
-            <button class="next_btn_post btn_link"></button>
-          </h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>Drag photos and videos here</p>
-          <button class="btn btn-primary btn_upload custom-btn-upload" (click)="addUpdateReelsStatus()">
-            Post
-          </button>
-                <div>
-            <div class="add-listings-box">
-              <h3>Gallery</h3>
-              <dropzone id="p-uploadimg-dropzone" [config]="config" [message]="'Drag photos and videos here'" 
-              class="custom-dropzone"
-              (maxFilesExceeded)="onMaxFilesExceeded()"
-              (maxFilesReached)="onMaxFilesReached()" 
-              (removedFile)="onRemoveFile($event)" 
-              (error)="onUploadError($event)"
-              (success)="onUploadSuccess($event)" 
-              (canceled)="onCanceled($event)">
-            </dropzone> 
-                  </div>
-            <!-- <div class="col-md-12">
-              <ol id="ol-uploadimg-imgname" class="custom-file-list">
-                <li *ngFor="let fileName of uploadedFilesName; let ndx=index" [id]="'opt-uploadimg-imgname-'+ndx">
-                  <a [id]="'a-imgname-'+ndx" href="FoxDocumentDirectory\RequestForOrder\UploadImages\{{fileName}}" target="_blank">{{fileName}}</a>
-                </li>
-              </ol>
-            </div> -->
-            <!-- <div class="clearfix"></div>
-            <dropzone id="p-uploadimg-dropzone" [config]="config" [message]="'Drag photos and videos here'" 
-              class="custom-dropzone"
-              (maxFilesExceeded)="onMaxFilesExceeded()"
-              (maxFilesReached)="onMaxFilesReached()" 
-              (removedFile)="onRemoveFile($event)" 
-              (error)="onUploadError($event)"
-              (success)="onUploadSuccess($event)" 
-              (canceled)="onCanceled($event)">
-            </dropzone> -->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+ <!-- next model -->
+ <div class="modal fade custom-modal" id="create_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+ aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h1 class="modal-title w-100 fs-5 d-flex align-items-end justify-content-between" id="exampleModalLabel">
+         <span class="title_create">Create new post</span>
+         <button class="next_btn_post btn_link"></button>
+       </h1>
+       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     </div>
+     <div class="modal-body" style="overflow-y: auto !important;">
+       <img class="up_load" src="../../../../assets/images/upload.png" alt="upload">
+       <h3>Gallery</h3>
+       <p class="py-0" style="padding: 0px;margin: 17px 0px 0px 0px;">Drag photos and videos here</p>
+       <div>
+         <div class="add-listings-box">
+
+           <dropzone id="p-uploadimg-dropzone" [config]="config" [message]="'Drag photos and videos here'"
+             class="custom-dropzone" (maxFilesExceeded)="onMaxFilesExceeded()"
+             (maxFilesReached)="onMaxFilesReached()" (removedFile)="onRemoveFile($event)"
+             (error)="onUploadError($event)" (success)="onUploadSuccess($event, true)" (canceled)="onCanceled($event)">
+           </dropzone>
+           <div class="d-flex justify-content-center">
+             <button class="btn btn-primary btn_upload" style="width: 100%;
+ max-width: 270px; border:1px solid #0ec6c6;background-color: transparent;color: #0ec6c6;"
+               (click)="addUpdateReelsStatus()">
+               Post
+             </button>
+           </div>
+         </div>
+         <!-- <div class="col-md-12">
+           <ol id="ol-uploadimg-imgname" class="custom-file-list">
+             <li *ngFor="let fileName of uploadedFilesName; let ndx=index" [id]="'opt-uploadimg-imgname-'+ndx">
+               <a [id]="'a-imgname-'+ndx" href="FoxDocumentDirectory\RequestForOrder\UploadImages\{{fileName}}" target="_blank">{{fileName}}</a>
+             </li>
+           </ol>
+         </div> -->
+         <!-- <div class="clearfix"></div>
+         <dropzone id="p-uploadimg-dropzone" [config]="config" [message]="'Drag photos and videos here'" 
+           class="custom-dropzone"
+           (maxFilesExceeded)="onMaxFilesExceeded()"
+           (maxFilesReached)="onMaxFilesReached()" 
+           (removedFile)="onRemoveFile($event)" 
+           (error)="onUploadError($event)"
+           (success)="onUploadSuccess($event)" 
+           (canceled)="onCanceled($event)">
+         </dropzone> -->
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
 
   
   <!-- story model -->
@@ -593,33 +602,38 @@
           </h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" style="overflow-y: auto !important;">
           <img class="up_load" src="../../../../assets/images/upload.png" alt="upload">
-          <p>Drag photos and videos here</p>
-          <button class="btn btn-primary btn_upload"
-            style="border:1px solid #0ec6c6;background-color: transparent;color: #0ec6c6;" (click)="addUpdateReels()">
-            Post
-          </button>
+          <h3>Gallery</h3>
+          <p style="padding: 0px; margin: 0px;">Drag photos and videos here</p>
+
           <div>
             <div class="col-md-12">
-                <ol id="ol-uploadimg-imgname">
-                    <li *ngFor="let fileName of uploadedFilesName; let ndx=index" [id]="'opt-uploadimg-imgname-'+ndx"><a [id]="'a-imgname-'+ndx" href="FoxDocumentDirectory\RequestForOrder\UploadImages\{{fileName}}"
-                            target="_blank">{{fileName}}</a></li>
-                </ol>
+              <ol id="ol-uploadimg-imgname">
+                <li *ngFor="let fileName of uploadedFilesName; let ndx=index" [id]="'opt-uploadimg-imgname-'+ndx"><a
+                    [id]="'a-imgname-'+ndx" href="FoxDocumentDirectory\RequestForOrder\UploadImages\{{fileName}}"
+                    target="_blank">{{fileName}}</a></li>
+              </ol>
             </div>
-            
+
             <div class="clearfix"></div>
-            
-            <dropzone id="p-uploadimg-dropzone" [config]="config" [message]="'Click or Drag Images and Documents here to upload (.pdf, .png, .jpg/.jpeg, .tif/.tiff, .bmp)'" (maxFilesExceeded)="onMaxFilesExceeded()"
-    (maxFilesReached)="onMaxFilesReached()" (removedFile)="onRemoveFile($event)" (error)="onUploadError($event)"
-    (success)="onUploadSuccess($event)" (canceled)="onCanceled($event)"></dropzone>
-        </div>
-          <button class="btn btn-primary btn_upload"
-            style="border:1px solid #0ec6c6;background-color: transparent;color: #0ec6c6;">
+
+            <dropzone id="p-uploadimg-dropzone" [config]="config" [message]="'Drag photos and videos here'"
+              (maxFilesExceeded)="onMaxFilesExceeded()" (maxFilesReached)="onMaxFilesReached()"
+              (removedFile)="onRemoveFile($event)" (error)="onUploadError($event)" (success)="onUploadSuccess($event)"
+              (canceled)="onCanceled($event)"></dropzone>
+          </div>
+          <button class="btn btn-primary btn_upload" style="width: 100%;
+    max-width: 270px; border:1px solid #0ec6c6;background-color: transparent;color: #0ec6c6;">
             select from your device
             <form id="upload-form">
               <input class="input_select" type="file" id="image-upload" name="image-upload">
             </form>
+          </button>
+          <button class="btn btn-primary btn_upload" style="width: 100%;
+    max-width: 270px;margin-top: 10px; border:1px solid #0ec6c6;background-color: transparent;color: #0ec6c6;"
+            (click)="addUpdateReels()">
+            Post
           </button>
 
           <!-- <div class="add-listings-box">
@@ -668,7 +682,6 @@
       </div>
     </div>
   </div>
-
   <!-- Start Main Banner Area -->
 
 <div class="story-overlay" *ngIf="showStory">
@@ -709,12 +722,15 @@
 
 
   <!-- reels -->
-  <div class="d-flex flex-column" style="overflow: hidden;" >
-    <div class="" style="width: 100%; max-width: 800px; margin: 0 170px 0 auto;">
+  <div class="d-flex flex-column reel-container-scroll" >
+    <!-- <div class="" style="width: 100%; max-width: 800px; margin: 0 170px 0 auto;">
       <app-category></app-category>
-    </div>
-    <div class="reels" *ngIf="this.currentOption == 'ReelsTab'" 
+    </div> -->
+    <div tabindex="0" class="reels" *ngIf="currentOption == 'ReelsTab'"
+    (focusout)="onFocusOut()"
+    (focus)="onFocus()" 
     (window:keydown)="onKeydown($event)" (wheel)="onScroll($event)"
+    #reelContainer  
     >
       <div *ngFor="let video of reelsDetailsList; let i = index" class="reel" [id]="'reel-' + i">
         <div class="video">
@@ -777,7 +793,7 @@
           </button>
           </div>
           <div class="send">
-            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#send_message_modal">
+            <button type="button" class="btn">
               <img src="../../../../assets/images/send.png">
             </button>
           </div>
@@ -823,22 +839,22 @@
       <div class="profile-header-box">
         <img src="assets/img/user1.jpg" alt="Profile Picture" class="profile-picture" />
         <div class="profile-info">
-          <h1 class="username">{{this.userReelsAccount[0].User_Name}}</h1>
+          <h1 class="username">{{this.userReelsAccountModel.User_Name}}</h1>
           <div class="profile-stats">
             <div class="stat">
-              <span class="stat-number">{{this.userReelsAccount[0].ReelsCount}}</span>
+              <span class="stat-number">{{this.userReelsAccountModel.ReelsCount}}</span>
               <span class="stat-label">Posts</span>
             </div>
             <div class="stat">
-              <span class="stat-number">{{this.userReelsAccount[0].FollowersCount}}</span>
+              <span class="stat-number">{{this.userReelsAccountModel.FollowersCount}}</span>
               <span class="stat-label">Followers</span>
             </div>
             <div class="stat">
-              <span class="stat-number">{{this.userReelsAccount[0].FollowingCount}}</span>
+              <span class="stat-number">{{this.userReelsAccountModel.FollowingCount}}</span>
               <span class="stat-label">Following</span>
             </div>
           </div>
-          <button class="edit-profile-button">Edit Profile</button>
+          <!-- <button class="edit-profile-button">Edit Profile</button> -->
         </div>
       </div>
     </div>
@@ -861,16 +877,16 @@
               </div>
             </div> -->
 
-            <div *ngFor="let video of userReelsAccount[0].UserReelsDetails; let i = index" class="reel-item new-reel-item">
-              <div class="video-wrapper new-video-wrapper">
-                <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" class="new-video" autoplay loop></video>
+            <div *ngFor="let video of userReelsAccount[0].UserReelsDetails; let i = index" class="new-reel-item">
+              <div class="new-video-wrapper">
+                <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" class="new-video" loop></video>
               </div>
             </div>
           </div>
           <div *ngIf="this.profileTab == 'SaveReelsTab'">
-            <div *ngFor="let video of userReelsAccount[0].UserSavedReelsDetails; let i = index" class="reel-item">
-              <div class="video-wrapper">
-                  <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" autoplay loop></video>
+            <div *ngFor="let video of userReelsAccount[0].UserSavedReelsDetails; let i = index" class="new-reel-item">
+              <div class="new-video-wrapper">
+                  <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName"  loop></video>
               </div>
             </div>
           </div>
@@ -894,6 +910,7 @@
 
   </div>
 </div>
+<app-common-call></app-common-call>
 
 
 

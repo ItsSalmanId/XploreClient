@@ -14,6 +14,7 @@ import * as $ from 'jquery'; // Import jQuery
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { CommonCall } from '../../../components/common/commonCall/commonCall.component';
 
 
 
@@ -63,6 +64,8 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
 
 
     @ViewChild('commentInput') commentInput!: ElementRef;
+    @ViewChild('reelContainer') reelContainer: ElementRef;
+    @ViewChild(CommonCall, { static: false }) childComponent!: CommonCall;
 
     videos = [
         {
@@ -119,7 +122,8 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
     posts: { id: number; image: string; }[];
     selectedTab: string;
     currentOption: string;
-    userReelsAccount: UserAccount;
+    userReelsAccount: UserAccount[];
+    userReelsAccountModel: UserAccount;
     profileTab: string;
     showStory: boolean = false;
   currentStory: any;
@@ -202,6 +206,8 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
     filteredUserAccounts: UserAccount[];
     currentReelIndex: number = 0;
     scrollAmount: number = 0;
+    isKeyDownProcessed: any;
+  containerFocused: boolean;
 
 
 
@@ -219,6 +225,9 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
             this.userAccount = new UserAccount();
             this.reelSaved = new ReelSaved();
             this.isShowStories = false;
+            this.userReelsAccountModel = new UserAccount();
+            this.userReelsAccount = [];
+            //this.userReelsAccountModel = new UserAccount();
 
 
 
@@ -231,7 +240,14 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
                // this.config.acceptedFiles = '.pdf, .png, .jpg, .JPG, .jpeg, .tiff, .tif, .docx';//.pdf .png .jpg .JPG .jpeg .tiff .tif .docx
                this.config.acceptedFiles = '.pdf, .jpg, .jpeg, .png, .tif, .gif, .tiff, .bmp';
                this.config.acceptedFiles = ".pdf, .png, .jpg, .jpeg, .tif, .tiff, .bmp, .mp4, .mov, .avi", // Add video formats here
-
+               this.config.init = function () {
+                this.on('addedfile', function (file) {
+                  if (this.files.length > 1) {
+                    this.removeFile(file);   // Automatically remove the additional file
+                    alert('You can only upload one video!');
+                  }
+                });
+              }
                //, .docx, .txt
                this.config.maxFiles = 5;
                this.config.maxFilesize = 20;
@@ -280,6 +296,7 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
 
         }
         ngOnInit(): void {
+            this.currentOption = 'HomeTab';
             this.videoSrc = '../../../../assets/video/video1.mp4',
             this.authorImg ='../../../../assets/images/profile_img.jpg',
             // Scroll to the top when the component initializes
@@ -289,18 +306,46 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
             this.pauseAllVideos();
             //this.getReelsStatus();
         }
+        onFocusOut() {
+          this.containerFocused = false;
+        }
 
         // Listen for keyboard events (e.g., ArrowDown)
   onKeydown(event: KeyboardEvent) {
-    this.isLoading = true;
+    if (this.containerFocused) {
+    // Prevent default scrolling behavior for ArrowUp and ArrowDown keys
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault(); // Prevent default scrolling
+    }
+    //this.ShowToast("KeyDown")
+
+    if (this.isKeyDownProcessed) return;
+    //this.ShowToast("KeyDown", "checkon bases of red and greeen", this.isKeyDownProcessed);
+
+    this.isKeyDownProcessed = true;
+    //this.ShowToast("KeyDown", "checkon bases of red and greeen", this.isKeyDownProcessed);
+
     if (event.key === 'ArrowDown') {
+    this.isLoading = true;
       this.scrollToNextReel();
     }
     else if (event.key === 'ArrowUp') {
-        event.preventDefault();
+    this.isLoading = true;
+        
+      event.preventDefault();
         this.scrollToPreviousReel();
       }
+      setTimeout(() => {
+        this.isKeyDownProcessed = false;
+        this.isLoading = false;
+
+    }, 500);
   }
+  }
+  onFocus() {
+    this.containerFocused = true;
+  }
+  
 
   // Handle mouse scroll events (up and down)
   onScroll(event: WheelEvent) {
@@ -316,16 +361,24 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
 
   // Logic to move to the next reel and update the scroll
   scrollToNextReel() {
-    if (this.currentReelIndex < this.reelsDetailsList.length - 1) {
+    if (this.currentReelIndex <= this.reelsDetailsList.length - 1) {
         this.pauseAllVideos();
-        this.currentReelIndex++;
+        if(this.currentReelIndex != this.reelsDetailsList.length - 1)
+        {
+            this.currentReelIndex++;
+
+        }
+        //this.currentReelIndex++;
         const nextReel = document.getElementById('reel-' + this.currentReelIndex);
         if (nextReel) {
             setTimeout(() => {
                 nextReel.scrollIntoView({ behavior: 'smooth' });
                 this.togglePlay(this.currentReelIndex);
                 this.isLoading = false;
-            }, 500);
+                this.isKeyDownProcessed = false;
+                //this.ShowToast("KeyDown", "checkon bases of red and greeen", this.isKeyDownProcessed);
+
+            }, 900);
         }
       }
   }
@@ -339,9 +392,11 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
       if (prevReel) {
         setTimeout(() => {
             prevReel.scrollIntoView({ behavior: 'smooth' });
+            
             this.togglePlay(this.currentReelIndex);
             this.isLoading = false;
-        }, 500);
+            this.isKeyDownProcessed = false;
+        }, 900);
       }
     }
   }
@@ -368,8 +423,32 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
                     });
         }
 
+        pauseAllProfileVideos() {
+            // Check if videoElements exist and loop through each video
+            if (this.videoElements) {
+              this.videoElements.forEach((videoElement: ElementRef, index: number) => {
+                if (videoElement.nativeElement) {
+                  videoElement.nativeElement.pause();            // Pause the video
+                  videoElement.nativeElement.currentTime = 0;    // Reset to start from the beginning
+        
+                  // Ensure the isPlaying state is updated for both UserReelsDetails and UserSavedReelsDetails
+                  if (this.userReelsAccount[0]?.UserReelsDetails[index]) {
+                    this.userReelsAccount[0].UserReelsDetails[index].isPlaying = false;
+                  }
+                  if (this.userReelsAccount[0]?.UserSavedReelsDetails[index]) {
+                    this.userReelsAccount[0].UserSavedReelsDetails[index].isPlaying = false;
+                  }
+                }
+              });
+            }
+            
+            // Mark changes for Angular to update the view
+            this.cdr.detectChanges();
+          }
+        
         getReelsUserProfile()
         {
+            
             this.userAccount.APPLICATION_USER_ACCOUNTS_ID = Number(localStorage.getItem("Temp"));
     
             this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
@@ -379,6 +458,9 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
                     response => {
                         console.log(response);
                         this.userReelsAccount = response;
+                        this.userReelsAccountModel = this.userReelsAccount[0];
+                        this.pauseAllProfileVideos();
+                        //this.pauseAllVideos();
                        // this._spinner.hide();
                        //this.ShowToast("Alert", response.Message, response.success);
                        //this.toastr.success(response.Message, 'Toastr fun!');
@@ -496,13 +578,29 @@ closeReel() {
             }
             else if(selectedOption == 'Reels')
             {
+              this.currentReelIndex = 0;
                 this.currentOption = 'ReelsTab';
+                this.onFocus();
+                // this.videoElements.forEach((videoElement, index) => {
+                //     observer.observe(videoElement.nativeElement);
+                // });
+            
+                // Play the first video when the page loads
+                //if (this.videoElements.first) {
+                    this.playFirstVideo();
+                //}
+                      this.cdr.detectChanges();
             }
             else if(selectedOption == 'Profile')
                 {
                     this.currentOption = 'ProfileTab';
                     this.getReelsUserProfile()
                 }
+                else if(selectedOption == 'MainPage')
+                    {
+                        this.router.navigate(['/products-list']);
+
+                    }
 
           }
           filterUserAccounts() {
@@ -617,6 +715,15 @@ closeReel() {
     }
 
     ngAfterViewInit(): void {
+        if (this.childComponent) {
+            this.childComponent.userToken();
+          }
+        if (this.reelContainer) {
+            this.reelContainer.nativeElement.focus();
+        } else {
+            console.log('Reel container not found');
+        }
+        
         setTimeout(() => {
             this.updateWidth('.owl-item', '68.8px');
           }, 1000); // Adjust the delay as needed
@@ -629,26 +736,56 @@ closeReel() {
 
         const observer = new IntersectionObserver(this.handleIntersection.bind(this), options);
 
-        this.videoElements.forEach((videoElement, index) => {
-            observer.observe(videoElement.nativeElement);
-        });
-
-        // Play the first video when the page loads
-        if (this.videoElements.first) {
-            this.playFirstVideo();
-        }
+        
         setTimeout(() => {
             document.getElementById('comment-input')?.focus();
           }, 200);
 
-          setTimeout(() => {
-          this.reelsDetailsList.forEach((reel, index) => {
-            reel.isPlaying = false;
-        });
-        this.pauseAllVideos();
-        this.cdr.detectChanges();
-    }, 500);
+          if (this.currentOption == 'ReelsTab')
+          {
+            setTimeout(() => {
+                this.reelsDetailsList.forEach((reel, index) => {
+                  reel.isPlaying = false;
+              });
+              this.pauseAllVideos();
+              if (this.reelContainer) {
+                  this.reelContainer.nativeElement.focus();
+              } else {
+                  console.log('Reel container not found');
+              }
+              this.reelContainer.nativeElement.focus();
+              const firstVideo = this.videoElements.first;
+          if (firstVideo) {
+            firstVideo.nativeElement.play(); // Play the first video
+          }
+          this.videoElements.forEach((videoElement, index) => {
+              observer.observe(videoElement.nativeElement);
+          });
+      
+          // Play the first video when the page loads
+          if (this.videoElements.first) {
+              this.playFirstVideo();
+          }
+                this.cdr.detectChanges();
+              
+          }, 900);
+          }
+          
     }
+    ngOnChanges() {
+        // Detect changes when currentOption changes to 'ReelsTab'
+        if (this.currentOption == 'ReelsTab') {
+          this.cdr.detectChanges();
+          this.focusReelContainer();
+        }
+      }
+       focusReelContainer() {
+    if (this.reelContainer) {
+      this.reelContainer.nativeElement.focus();
+    } else {
+      console.log('Reel container not found');
+    }
+  }
     selectedReel(selectedReel: number)
     {
       this.isSelectedReel = selectedReel;
@@ -674,8 +811,12 @@ closeReel() {
                                 mainComment.replies = this.reelsCommentsDetails.filter(reply => reply.IS_REPLAY_COMMENT && reply.                              REPLAY_COMMENT_HEADER_ID === mainComment.REELS_COMMENTS_DETAILS_ID);
                               });
 
+                              const reel = this.reelsDetailsList.find((item: any) => 
+                                item.REELS_DETAILS_ID === this.reelsCommentsDetails[0].REELS_DETAILS_ID);
+                              reel.reelsCommentsModelList = this.reelsCommentsDetails;
+
+
                         this.wantToReplayTest = false;
-                         this.ShowToast("Xplore", "Your Reels has been successfully added.", true);            
                      });
              }
 
@@ -702,7 +843,7 @@ closeReel() {
                      response => {
                         this.wantToReplayTest = false;
                         this.getCommentsByReel();
-                         this.ShowToast("Xplore", "Your Reels has been successfully added.", true);            
+                         this.ShowToast("Xplore", "The comment has been submitted successfully.", true);            
                      });
              }
 
@@ -776,25 +917,56 @@ closeReel() {
            }
            else
            {
-            console.log(this.reelsDetails);
-            console.log("click on RegisterNow");
-            this.reelsDetails.USER_ID = Number(localStorage.getItem("Temp"));
-            this.reelsDetails.REEL_STATUS = true;
+              if(this.uploadedFilesName.length > 1)
+              {
+                this.ShowToast("Xplore", "At least one picture is required. Please upload one.", false);
+              }
+              else
+              {
+                console.log(this.reelsDetails);
+                console.log("click on RegisterNow");
+                this.reelsDetails.USER_ID = Number(localStorage.getItem("Temp"));
+                this.reelsDetails.REEL_STATUS = true;
+    
+                if (this.reelsDetails) {
+                    this.reelsDetails.uploadedFilesName = this.uploadedFilesName;
+                    //this._spinner.show();
+                    this._addBusinessService.addUpdateReelsStatus(this.reelsDetails).subscribe(
+                        response => {
+                            //this.config = new DropzoneConfig();
+                            this.uploadedFilesName = [];
+                            this.uploadedFilesNameClient = [];
+                            this.config.init = function () {
+                                this.on("removedfile", (file) => {
+                                    this.onRemoveFile({ name: file.name });
+                                  });
+                              }
 
-            if (this.reelsDetails) {
-                this.reelsDetails.uploadedFilesName = this.uploadedFilesName;
-                //this._spinner.show();
-                this._addBusinessService.addUpdateReelsStatus(this.reelsDetails).subscribe(
-                    response => {
-                        this.ShowToast("Xplore", "Your reels status has been successfully added.", true);
-                        //this.router.navigate(['/dashboard-my-listings']);
-                       // this._spinner.hide();
-                       //this.ShowToast("Alert", response.Message, response.success);
-                       //this.toastr.success(response.Message, 'Toastr fun!');
-                       //this.ShowToast("Xplore", response.Message, response.Success);
-                     
-                    });
-            }
+                            
+                            const modalElement = document.getElementById('create_modal');
+    if (modalElement) {
+      // Remove the 'show' class and hide the modal
+      modalElement.classList.remove('show');
+      modalElement.style.display = 'none';
+      document.body.classList.remove('modal-open'); // Remove the modal-open class from body
+
+      // Remove the backdrop manually
+      const backdropElement = document.querySelector('.modal-backdrop');
+      if (backdropElement) {
+        backdropElement.remove(); // Remove the backdrop element from the DOM
+      }
+    }
+  
+                            this.ShowToast("Xplore", "Your reels status has been successfully added.", true);
+                            //this.router.navigate(['/dashboard-my-listings']);
+                           // this._spinner.hide();
+                           //this.ShowToast("Alert", response.Message, response.success);
+                           //this.toastr.success(response.Message, 'Toastr fun!');
+                           //this.ShowToast("Xplore", response.Message, response.Success);
+                         
+                        });
+                }
+              }
            }
     //   }
     }
@@ -851,7 +1023,24 @@ closeReel() {
 this.allReelsCommentsDetails.forEach(mainComment => {
   mainComment.replies = this.reelsCommentsDetails.filter(reply => reply.IS_REPLAY_COMMENT && reply.REPLAY_COMMENT_HEADER_ID === mainComment.REELS_COMMENTS_DETAILS_ID);
 });
-                    console.log(response);
+                    console.log(this.reelsDetailsList);
+                    this.reelsDetailsList.forEach((item: any) => {
+                        item.IS_REEL_LIKED = item.IS_REEL_LIKED_OR_NOT;
+                        item.isBookmarked = item.IS_REEL_SAVED_OR_NOT;
+                        
+                        // Check if the REELS_DETAILS_ID matches
+                        // if (item.REELS_DETAILS_ID === this.reelsDetails.REELS_DETAILS_ID) {
+                          
+                        //   // Update the 'liked' status
+                        //   item.IS_REEL_LIKED_OR_NOT = this.reelsDetails.IS_REEL_LIKED_OR_NOT;
+                        //   item.IS_REEL_LIKED = this.reelsDetails.IS_REEL_LIKED_OR_NOT;
+                      
+                        //   // Update the 'saved' (bookmarked) status
+                        //   item.IS_REEL_SAVED_OR_NOT = this.reelsDetails.IS_REEL_SAVED_OR_NOT;
+                        //   item.isBookmarked = this.reelsDetails.IS_REEL_SAVED_OR_NOT;
+                        // }
+                      });
+                      console.log(this.reelsDetailsList);
                     
                    // this._spinner.hide();
                    //this.ShowToast("Alert", response.Message, response.success);
@@ -914,18 +1103,40 @@ this.allReelsCommentsDetails.forEach(mainComment => {
           this.toastr.error(title, message);
         }
       }
-    addU
+    //   ngAfterViewChecked() {
+    //     // Check if the reelContainer and video elements are available
+    //     if (this.videoElements.length > 0 && this.reelsDetailsList.length > 0) {
+    //         console.log('ngAfterViewChecked:');
+    //       const firstVideoElement = this.videoElements.toArray()[0].nativeElement;
+    //       const firstVideo = this.reelsDetailsList[0];
+    
+    //       if (!firstVideo.isPlaying) {
+    //         firstVideo.isPlaying = true;
+    //         firstVideoElement.play().catch(error => {
+    //           console.log('Autoplay prevented:', error);
+    //         });
+    //       }
+    //     }
+    // }
 
     playFirstVideo() {
-        if (this.videoElements.first) {
-            this.currentPlayingIndex = 0;
-            const firstVideoElement = this.videoElements.first.nativeElement;
-            firstVideoElement.play().catch(error => {
+        const videoElementt = this.videoElements.toArray()[0].nativeElement; 
+        const videoElement = this.videoElements.toArray()[0].nativeElement;
+
+        const video = this.reelsDetailsList[0];
+        console.log(this.currentReelIndex);
+        if (video.isPlaying) {
+            video.isPlaying = false;
+            videoElement.pause();
+        } else {
+            video.isPlaying = true;
+            videoElement.play().catch(error => {
                 console.log('Autoplay prevented:', error);
             });
-            this.videos[0].isPlaying = true;
-            this.cdr.detectChanges();
         }
+        this.reelsDetailsList[0].isPlaying = video.isPlaying;
+
+        this.cdr.detectChanges();
     }
 
     handleIntersection(entries: IntersectionObserverEntry[], observer: IntersectionObserver) {
@@ -972,7 +1183,7 @@ this.allReelsCommentsDetails.forEach(mainComment => {
         //const video = this.videos[index];
         const videoElement = this.videoElements.toArray()[index].nativeElement;
         const video = this.reelsDetailsList[index];
-        
+        console.log(this.currentReelIndex);
         if (video.isPlaying) {
             video.isPlaying = false;
             videoElement.pause();
@@ -1074,7 +1285,7 @@ playVideoOnIndexChange(newIndex: number) {
                       
 
                         this.wantToReplayTest = false;
-                         this.ShowToast("Xplore", "Your Reels has been successfully added.", true);            
+                         //this.ShowToast("Xplore", "Your Reels has been successfully added.", true);            
                      });
              }
 
@@ -1179,18 +1390,33 @@ playVideoOnIndexChange(newIndex: number) {
         //console.log("onMaxFilesExceeded");
         //$("#modal-max-limit-exceed").modal("show");
 
-        //this.ShowToast("File Upload", "A maximum of 5 files can be attached.", false);
+        this.ShowToast("File Upload", "A maximum of 5 files can be attached.", false);
     }
 
     onCanceled($event) {
         //console.log("onCanceled");
         //console.log($event);
     }
-    onUploadSuccess($event) {
+    onUploadSuccess($event, isCallFromNewStory: boolean = false) {
         //console.log("onUploadSuccess");
+        
         this.uploadedFilesName.push($event[1].FilePath);
         this.uploadedFilesNameClient.push($event[0].name);
         this.disableTreatmentLocation = false;
+        // if(isCallFromNewStory)
+        //     {
+        //      if(this.uploadedFilesName.length > 0 )
+        //         {
+        //             //this.onRemoveFile($event[0].name);
+        //             let index: number = this.uploadedFilesNameClient.indexOf($event[0].name);
+        //             if (index > -1) {
+        //                 this.uploadedFilesName.splice(index, 1);
+        //                 this.uploadedFilesNameClient.splice(index, 1);
+        //             }
+        //             return
+        //         }   
+        //     }
+    
         console.log(this.uploadedFilesNameClient);
         console.log(this.uploadedFilesName);
 
