@@ -6,7 +6,7 @@ import { BusinessDetail, TimeSlots, WeeklyTimeSlots, ReelsDetails, ReelsComments
  } from "../../../models/AddBusiness/AddBusiness.model";
 import { Observable, timeout } from 'rxjs';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-import { DropzoneConfig } from 'ngx-dropzone-wrapper';
+import { DropzoneConfig, DropzoneComponent, DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { GlobalSettingService } from '../../../services/Global/global-setting.service';
 import { GenericUtility } from '../../../utilities/generic-utility';
 //declare var $: any;
@@ -61,6 +61,8 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
     currentPlayingIndex: number | null = null;
 
     @ViewChildren('videoElement') videoElements: QueryList<ElementRef<HTMLVideoElement>>;
+    @ViewChild(DropzoneComponent, { static: false }) dropzoneComponent!: DropzoneComponent;
+
 
 
     @ViewChild('commentInput') commentInput!: ElementRef;
@@ -244,10 +246,23 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
                 this.on('addedfile', function (file) {
                   if (this.files.length > 1) {
                     this.removeFile(file);   // Automatically remove the additional file
-                    alert('You can only upload one video!');
+                    //alert('You can only upload one video!');
+                    this.ShowToast("Xplore", "You can only upload one video!", false); 
+
                   }
                 });
               }
+
+
+
+              // this.config.init = function () {
+              //   let dropzoneInstance = this;
+              //   this.on("removedfile", (file) => {
+              //       this.onRemoveFile({ name: file.name });
+              //     });
+              // }
+
+              
                //, .docx, .txt
                this.config.maxFiles = 5;
                this.config.maxFilesize = 20;
@@ -460,6 +475,7 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
                         this.userReelsAccount = response;
                         this.userReelsAccountModel = this.userReelsAccount[0];
                         this.pauseAllProfileVideos();
+                        this.profileTab = 'PostTab';
                         //this.pauseAllVideos();
                        // this._spinner.hide();
                        //this.ShowToast("Alert", response.Message, response.success);
@@ -593,8 +609,9 @@ closeReel() {
             }
             else if(selectedOption == 'Profile')
                 {
+                    
+                    this.getReelsUserProfile();
                     this.currentOption = 'ProfileTab';
-                    this.getReelsUserProfile()
                 }
                 else if(selectedOption == 'MainPage')
                     {
@@ -908,9 +925,13 @@ closeReel() {
     //   }
     }
 
+    onRemoveFiles(file: { name: string }) {
+      console.log('File removed: ', file.name);
+      // Add your file removal logic here
+    }
+
     addUpdateReelsStatus()
     {
-        
            if(this.uploadedFilesName.length == 0)
            {
             this.ShowToast("Xplore", "At least one picture is required. Please upload one.", false);
@@ -933,17 +954,10 @@ closeReel() {
                     //this._spinner.show();
                     this._addBusinessService.addUpdateReelsStatus(this.reelsDetails).subscribe(
                         response => {
-                            //this.config = new DropzoneConfig();
-                            this.uploadedFilesName = [];
-                            this.uploadedFilesNameClient = [];
-                            this.config.init = function () {
-                                this.on("removedfile", (file) => {
-                                    this.onRemoveFile({ name: file.name });
-                                  });
-                              }
-
-                            
-                            const modalElement = document.getElementById('create_modal');
+                          if (this.dropzoneComponent && this.dropzoneComponent.directiveRef.dropzone()) {
+                            this.dropzoneComponent.directiveRef.dropzone().removeAllFiles();
+                          }
+ const modalElement = document.getElementById('create_modal');
     if (modalElement) {
       // Remove the 'show' class and hide the modal
       modalElement.classList.remove('show');
@@ -956,7 +970,7 @@ closeReel() {
         backdropElement.remove(); // Remove the backdrop element from the DOM
       }
     }
-  
+    this.getReels();
                             this.ShowToast("Xplore", "Your reels status has been successfully added.", true);
                             //this.router.navigate(['/dashboard-my-listings']);
                            // this._spinner.hide();
@@ -968,7 +982,8 @@ closeReel() {
                 }
               }
            }
-    //   }
+          
+      
     }
 
     wantToReplay(selectedUser: Number, selectedComment: number)
@@ -1347,7 +1362,7 @@ playVideoOnIndexChange(newIndex: number) {
                         this.isLikeOrDislikeReel = false;
                        // this.getLikeByReel();
                        this.getLikeByReel();
-                        this.ShowToast("Xplore", "Your Reels like or dislike has been successfully added.", true);
+                        this.ShowToast("Xplore", "Your reels have been saved.", true);
 
                         //this.router.navigate(['/dashboard-my-listings']);
                        // this._spinner.hide();
