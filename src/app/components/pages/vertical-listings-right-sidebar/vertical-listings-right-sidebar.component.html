@@ -97,13 +97,13 @@
             </li>
           </ul>
         </div>
-        <div class="more">
+        <!-- <div class="more">
           <div class="btn-group dropup">
             <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
               <img src="../../../../assets/images/menu.png">
               <span class="d-none d-lg-block">More</span>
             </button>
-            <!-- <ul class="dropdown-menu">
+            <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
                   <span>Settings</span>
                   <img src="../../../../assets/images/reglage.png">
@@ -130,9 +130,9 @@
               <li><a class="dropdown-item" href=".">
                   <span>Log out</span>
                 </a></li>
-            </ul> -->
+            </ul>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="nav_sm">
         <div class="content">
@@ -735,21 +735,19 @@
 </div>
 <div class="popup-content">
    <div class="row g-0">
-    <div class="col-12 col-md-6 col-lg-6">
+    <div class="col-12 col-md-6 col-lg-5">
       <div class="postDetailslider">
-        <owl-carousel-o #carousel [options]="PostDetailSlider">
-          <ng-container *ngFor="let image of postDetailImages; let i = index">
-            <ng-template carouselSlide>
+        
               <div class="img-container">
-                <img [src]="image.src" [alt]="image.alt">
+                <!-- <img [src]="image.src" [alt]="image.alt"> -->
+                <video src="../../../../assets/video/video2.mp4"  autoplay muted loop></video>
+
               </div>
-            </ng-template>
-          </ng-container>
-        </owl-carousel-o>
+         
       </div>
       
      </div>
-     <div class="col-12 col-md-6 col-lg-6   d-flex flex-column">
+     <div class="col-12 col-md-6 col-lg-7   d-flex flex-column justify-content-arround">
       <div class="post-detail-top">
         <div class="info">
           <div class="person">
@@ -1257,11 +1255,19 @@
           <div class="liked">
               <a class="bold" href="#">150 likes</a>
           </div>
-          <div class="post_desc">
-               
-             
-              <input type="text" placeholder="Add a comments...">
-          </div>
+          <form method="post" cl>
+            <div class="input">
+              <img src="../../../../assets/images/profile_img.jpg" alt="">
+              <!-- <input type="text" id="emoji_comment" 
+              [(ngModel)]="this.reelsCommentsModel.COMMENT"
+              placeholder="Add a comment..." /> -->
+          <input type="text" #commentInput name="comment-input" [(ngModel)]="this.reelsCommentsModel.COMMENT" id="emoji_comment" placeholder="Add a comment..." />
+
+              <button type="button" class="comment-btn" (click)="postComment()">
+                <i class="fa fa-paper-plane"></i> <!-- or use an appropriate send icon -->
+              </button>
+            </div>
+          </form>
         </div>
       </div>
      
@@ -1370,17 +1376,23 @@
     <div class="follow-page-container" *ngIf="this.currentOption == 'HomeTab'">
       <h2 class="page-title">Suggested for You</h2>
       <div class="user-list">
-        <div class="user-item" *ngFor="let user of userAccountList">
-          <img src="assets/img/user1.jpg" alt="{{user.User_Name}}" class="profile-picture" />
-          <div class="user-info">
-            <h3 class="username">{{ user.User_Name }}</h3>
-            <button class="follow-button" (click)="toggleFollow(user)"
-            [ngClass]="user.IS_FOLLOWING ? 'following' : 'follow-button'" 
-            >
-              {{ user.IS_FOLLOWING ? 'Following' : 'Follow' }}
-            </button>
+        <div class="row" style="row-gap: 30px;">
+          <div class="col-12">
+            <div *ngFor="let user of userAccountList" class="user-item-wrapper">
+              <div class="user-item d-flex justify-content-between align-items-center">
+                <img src="assets/img/user1.jpg" alt="{{user.User_Name}}" class="profile-picture" />
+                
+                <h4 class="username">{{ user.User_Name }}</h4>
+                <button class="follow-button ml-3" (click)="toggleFollow(user)"
+                [ngClass]="user.IS_FOLLOWING ? 'following' : 'follow-button'" 
+                >
+                  {{ user.IS_FOLLOWING ? 'Following' : 'Follow' }}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
+        
       </div>
     </div>
 
