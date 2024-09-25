@@ -39,12 +39,12 @@
                         "scripts": [
                         "node_modules/jquery/dist/jquery.min.js"
                         ],
-                        "vendorChunk": true,
-                        "extractLicenses": false,
                         "buildOptimizer": false,
-                        "sourceMap": true,
-                        "optimization": false,
-                        "namedChunks": true
+    "optimization": false,
+    "vendorChunk": true,
+    "extractLicenses": false,
+    "sourceMap": true,
+    "namedChunks": true
                     },
                     "configurations": {
                         "production": {

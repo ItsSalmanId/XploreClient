@@ -46,6 +46,9 @@ import { DashboardAllListingsComponent } from './components/pages/dashboard/dash
 // import { AuthGuard } from '../../../Xploradoor/src/app/services/AuthService/auth.guard';
 import { ReelsStatusComponent } from './components/pages/reels-status/reels-status.component';
 import { ReelsVertical } from './components/pages/reels-listings/reels-listings.component';
+import { AuthGuard } from './services/AuthService/auth.guard';
+import { ShowStoriesComponent } from './components/pages/show-stories/show-stories.component';
+import { ShowUsersComponent } from './components/pages/show-users/show-users.component';
 
 const routes: Routes = [
     {path: '', component: HomeDemoOneComponent},
@@ -69,7 +72,7 @@ const routes: Routes = [
     {path: 'destinations', component: TopPlaceComponent},
     {path: 'vertical-listings-left-sidebar', component: VerticalListingsLeftSidebarComponent},
     {path: 'vertical-listings-right-sidebar', component: VerticalListingsRightSidebarComponent},
-    {path: 'reels-vertical', component: ReelsVertical},
+    {path: 'reels-vertical', component: ReelsVertical, canActivate: [AuthGuard]},
     {path: 'vertical-listings-full-width', component: VerticalListingsFullWidthComponent},
     {path: 'grid-listings-left-sidebar', component: GridListingsLeftSidebarComponent},
     {path: 'grid-listings-right-sidebar', component: GridListingsRightSidebarComponent},
@@ -92,6 +95,8 @@ const routes: Routes = [
     {path: 'dashboard-my-listings', component: DashboardMyListingsComponent},
     {path: 'dashboard-user-details', component: DashboardUserDetailsComponent},
     {path: 'dashboard-all-listings', component: DashboardAllListingsComponent},
+    {path: 'show-stories', component: ShowStoriesComponent},
+    {path: 'show-users', component: ShowUsersComponent},
     // Here add new pages component
 
     {path: '**', component: NotFoundComponent} // This line will remain down from the whole pages component list
