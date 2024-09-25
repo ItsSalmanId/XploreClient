@@ -1,5 +1,7 @@
 <div class="stories-wrapper">
   <div class="stories">
+    <button type="button" class="close-button close-button" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
+       
     <div
       *ngFor="let story of stories; let index = index"
       [ngClass]="{'story': true}"
