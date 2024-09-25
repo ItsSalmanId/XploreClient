@@ -92,9 +92,11 @@ import { DashboardAllListingsComponent } from './components/pages/dashboard/dash
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 // import { AuthInterceptor } from '../../../Xploradoor/src/app/services/AuthService/auth.interceptor';
 import { CommonCall } from './components/common/commonCall/commonCall.component'; // Adjust the path
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ReelsStatusComponent } from './components/pages/reels-status/reels-status.component';
 import { ReelsVertical } from './components/pages/reels-listings/reels-listings.component';
+import { ShowStoriesComponent } from './components/pages/show-stories/show-stories.component';
+import { ShowUsersComponent } from './components/pages/show-users/show-users.component';
 
 const DROPZONECONFIG: DropzoneConfigInterface = {
     url: 'C:/new1/Xploradoor-main/main/Xploradoor/images',
@@ -178,7 +180,9 @@ const DROPZONECONFIG: DropzoneConfigInterface = {
         DashboardUserDetailsComponent,
         DashboardAllListingsComponent,
         CommonCall,
-        ReelsStatusComponent
+        ReelsStatusComponent,
+        ShowStoriesComponent,
+        ShowUsersComponent
     ],
     imports: [
         BrowserModule,
@@ -193,7 +197,8 @@ const DROPZONECONFIG: DropzoneConfigInterface = {
         HttpClientModule,
         ToastrModule.forRoot(), // ToastrModule added
         NgxDropzoneModule,
-        DropzoneModule
+        DropzoneModule,
+        CommonModule
     ],
     providers: [
         AccountUtility,
