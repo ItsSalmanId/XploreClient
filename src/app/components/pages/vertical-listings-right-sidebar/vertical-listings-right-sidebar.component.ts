@@ -1,4 +1,5 @@
-import { Component, OnInit, AfterViewInit, ViewChildren, ElementRef, QueryList, ChangeDetectorRef, Renderer2, ViewChild,   } from '@angular/core';
+import { Component, OnInit, AfterViewInit, HostListener,
+  ViewChildren, ElementRef, QueryList, ChangeDetectorRef, Renderer2, ViewChild,   } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { AddBusinessService } from '../../../services/AddBusiness/AddBusiness.service'
 import { BusinessDetail, TimeSlots, WeeklyTimeSlots, ReelsDetails, ReelsCommentsDetails, UserAccount, UserFollowDetails,
@@ -54,6 +55,7 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
      userAccount: UserAccount;
      isShowStories : boolean;
      isLoading: boolean = false;
+     reelsDetailsListSaved: ReelsDetails[] = [];
 
 
 
@@ -61,6 +63,12 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
     currentPlayingIndex: number | null = null;
 
     @ViewChildren('videoElement') videoElements: QueryList<ElementRef<HTMLVideoElement>>;
+
+    //@ViewChildren('videoProfileElement') videoProfileElements: QueryList<ElementRef<HTMLVideoElement>>;
+
+    @ViewChild('videoProfileElement') videoProfileElements: ElementRef;
+
+
     @ViewChild(DropzoneComponent, { static: false }) dropzoneComponent!: DropzoneComponent;
 
 
@@ -68,6 +76,8 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
     @ViewChild('commentInput') commentInput!: ElementRef;
     @ViewChild('reelContainer') reelContainer: ElementRef;
     @ViewChild(CommonCall, { static: false }) childComponent!: CommonCall;
+    // Listen for clicks on the entire document
+    // @HostListener('document:click', ['$event'])
 
     videos = [
         {
@@ -210,13 +220,17 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
     scrollAmount: number = 0;
     isKeyDownProcessed: any;
   containerFocused: boolean;
+  selectiveSavedIndex: number;
+  videoPlayed: any;
 
 
 
     constructor(private cdr: ChangeDetectorRef, private _addBusinessService: AddBusinessService, 
         public _globalSettingService: GlobalSettingService, 
         private _genericUtilities: GenericUtility, private router: Router, 
-        private toastr: ToastrService, private renderer: Renderer2, private datePipe: DatePipe) { 
+        private toastr: ToastrService, private renderer: Renderer2, private datePipe: DatePipe,
+        private eRef: ElementRef
+      ) { 
 
             this.reelsCommentsModel = new ReelsCommentsDetails();
             this.userFollowDetail = new UserFollowDetails();
@@ -321,6 +335,17 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
             this.pauseAllVideos();
             //this.getReelsStatus();
         }
+        // @HostListener('document:click', ['$event'])
+        // onSearchFocusOut(event: FocusEvent) {
+        //   // Check if the click is outside the search div
+        //   if (!this.eRef.nativeElement.contains(event.relatedTarget)) {
+        //    // this.isSearchVisible = false; // Hide the div when clicking outside
+        //   }
+        // }
+        onSearchBoxFocusOut()
+        {
+          this.isSearchVisible = false;
+        }
         onFocusOut() {
           this.containerFocused = false;
         }
@@ -339,14 +364,22 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
 
     this.isKeyDownProcessed = true;
     //this.ShowToast("KeyDown", "checkon bases of red and greeen", this.isKeyDownProcessed);
-
+    const container = document.querySelector('.reel-container-scroll');
+    const scrollAmount = 50;
     if (event.key === 'ArrowDown') {
     this.isLoading = true;
+    // setTimeout(() => {
+    //   container.scrollBy(0, -scrollAmount);
+    // }, 200);
+     // Scroll down
       this.scrollToNextReel();
     }
     else if (event.key === 'ArrowUp') {
     this.isLoading = true;
-        
+    // setTimeout(() => {
+    //   container.scrollBy(0, scrollAmount);
+    // }, 200);
+    
       event.preventDefault();
         this.scrollToPreviousReel();
       }
@@ -483,6 +516,10 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
                        //this.ShowToast("Xplore", response.Message, response.Success);
                      
                     });
+        }
+        selectedSavedReels()
+        {
+          this.userReelsAccount[0].UserReelsDetails
         }
     
     
@@ -803,7 +840,8 @@ closeReel() {
       console.log('Reel container not found');
     }
   }
-    selectedReel(selectedReel: number)
+    
+  selectedReel(selectedReel: number)
     {
       this.isSelectedReel = selectedReel;
       this.isShowComments = true;
@@ -811,6 +849,7 @@ closeReel() {
       this.reelsCommentsModel.REELS_DETAILS_ID = this.isSelectedReel;
       this.getCommentsByReel();
     }
+    
     getCommentsByReel()
     {
         this.reelsCommentsModel.COMMENT = "";
@@ -851,6 +890,11 @@ closeReel() {
              {
                 this.reelsCommentsModel.IS_REPLAY_COMMENT = true;
                 this.reelsCommentsModel.REPLAY_COMMENT = this.reelsCommentsModel.COMMENT;
+             }
+             else
+             {
+              this.reelsCommentsModel.IS_REPLAY_COMMENT = false;
+              this.reelsCommentsModel.REPLAY_COMMENT = null;
              }
              if (this.reelsCommentsModel) {
 
@@ -1197,6 +1241,7 @@ this.allReelsCommentsDetails.forEach(mainComment => {
     togglePlay(index: number) {
         //const video = this.videos[index];
         const videoElement = this.videoElements.toArray()[index].nativeElement;
+        
         const video = this.reelsDetailsList[index];
         console.log(this.currentReelIndex);
         if (video.isPlaying) {
@@ -1209,9 +1254,53 @@ this.allReelsCommentsDetails.forEach(mainComment => {
             });
         }
         this.reelsDetailsList[index].isPlaying = video.isPlaying;
+        if(this.isPopupVisible == true)
+          {
+            this.reelsDetailsListSaved[0].isPlaying = video.isPlaying; 
+          }
 
         this.cdr.detectChanges();
     }
+
+    ngAfterViewChecked() {
+      if (this.isPopupVisible && !this.videoPlayed && this.videoProfileElements) {
+        this.toggleProfilePlay(0);
+        this.videoPlayed = true; // Prevent multiple plays
+      }
+    }
+
+    toggleProfileMute(index: number) {
+      //const video = this.videos[index];
+      const video = this.reelsDetailsListSaved[0];
+      video.isMuted = !video.isMuted;
+      //const videoElement = this.videoElements.toArray()[index].nativeElement;
+      const videoProfileElement = this.videoProfileElements.nativeElement;
+      videoProfileElement.muted = video.isMuted;
+  }
+    
+    toggleProfilePlay(index: number) {
+      //const video = this.videos[index];
+      const videoProfileElement = this.videoProfileElements.nativeElement;
+      
+      const video = this.reelsDetailsListSaved[0];
+      console.log(this.currentReelIndex);
+      if (video.isPlaying) {
+          video.isPlaying = false;
+          videoProfileElement.pause();
+      } else {
+          video.isPlaying = true;
+          videoProfileElement.play().catch(error => {
+              console.log('Autoplay prevented:', error);
+          });
+      }
+      //this.reelsDetailsList[index].isPlaying = video.isPlaying;
+      if(this.isPopupVisible == true)
+        {
+          this.reelsDetailsListSaved[0].isPlaying = video.isPlaying; 
+        }
+
+      this.cdr.detectChanges();
+  }
     pauseAllVideos() {
         // Check if videoElements exist and loop through each video
         if (this.videoElements) {
@@ -1296,6 +1385,11 @@ playVideoOnIndexChange(newIndex: number) {
                               this.reelsDetailsList[index].IS_REEL_SAVED_OR_NOT =
                               this.reelsDetailsList[index].isBookmarked
                               = this.reelsDetails.IS_REEL_SAVED_OR_NOT;
+                            }
+                            if(this.isPopupVisible == true)
+                            {
+                              this.reelsDetailsListSaved[0].IS_REEL_LIKED_OR_NOT = 
+                              this.reelsDetailsListSaved[0].IS_REEL_LIKED = this.reelsDetails.IS_REEL_LIKED_OR_NOT;
                             }
                       
 
@@ -1813,7 +1907,26 @@ playVideoOnIndexChange(newIndex: number) {
 
   isPopupVisible = false;
 
-togglePopup() {
+togglePopup(selectedReelId: number = 0) 
+{
+  this.reelsDetailsListSaved = this.userReelsAccount[0].UserReelsDetails.filter(reel => reel.REELS_DETAILS_ID === selectedReelId);
+  console.log(this.reelsDetailsListSaved)
+  //this.playVideo(0);
+  this.selectedReel(selectedReelId);
   this.isPopupVisible = !this.isPopupVisible;
+
 }
+togglePopupClose()
+{
+  this.isPopupVisible = !this.isPopupVisible;
+
+}
+
+togglePopupIndex(selectiveIndex: number = 0) 
+{
+  const index = this.reelsDetailsList.findIndex((item: any) => item.REELS_DETAILS_ID === this.reelsDetailsListSaved[0].REELS_DETAILS_ID);
+  this.selectiveSavedIndex = index;
+}
+
+
 }

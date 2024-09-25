@@ -248,6 +248,7 @@ export class ReelsCommentsDetails {
     IS_REPLAY_LIKES: number;
     IS_REPLAY_LIKED: boolean = false;
     LIKE_OR_DISLIKE: boolean = false;
+    USER_NAME: string = "";
 }
 export class ReelsCommentsLikes {
     COMMENT_LIKE_ID: number;

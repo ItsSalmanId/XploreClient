@@ -205,11 +205,16 @@
     </div>
   </div>
   <!-- search -->
-  <div id="search" class="search_section" [ngClass]="{'show': isSearchVisible}">
+  <div id="search" class="search_section" [ngClass]="{'show': isSearchVisible}" 
+  
+  >
+  <div  tabindex="0"
+  (focusout)="onSearchBoxFocusOut()">
     <h2>Search</h2>
     <form method="post">
       <input type="text" placeholder="Search" name="searchQuery" (ngModelChange)="filterUserAccounts()"
        [(ngModel)]="searchQuery">
+       <i class="bi bi-search "></i>
     </form>
     <div class="find">
       <div class="desc">
@@ -240,6 +245,8 @@
       </div>
       
     </div>
+  </div>
+    
   </div>
 
   <div id="notification" class="notification_section">
@@ -385,7 +392,7 @@
                 </div>
                 <div class="content">
                   <div class="person">
-                    <h4>namePerson</h4>
+                    <h4>{{comment.USER_NAME}}</h4>
                     <span>{{ getTimeAgo(comment.CREATED_DATE) }}</span>
                   </div>
                   <p>{{comment.COMMENT}}</p>
@@ -425,7 +432,7 @@
                   </div>
                   <div class="content">
                     <div class="person">
-                      <h4>namePerson</h4>
+                      <h4>{{comment.USER_NAME}}</h4>
                         <span>{{ getTimeAgo(replay.CREATED_DATE) }}</span>
                     </div>
                       <p>{{replay.REPLAY_COMMENT}}</p>
@@ -729,14 +736,52 @@
     <i class="flaticon-right-chevron"></i>
   </button>
 
-<div class="cross-icon" (click)="togglePopup()">
+<div class="cross-icon" (click)="togglePopupClose()">
   <i class="bi bi-x-lg"></i>
 </div>
 <div class="popup-content">
-   <div class="row">
-    <div class="col-12 col-md-6 col-lg-6">
+   <div class="row g-0">
+    <div class="col-12 col-md-6 col-lg-5">
       <div class="postDetailslider">
-        <owl-carousel-o #carousel [options]="PostDetailSlider">
+        
+
+
+        <!-- <owl-carousel-o #carousel [options]="PostDetailSlider">
+          <ng-container *ngFor="let video of reelsDetailsListSaved; let i = index" class="new-reel-item" (click)="togglePopup()">
+            <ng-template carouselSlide>
+              <div class="img-container">
+                <img [src]="image.src" [alt]="image.alt">
+                <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" class="new-video"  loop></video>
+              </div>
+            </ng-template>
+          </ng-container>
+        </owl-carousel-o> -->
+
+
+
+          <div class="img-container" *ngFor="let video of reelsDetailsListSaved; let i = index"
+          >
+          
+            <video
+             #videoProfileElement [id]="'video-' + i" style="height: 100% !important;width: 100%;"
+             [src]="video.uploadedFilesName"  loop></video>
+
+             <div class="custom-content">
+              <div class="custom-sound" (click)="toggleProfileMute(this.selectiveSavedIndex)">
+                <img class="volume-up" src="../../../../assets/images/volume-up.png" *ngIf="!video.isMuted">
+                <img class="volume-mute" src="../../../../assets/images/volume-mute.png" *ngIf="video.isMuted">
+              </div>
+              <div class="custom-play" [ngClass]="{'opac_1': !video.isPlaying}" (click)="toggleProfilePlay(this.selectiveSavedIndex)">
+                <img src="../../../../assets/images/play-button-arrowhead.png">
+              </div>
+            </div>
+          </div>
+
+
+          
+         
+
+        <!-- <owl-carousel-o #carousel [options]="PostDetailSlider">
           <ng-container *ngFor="let image of postDetailImages; let i = index">
             <ng-template carouselSlide>
               <div class="img-container">
@@ -744,13 +789,13 @@
               </div>
             </ng-template>
           </ng-container>
-        </owl-carousel-o>
+        </owl-carousel-o> -->
       </div>
       
      </div>
-     <div class="col-12 col-md-6 col-lg-6  py-2 d-flex flex-column justify-content-between">
+     <div class="col-12 col-md-6 col-lg-7   d-flex flex-column justify-content-around">
       <div class="post-detail-top">
-        <div class="info">
+         <div class="info">
           <div class="person">
               <img src="https://i.ibb.co/3S1hjKR/account1.jpg">
               <a href="#">zineb</a>
@@ -761,471 +806,81 @@
               <img src="../../../../assets/images/show_more.png" alt="show more">
           </div>
         </div>
-    <div class="comment-container ">
-      <div class="comments ">
+        <!-- story comment -->
+    <div class="comment-container">
+      <div class="comments" *ngFor="let comment of allReelsCommentsDetails; let index = index">
+        <!-- *ngFor="let comment of reelsDetailsList.reelsCommentsDetailsList" -->
         <div class="comment" style="padding-right: 10px;">
-            <div class="d-flex">
-                <div class="img">
-                    <img src="../../../../assets/images/profile_img.jpg" alt="">
-                </div>
-                <div class="content">
-                    <div class="person">
-                        <h4>namePerson</h4>
-                        <span>3j</span>
-                    </div>
-                    <p>Wow amzing shot</p>
-                    <div class="replay">
-                        <button class="replay">replay</button>
-                        <button class="translation">see translation</button>
-                    </div>
-                    <div class="answers">
-                        <button class="see_comment">
-                            <span class="hide_com hide">Hide all responses</span>
-                            <span class="show_c"> <span class="line"></span> See the <span> 1
-                                </span> answers</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="like">
-                <img class="not_loved" src=".../../../../assets/images/love.png" alt="">
-                <img class="loved" src="../../../../assets/images/heart.png" alt="">
-                <p> 55</p>
-            </div>
-        </div>
-        <div class="responses hide">
-            <div class="response comment">
-                <div class="d-flex">
-                    <div class="img">
-                        <img src="../../../../assets/images/profile_img.jpg" alt="">
-                    </div>
-                    <div class="content">
-                        <div class="person">
-                            <h4>namePerson</h4>
-                            <span>3j</span>
-                        </div>
-                        <p>Wow amzing shot</p>
-                        <div class="replay">
-                            <button>replay</button>
-                            <button>see translation</button>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="like">
-                    <img class="not_loved" src="../../../../assets/images/love.png" alt="">
-                    <img class="loved" src="../../../../assets/images/heart.png" alt="">
-                    <p> 55</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="comments ">
-      <div class="comment" style="padding-right: 10px;">
           <div class="d-flex">
-              <div class="img">
-                  <img src="../../../../assets/images/profile_img.jpg" alt="">
-              </div>
-              <div class="content">
-                  <div class="person">
-                      <h4>namePerson</h4>
-                      <span>3j</span>
-                  </div>
-                  <p>Wow amzing shot</p>
-                  <div class="replay">
-                      <button class="replay">replay</button>
-                      <button class="translation">see translation</button>
-                  </div>
-                  <div class="answers">
-                      <button class="see_comment">
-                          <span class="hide_com hide">Hide all responses</span>
-                          <span class="show_c"> <span class="line"></span> See the <span> 1
-                              </span> answers</span>
-                      </button>
-                  </div>
-              </div>
-          </div>
-          <div class="like">
-              <img class="not_loved" src=".../../../../assets/images/love.png" alt="">
-              <img class="loved" src="../../../../assets/images/heart.png" alt="">
-              <p> 55</p>
-          </div>
-      </div>
-      <div class="responses hide">
-          <div class="response comment">
-              <div class="d-flex">
-                  <div class="img">
-                      <img src="../../../../assets/images/profile_img.jpg" alt="">
-                  </div>
-                  <div class="content">
-                      <div class="person">
-                          <h4>namePerson</h4>
-                          <span>3j</span>
-                      </div>
-                      <p>Wow amzing shot</p>
-                      <div class="replay">
-                          <button>replay</button>
-                          <button>see translation</button>
-                      </div>
-
-                  </div>
-              </div>
-              <div class="like">
-                  <img class="not_loved" src="../../../../assets/images/love.png" alt="">
-                  <img class="loved" src="../../../../assets/images/heart.png" alt="">
-                  <p> 55</p>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="comments ">
-    <div class="comment" style="padding-right: 10px;">
-        <div class="d-flex">
             <div class="img">
-                <img src="../../../../assets/images/profile_img.jpg" alt="">
-            </div>
-            <div class="content">
-                <div class="person">
-                    <h4>namePerson</h4>
-                    <span>3j</span>
-                </div>
-                <p>Wow amzing shot</p>
-                <div class="replay">
-                    <button class="replay">replay</button>
-                    <button class="translation">see translation</button>
-                </div>
-                <div class="answers">
-                    <button class="see_comment">
-                        <span class="hide_com hide">Hide all responses</span>
-                        <span class="show_c"> <span class="line"></span> See the <span> 1
-                            </span> answers</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="like">
-            <img class="not_loved" src=".../../../../assets/images/love.png" alt="">
-            <img class="loved" src="../../../../assets/images/heart.png" alt="">
-            <p> 55</p>
-        </div>
-    </div>
-    <div class="responses hide">
-        <div class="response comment">
-            <div class="d-flex">
-                <div class="img">
-                    <img src="../../../../assets/images/profile_img.jpg" alt="">
-                </div>
-                <div class="content">
-                    <div class="person">
-                        <h4>namePerson</h4>
-                        <span>3j</span>
-                    </div>
-                    <p>Wow amzing shot</p>
-                    <div class="replay">
-                        <button>replay</button>
-                        <button>see translation</button>
-                    </div>
-
-                </div>
-            </div>
-            <div class="like">
-                <img class="not_loved" src="../../../../assets/images/love.png" alt="">
-                <img class="loved" src="../../../../assets/images/heart.png" alt="">
-                <p> 55</p>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="comments ">
-  <div class="comment" style="padding-right: 10px;">
-      <div class="d-flex">
-          <div class="img">
               <img src="../../../../assets/images/profile_img.jpg" alt="">
-          </div>
-          <div class="content">
-              <div class="person">
-                  <h4>namePerson</h4>
-                  <span>3j</span>
-              </div>
-              <p>Wow amzing shot</p>
-              <div class="replay">
-                  <button class="replay">replay</button>
-                  <button class="translation">see translation</button>
-              </div>
-              <div class="answers">
-                  <button class="see_comment">
-                      <span class="hide_com hide">Hide all responses</span>
-                      <span class="show_c"> <span class="line"></span> See the <span> 1
-                          </span> answers</span>
-                  </button>
-              </div>
-          </div>
-      </div>
-      <div class="like">
-          <img class="not_loved" src=".../../../../assets/images/love.png" alt="">
-          <img class="loved" src="../../../../assets/images/heart.png" alt="">
-          <p> 55</p>
-      </div>
-  </div>
-  <div class="responses hide">
-      <div class="response comment">
-          <div class="d-flex">
-              <div class="img">
-                  <img src="../../../../assets/images/profile_img.jpg" alt="">
-              </div>
-              <div class="content">
-                  <div class="person">
-                      <h4>namePerson</h4>
-                      <span>3j</span>
-                  </div>
-                  <p>Wow amzing shot</p>
-                  <div class="replay">
-                      <button>replay</button>
-                      <button>see translation</button>
-                  </div>
-
-              </div>
-          </div>
-          <div class="like">
-              <img class="not_loved" src="../../../../assets/images/love.png" alt="">
-              <img class="loved" src="../../../../assets/images/heart.png" alt="">
-              <p> 55</p>
-          </div>
-      </div>
-  </div>
-</div>
-<div class="comments ">
-<div class="comment" style="padding-right: 10px;">
-    <div class="d-flex">
-        <div class="img">
-            <img src="../../../../assets/images/profile_img.jpg" alt="">
-        </div>
-        <div class="content">
-            <div class="person">
-                <h4>namePerson</h4>
-                <span>3j</span>
-            </div>
-            <p>Wow amzing shot</p>
-            <div class="replay">
-                <button class="replay">replay</button>
-                <button class="translation">see translation</button>
-            </div>
-            <div class="answers">
-                <button class="see_comment">
-                    <span class="hide_com hide">Hide all responses</span>
-                    <span class="show_c"> <span class="line"></span> See the <span> 1
-                        </span> answers</span>
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="like">
-        <img class="not_loved" src=".../../../../assets/images/love.png" alt="">
-        <img class="loved" src="../../../../assets/images/heart.png" alt="">
-        <p> 55</p>
-    </div>
-</div>
-<div class="responses hide">
-    <div class="response comment">
-        <div class="d-flex">
-            <div class="img">
-                <img src="../../../../assets/images/profile_img.jpg" alt="">
             </div>
             <div class="content">
-                <div class="person">
-                    <h4>namePerson</h4>
-                    <span>3j</span>
-                </div>
-                <p>Wow amzing shot</p>
-                <div class="replay">
-                    <button>replay</button>
-                    <button>see translation</button>
-                </div>
+              <div class="person">
+                <h4>{{comment.USER_NAME}}</h4>
+                <span>{{ getTimeAgo(comment.CREATED_DATE) }}</span>
+              </div>
+              <p>{{comment.COMMENT}}</p>
+              <div class="replay">
+                <button class="replay" (click)="wantToReplay(comment.USER_ID, comment.REELS_COMMENTS_DETAILS_ID)">replay</button>
+                <button class="translation">see translation</button>
+              </div>
+              <div class="answers" *ngIf="comment.replies && comment.replies.length > 0">
+                <button class="see_comment" (click)="toggleReplies(index)">
+                  <!-- <span class="hide_com">Hide all responses</span> -->
+                  <span class="hide_com">{{ isReplyVisible[index] ? 'Hide Replies' : 'Show Replies' }}</span>
+                  <span class="show_c"></span> See the <span>{{ comment.replies.length }}</span> answers
 
+                  <!-- <span class="show_c"> <span class="line"></span> See the <span> 1 </span> answers</span> -->
+                </button>
+              </div>
             </div>
-        </div>
-        <div class="like">
+          </div>
+          <!-- <div class="like">
             <img class="not_loved" src="../../../../assets/images/love.png" alt="">
             <img class="loved" src="../../../../assets/images/heart.png" alt="">
             <p> 55</p>
+          </div> -->
+
+          <div class="like" (click)="toggleLikeTest(comment, index)">
+            <img [ngClass]="{ 'not_loved': !comment.IS_LIKED, 'loved': comment.IS_LIKED }" src="../../../../assets/images/heart.png" alt="Like">
+            <p>{{ comment.COMMENT_LIKE }}</p>
+          </div>
+
         </div>
+
+        <div *ngIf="isReplyVisible[index]">
+          <div class="responses" *ngFor="let replay of comment.replies; let indexC = index">
+          <div class="response comment">
+            <div class="d-flex">
+              <div class="img">
+                <img src="../../../../assets/images/profile_img.jpg" alt="">
+              </div>
+              <div class="content">
+                <div class="person">
+                  <h4>{{comment.USER_NAME}}</h4>
+                    <span>{{ getTimeAgo(replay.CREATED_DATE) }}</span>
+                </div>
+                  <p>{{replay.REPLAY_COMMENT}}</p>
+                <div class="replay">
+                  <button>replay</button>
+                  <button>see translation</button>
+                </div>
+              </div>
+            </div>
+              <!-- <div class="like">
+              <img class="not_loved" src="../../../../assets/images/love.png" alt="">
+              <img class="loved" src="../../../../assets/images/heart.png" alt="">
+              <p> 55</p>
+              </div> -->
+              <div class="like" (click)="toggleLikeTest(replay, indexC, true)">
+                <img [ngClass]="{ 'not_loved': !replay.IS_LIKED, 'loved': replay.IS_LIKED }" src="../../../../assets/images/heart.png" alt="Like">
+                <p>{{ replay.IS_REPLAY_LIKES }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-</div>
-<div class="comments ">
-<div class="comment" style="padding-right: 10px;">
-  <div class="d-flex">
-      <div class="img">
-          <img src="../../../../assets/images/profile_img.jpg" alt="">
-      </div>
-      <div class="content">
-          <div class="person">
-              <h4>namePerson</h4>
-              <span>3j</span>
-          </div>
-          <p>Wow amzing shot</p>
-          <div class="replay">
-              <button class="replay">replay</button>
-              <button class="translation">see translation</button>
-          </div>
-          <div class="answers">
-              <button class="see_comment">
-                  <span class="hide_com hide">Hide all responses</span>
-                  <span class="show_c"> <span class="line"></span> See the <span> 1
-                      </span> answers</span>
-              </button>
-          </div>
-      </div>
-  </div>
-  <div class="like">
-      <img class="not_loved" src=".../../../../assets/images/love.png" alt="">
-      <img class="loved" src="../../../../assets/images/heart.png" alt="">
-      <p> 55</p>
-  </div>
-</div>
-<div class="responses hide">
-  <div class="response comment">
-      <div class="d-flex">
-          <div class="img">
-              <img src="../../../../assets/images/profile_img.jpg" alt="">
-          </div>
-          <div class="content">
-              <div class="person">
-                  <h4>namePerson</h4>
-                  <span>3j</span>
-              </div>
-              <p>Wow amzing shot</p>
-              <div class="replay">
-                  <button>replay</button>
-                  <button>see translation</button>
-              </div>
-
-          </div>
-      </div>
-      <div class="like">
-          <img class="not_loved" src="../../../../assets/images/love.png" alt="">
-          <img class="loved" src="../../../../assets/images/heart.png" alt="">
-          <p> 55</p>
-      </div>
-  </div>
-</div>
-</div>
-<div class="comments ">
-<div class="comment" style="padding-right: 10px;">
-  <div class="d-flex">
-      <div class="img">
-          <img src="../../../../assets/images/profile_img.jpg" alt="">
-      </div>
-      <div class="content">
-          <div class="person">
-              <h4>namePerson</h4>
-              <span>3j</span>
-          </div>
-          <p>Wow amzing shot</p>
-          <div class="replay">
-              <button class="replay">replay</button>
-              <button class="translation">see translation</button>
-          </div>
-          <div class="answers">
-              <button class="see_comment">
-                  <span class="hide_com hide">Hide all responses</span>
-                  <span class="show_c"> <span class="line"></span> See the <span> 1
-                      </span> answers</span>
-              </button>
-          </div>
-      </div>
-  </div>
-  <div class="like">
-      <img class="not_loved" src=".../../../../assets/images/love.png" alt="">
-      <img class="loved" src="../../../../assets/images/heart.png" alt="">
-      <p> 55</p>
-  </div>
-</div>
-<div class="responses hide">
-  <div class="response comment">
-      <div class="d-flex">
-          <div class="img">
-              <img src="../../../../assets/images/profile_img.jpg" alt="">
-          </div>
-          <div class="content">
-              <div class="person">
-                  <h4>namePerson</h4>
-                  <span>3j</span>
-              </div>
-              <p>Wow amzing shot</p>
-              <div class="replay">
-                  <button>replay</button>
-                  <button>see translation</button>
-              </div>
-
-          </div>
-      </div>
-      <div class="like">
-          <img class="not_loved" src="../../../../assets/images/love.png" alt="">
-          <img class="loved" src="../../../../assets/images/heart.png" alt="">
-          <p> 55</p>
-      </div>
-  </div>
-</div>
-</div>
-<div class="comments ">
-<div class="comment" style="padding-right: 10px;">
-  <div class="d-flex">
-      <div class="img">
-          <img src="../../../../assets/images/profile_img.jpg" alt="">
-      </div>
-      <div class="content">
-          <div class="person">
-              <h4>namePerson</h4>
-              <span>3j</span>
-          </div>
-          <p>Wow amzing shot</p>
-          <div class="replay">
-              <button class="replay">replay</button>
-              <button class="translation">see translation</button>
-          </div>
-          <div class="answers">
-              <button class="see_comment">
-                  <span class="hide_com hide">Hide all responses</span>
-                  <span class="show_c"> <span class="line"></span> See the <span> 1
-                      </span> answers</span>
-              </button>
-          </div>
-      </div>
-  </div>
-  <div class="like">
-      <img class="not_loved" src=".../../../../assets/images/love.png" alt="">
-      <img class="loved" src="../../../../assets/images/heart.png" alt="">
-      <p> 55</p>
-  </div>
-</div>
-<div class="responses hide">
-  <div class="response comment">
-      <div class="d-flex">
-          <div class="img">
-              <img src="../../../../assets/images/profile_img.jpg" alt="">
-          </div>
-          <div class="content">
-              <div class="person">
-                  <h4>namePerson</h4>
-                  <span>3j</span>
-              </div>
-              <p>Wow amzing shot</p>
-              <div class="replay">
-                  <button>replay</button>
-                  <button>see translation</button>
-              </div>
-
-          </div>
-      </div>
-      <div class="like">
-          <img class="not_loved" src="../../../../assets/images/love.png" alt="">
-          <img class="loved" src="../../../../assets/images/heart.png" alt="">
-          <p> 55</p>
-      </div>
-  </div>
-</div>
-</div>
     </div>
     </div>
       <div class="sending-container">
@@ -1233,10 +888,18 @@
         <div class="desc">
           <div class="icons">
               <div class="icon_left d-flex justify-content-center align-items-center">
-                  <div class="like">
+                  <!-- <div class="like">
                       <img class="not_loved" src="../../../../assets/images/love.png">
                       <img class="loved" src="../../../../assets/images/heart.png">
+                  </div> -->
+                  <div class="like" (click)="toggleLike(selectiveSavedIndex, this.reelsDetailsListSaved[0])" >
+                    <!-- <img *ngIf="!video.liked" class="not_loved" src="../../../../assets/images/love.png" alt="Not Loved">
+                    <img *ngIf="video.liked" class="loved" src="../../../../assets/images/heart.png" alt="Loved">
+                    <p>{{ video.likesCount }}</p> -->
+                    <img [ngClass]="{ 'not_loved': !this.reelsDetailsListSaved[0].IS_REEL_LIKED, 'loved': this.reelsDetailsListSaved[0].IS_REEL_LIKED }" src="../../../../assets/images/heart.png" alt="Like">
+                        <!-- <p>{{ this.reelsDetailsListSaved[0].REEL_LIKES_COUNT }}</p> -->
                   </div>
+
                   <div class="chat">
                       <button type="button" class="btn p-0" data-bs-toggle="modal" data-bs-target="#message_modal">
                           <img src="../../../../assets/images/bubble-chat.png">
@@ -1254,13 +917,30 @@
               </div>
           </div>
           <div class="liked">
-              <a class="bold" href="#">150 likes</a>
+              <a class="bold" href="#">{{ this.reelsDetailsListSaved[0].REEL_LIKES_COUNT }} likes</a>
           </div>
-          <div class="post_desc">
+          <!-- <div class="post_desc">
                
-             
-              <input type="text" placeholder="Add a comments...">
-          </div>
+            <input type="text" #commentInput name="comment-input" [(ngModel)]="this.reelsCommentsModel.COMMENT" id="emoji_comment" placeholder="Add a comment..." />
+
+            <button type="button" class="comment-btn" (click)="postComment()">
+              <i class="fa fa-paper-plane"></i> 
+            </button>
+          </div> -->
+
+          <form method="post" cl>
+            <div class="input">
+              <img src="../../../../assets/images/profile_img.jpg" alt="">
+              <input type="text" #commentInput name="comment-input" [(ngModel)]="this.reelsCommentsModel.COMMENT" id="emoji_comment" placeholder="Add a comment..." />
+              <button type="button" class="comment-btn" (click)="postComment()">
+                <i class="fa fa-paper-plane"></i> <!-- or use an appropriate send icon -->
+              </button>
+
+            </div>
+          </form>
+
+
+
         </div>
       </div>
      
@@ -1281,12 +961,13 @@
     (focus)="onFocus()" 
     (window:keydown)="onKeydown($event)" (wheel)="onScroll($event)"
     #reelContainer  
+    style="height: 100vh; overflow-y: hidden;"
     >
       <div *ngFor="let video of reelsDetailsList; let i = index" class="reel" [id]="'reel-' + i">
         <div class="video">
           <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" loop></video>
           <div class="content">
-            <div class="sound" (click)="toggleMute(i)">
+            <div class="sound" (click)="toggleProfileMute(i)">
               <img class="volume-up" src="../../../../assets/images/volume-up.png" *ngIf="!video.isMuted">
               <img class="volume-mute" src="../../../../assets/images/volume-mute.png" *ngIf="video.isMuted">
             </div>
@@ -1368,7 +1049,7 @@
     <div class="follow-page-container" *ngIf="this.currentOption == 'HomeTab'">
       <h2 class="page-title">Suggested for You</h2>
       <div class="user-list">
-        <div class="user-item" *ngFor="let user of userAccountList">
+        <!-- <div class="user-item" *ngFor="let user of userAccountList">
           <img src="assets/img/user1.jpg" alt="{{user.User_Name}}" class="profile-picture" />
           <div class="user-info">
             <h3 class="username">{{ user.User_Name }}</h3>
@@ -1378,7 +1059,27 @@
               {{ user.IS_FOLLOWING ? 'Following' : 'Follow' }}
             </button>
           </div>
+        </div> -->
+
+        <div class="row" style="row-gap: 30px;">
+          <div class="col-12">
+            <div *ngFor="let user of userAccountList" class="user-item-wrapper">
+              <div class="user-item d-flex justify-content-between align-items-center">
+                <img src="assets/img/user1.jpg" alt="{{user.User_Name}}" class="profile-picture" />
+                
+                <h4 class="username">{{ user.User_Name }}</h4>
+                <button class="follow-button ml-3" (click)="toggleFollow(user)"
+                [ngClass]="user.IS_FOLLOWING ? 'following' : 'follow-button'" 
+                >
+                  {{ user.IS_FOLLOWING ? 'Following' : 'Follow' }}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
+    
+        
+
       </div>
     </div>
 
@@ -1427,16 +1128,18 @@
               </div>
             </div> -->
 
-            <div *ngFor="let video of userReelsAccount[0].UserReelsDetails; let i = index" class="new-reel-item" (click)="togglePopup()">
+            <div *ngFor="let video of userReelsAccount[0].UserReelsDetails; let i = index" class="new-reel-item"
+             (click)="togglePopup(video.REELS_DETAILS_ID);togglePopupIndex()">
               <div class="new-video-wrapper">
-                <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" class="new-video" loop></video>
+                <video [id]="'video-' + i" [src]="video.uploadedFilesName" class="new-video"  muted ></video>
               </div>
             </div>
           </div>
           <div *ngIf="this.profileTab == 'SaveReelsTab'">
-            <div *ngFor="let video of userReelsAccount[0].UserSavedReelsDetails; let i = index" class="new-reel-item">
+            <div *ngFor="let video of userReelsAccount[0].UserSavedReelsDetails; let i = index"
+             class="new-reel-item">
               <div class="new-video-wrapper">
-                  <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName"  loop></video>
+                  <video  [id]="'video-' + i" [src]="video.uploadedFilesName"  muted ></video>
               </div>
             </div>
           </div>
