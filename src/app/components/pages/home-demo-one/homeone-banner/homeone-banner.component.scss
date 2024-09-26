@@ -1,14 +1,16 @@
 .main-banner-area {
+    // height: 100vh;
+    // display: flex;
+    // align-items: center;
     padding: {
         top: 110px;
-        // bottom: 250px;
+        bottom: 30px;
     };
     background: {
         image: url(../../../../../assets/img/main-banner.jpg);
         position: center center;
         size: cover;
         repeat: no-repeat;
-        height: 100vh
     };
 }
 .main-banner-content {
@@ -322,10 +324,10 @@
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
 
     .main-banner-area {
-        padding: {
-            top: 240px;
-            bottom: 180px;
-        };
+        // padding: {
+        //     top: 240px;
+        //     bottom: 180px;
+        // };
     }
     .main-banner-content {
         max-width: 100%;

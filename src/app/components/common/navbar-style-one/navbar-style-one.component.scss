@@ -81,7 +81,7 @@
                     margin-right: 0;
                 }
                 &:first-child {
-                    margin-left: 0;
+                    margin-left: 10px;
                 }
                 &:hover, &.active {
                     a {
@@ -306,7 +306,7 @@
             }
         }
         .navbar-search-box {
-            margin-left: 40px;
+            margin-left: 0px;
             position: relative;
             width: 210px;
 
@@ -1733,12 +1733,12 @@
                 }
             }
             .navbar-search-box {
-                margin-left: 40px;
+                // margin-left: 40px;
                 width: 160px;
             }
             .others-option {
                 .option-item {
-                    margin-left: 18px;
+                    // margin-left: 18px;
                     
                     span {
                         i {
@@ -1771,4 +1771,9 @@
         }
     }
 
+}
+@media only screen and (min-width: 1350px) {
+    .navbar-search-box {
+        margin-left: 40px !important;
+    }
 }

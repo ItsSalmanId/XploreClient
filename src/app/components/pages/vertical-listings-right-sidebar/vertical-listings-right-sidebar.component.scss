@@ -1672,6 +1672,7 @@ button.log_btn:hover {
   display: flex;
   flex-wrap: wrap;
   font-size: 20px;
+  color: black;
 }
 @media screen and (max-width: 498px) {
   .profile_container .profile_info .info p.name {
@@ -1702,17 +1703,21 @@ button.log_btn:hover {
 }
 .profile_container .profile_info .info .general_info p {
   margin-right: 15px;
+  color: black;
 }
 .profile_container .profile_info .info .general_info p span {
-  font-weight: 500;
+  font-weight: 700;
 }
 .profile_container .profile_info .info .nick_name {
-  font-weight: 500;
+  font-weight: 700;
+  color: black;
 }
 .profile_container .profile_info .info .desc {
   font-weight: 18px;
-  font-weight: 400;
+  font-weight: 500;
+  color: black;
 }
+
 .profile_container .highlights {
   display: flex;
   text-align: center;
@@ -1908,9 +1913,7 @@ box-shadow: 5px 5px #16f5f5 !important;
 ///follow 
 
 .follow-page-container {
-  max-width: 1340px; /* Significantly increase the container width */
-  margin: 0 auto;
-  padding: 20px;
+   
 }
 
 .page-title {
@@ -1918,6 +1921,7 @@ box-shadow: 5px 5px #16f5f5 !important;
   font-size: 28px; /* Increase title font size */
   margin-bottom: 30px;
   color: #333;
+  margin-top: 20px;
 }
 
 .user-list {
@@ -1928,10 +1932,11 @@ box-shadow: 5px 5px #16f5f5 !important;
 
 .user-item {
   background-color: black;
-  border-radius: 20px; /* Increase border-radius for a larger, rounded look */
+  border-radius: 100px; /* Increase border-radius for a larger, rounded look */
   padding: 30px; /* Further increase padding for a much larger box */
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1); /* Larger shadow for more depth */
 }
+
 
 .user-item-wrapper {
   margin-bottom: 30px; /* Ensures spacing between items */
@@ -1945,7 +1950,7 @@ box-shadow: 5px 5px #16f5f5 !important;
   height: 80px;
   border-radius: 50%;
   object-fit: cover;
-  margin-right: 30px; /* Increase space between the picture and user info */
+    /* Increase space between the picture and user info */
 }
 
 .user-info {
@@ -1962,36 +1967,29 @@ box-shadow: 5px 5px #16f5f5 !important;
 }
 
 .follow-button {
-  background-color: white;
-  color: black;
-  border: none;
-  padding: 12px 30px; /* Significantly increase button size */
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 12px 31px; 
+  font-weight: 600; 
   border-radius: 8px;
+  margin-left: 25px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-size: 18px; /* Further increase button font size */
+  font-size: 15px; /* Further increase button font size */
+}
+.follow-button:hover {
+  background-color: white;
+  color: black;
+  transition: 0.3s ease-in;
 }
 
 // .follow-button:hover {
 //   background-color: #007bb5;
 // }
 
-@media (max-width: 480px) {
-  .user-item {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .user-info {
-    width: auto;
-    margin-top: 15px;
-  }
-
-  .follow-button {
-    width: 100%;
-    padding: 14px; /* Adjust padding for mobile view */
-    text-align: center;
-  }
+@media screen and  (max-width: 480px) {
+  
 }
 
 
@@ -2018,8 +2016,7 @@ box-shadow: 5px 5px #16f5f5 !important;
 }
 
 .profile-picture {
-  width: 120px;
-  height: 120px;
+  width: 70px;
   border-radius: 50%;
   object-fit: cover;
   margin-right: 30px;
@@ -2132,16 +2129,24 @@ box-shadow: 5px 5px #16f5f5 !important;
 
 
 .following {
-  background-color: white;
-  color: black;
-  border: none;
-  padding: 12px 30px; /* Significantly increase button size */
+ 
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  transition: 0.3s ease-in;
+  padding: 12px 17px;
+
+  font-weight: 600;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-size: 18px;
+  font-size: 15px;
+  margin-left: 10px;
 }
-
+.following:hover {
+  background-color: white;
+  color: black;
+}
 ///reels comment
 .input .comment-btn {
   background: transparent;
@@ -2782,7 +2787,7 @@ box-shadow: 5px 5px #16f5f5 !important;
 @media screen and (max-width:767px) {
   
   .sending-container .desc form input {
-    max-width: 45% !important;
+    max-width: 68% !important;
   }
   .comment-container {
     display: none !important;
@@ -2803,6 +2808,37 @@ box-shadow: 5px 5px #16f5f5 !important;
   .popup-content {
     max-width: 51vh !important;
   }
+  .user-item {
+    padding: 30px 0px !important;
+  }
+  .username {
+    font-size: 21px !important;
+    padding: 15px 0px;
+    margin-bottom: 0px;
+  }
+  .profile-picture {
+    margin-right: 0px !important;
+  }
+  .user-item {
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 0px !important;
+  }
+
+  .user-info {
+    width: auto;
+    margin-top: 15px;
+  }
+
+  .follow-button {
+    margin-left: 0px !important; 
+  }
+  .following {
+    margin-left: 0px !important;
+  }
+  .post-detail-top .info {
+    padding: 4px 7px 0px 4px !important;
+  }
 }
 
 .post-detail-top .info {
@@ -2822,13 +2858,13 @@ padding-left: 0px !important;
 }
 
 .reel-container-scroll{
-  overflow-y: hidden !important;  /* Hide the scrollbar */
-  height: 120vh !important; /* Set height to full viewport */
+  overflow-y: hidden !important;  
+  height: 120vh !important;  
   position: relative !important;
 }
 
 .reel-container-scroll:focus {
-  outline: none !important; /* Remove focus outline */
+  outline: none !important;  
 }
 
 
@@ -2847,8 +2883,8 @@ padding-left: 0px !important;
 
 .custom-sound {
   position: absolute;
-  top: 10px; /* Adjust as needed */
-  right: 10px; /* Adjust as needed */
+  top: 10px;  
+  right: 10px;  
   z-index: 10;
 }
 
@@ -2861,12 +2897,12 @@ padding-left: 0px !important;
 }
 
 .custom-play-icon {
-  width: 50px; /* Adjust size as needed */
+  width: 50px; 
   height: 50px;
 }
 
 .custom-volume-up,
 .custom-volume-mute {
-  width: 30px; /* Adjust size as needed */
+  width: 30px; 
   height: 30px;
 }
