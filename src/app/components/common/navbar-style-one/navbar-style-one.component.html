@@ -103,6 +103,14 @@
                                 <li class="nav-item"><a routerLink="/single-products" class="nav-link" routerLinkActive="active"[routerLinkActiveOptions]="{exact: true}">Products Details</a></li>
                             </ul> -->
                         </li>
+
+                        <li class="nav-item">
+                            <a  class="dropdown-toggle nav-link" *ngIf="accountType == 'Admin'" 
+                            (click)="isClickDashboard()"
+                            >
+                                Dashboard <i class="bi bi-alexa"></i>
+                            </a> 
+                        </li>
                         <!-- <li class="nav-item">
                             <a href="javascript:void(0)" class="dropdown-toggle nav-link">
                                 Blog

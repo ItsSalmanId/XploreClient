@@ -170,6 +170,7 @@
           </div>
         </div>
       </div>
+      
       <div class="nav_xm">
         <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -760,19 +761,22 @@
 
 
           <div class="img-container" *ngFor="let video of reelsDetailsListSaved; let i = index"
+          (click)="toggleProfilePlay(this.selectiveSavedIndex)"
           >
-          
+   
             <video
              #videoProfileElement [id]="'video-' + i" style="height: 100% !important;width: 100%;"
-             [src]="video.uploadedFilesName"  loop></video>
-
+             [src]="video.uploadedFilesName"   loop ></video>
+           
              <div class="custom-content">
               <div class="custom-sound" (click)="toggleProfileMute(this.selectiveSavedIndex)">
                 <img class="volume-up" src="../../../../assets/images/volume-up.png" *ngIf="!video.isMuted">
                 <img class="volume-mute" src="../../../../assets/images/volume-mute.png" *ngIf="video.isMuted">
               </div>
-              <div class="custom-play" [ngClass]="{'opac_1': !video.isPlaying}" (click)="toggleProfilePlay(this.selectiveSavedIndex)">
-                <img src="../../../../assets/images/play-button-arrowhead.png">
+              <div class="custom-play" 
+               
+                [ngClass]="{'opac_1': !video.isPlaying}">
+                <img src="../../../../assets/images/play-button-arrowhead.png" *ngIf="!video.isPlaying">
               </div>
             </div>
           </div>

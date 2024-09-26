@@ -21,6 +21,7 @@ export class NavbarStyleOneComponent implements OnInit {
     errorConfirmPassword: any = { isError: false, errorMessage: "" };
     errorUserNameEmail: any = { isError: false, errorMessage: "" };
     errorLoginPassword: any = { isError: false, errorMessage: "" };
+    accountType: string;
     
 
     constructor(private router: Router, private _accountServiceService: AccountService, private toastr: ToastrService) { 
@@ -33,6 +34,17 @@ export class NavbarStyleOneComponent implements OnInit {
     ngOnInit(): void {
 
         this.surveyLink.ENCRYPTED_PATIENT_ACCOUNT = "123456";
+         this.accountType = localStorage.getItem('ACCOUNT_TYPE');
+
+    }
+
+    isClickDashboard()
+    {
+        if(this.accountType == "Admin")
+            {
+                //localStorage.setItem('ACCOUNT_TYPE', this.userAccount.ACCOUNT_TYPE);
+                this.router.navigate(['/dashboard-user-details']);
+            }
     }
 
     isCallFromNavBar()

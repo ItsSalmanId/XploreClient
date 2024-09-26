@@ -156,10 +156,12 @@ if (this.userAccount) {
             console.log(response);
             if(this.userAccount.ACCOUNT_TYPE == "Admin")
             {
+                localStorage.setItem('ACCOUNT_TYPE', this.userAccount.ACCOUNT_TYPE);
                 this.router.navigate(['/dashboard-user-details']);
             }
             else
             {
+                localStorage.setItem('ACCOUNT_TYPE', this.userAccount.ACCOUNT_TYPE);
                 this.router.navigate(['/dashboard-my-listings']);
             }
 
