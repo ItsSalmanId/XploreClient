@@ -95,6 +95,8 @@ import { CommonCall } from './components/common/commonCall/commonCall.component'
 import { DatePipe } from '@angular/common';
 import { ReelsStatusComponent } from './components/pages/reels-status/reels-status.component';
 import { ReelsVertical } from './components/pages/reels-listings/reels-listings.component';
+import { ShowStoriesComponent } from './components/pages/show-stories/show-stories.component';
+import { ShowUsersComponent } from './components/pages/show-users/show-users.component';
 
 const DROPZONECONFIG: DropzoneConfigInterface = {
     url: 'C:/new1/Xploradoor-main/main/Xploradoor/images',
@@ -178,7 +180,9 @@ const DROPZONECONFIG: DropzoneConfigInterface = {
         DashboardUserDetailsComponent,
         DashboardAllListingsComponent,
         CommonCall,
-        ReelsStatusComponent
+        ReelsStatusComponent,
+        ShowStoriesComponent,
+        ShowUsersComponent
     ],
     imports: [
         BrowserModule,

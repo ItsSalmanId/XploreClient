@@ -960,6 +960,8 @@
     <!-- <div class="" style="width: 100%; max-width: 800px; margin: 0 170px 0 auto;">
       <app-category></app-category>
     </div> -->
+    
+    
     <div tabindex="0" class="reels" *ngIf="currentOption == 'ReelsTab'"
     (focusout)="onFocusOut()"
     (focus)="onFocus()" 
@@ -1090,6 +1092,9 @@
     <!-- profile page -->
 
   <div class="profile-page-container" *ngIf="this.currentOption == 'ProfileTab'">
+    <div class="" style="width: 100%; max-width: 800px; margin: 0 170px 0 auto;">
+      <app-show-users></app-show-users>
+    </div>
     <div class="profile-header">
       <div class="profile-header-box">
         <img src="assets/img/user1.jpg" alt="Profile Picture" class="profile-picture" />

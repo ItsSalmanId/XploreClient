@@ -1,0 +1,120 @@
+<div class="stories-wrapper">
+  <div class="stories">
+    <button type="button" class="close-button close-button" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
+       
+    <div
+      *ngFor="let story of stories; let index = index"
+      [ngClass]="{'story': true}"
+      [ngStyle]="{
+        transform: index === indexSelected ? 'translate(0px)' : 'translate(' + calculateTransform(index) + 'px) scale(0.3)',
+        cursor: index !== indexSelected ? 'pointer' : 'auto'
+      }"
+      (click)="index !== indexSelected ? selectSlide(index) : null"
+    >
+      <div class="story__source">
+        <!-- <img 
+          [src]="index === indexSelected ? story.images[key].url : story.images[0].url" 
+          alt="story image"
+        /> -->
+        <img *ngIf="story.images[key]?.type=='image'"
+        [src]="index === indexSelected ? story.images[key].url : story.images[0].url"
+        class="h-full w-full rounded-lg"
+      />
+      <video *ngIf="story.images[key]?.type=='video'"
+      id="storyVideo-{{indexSelected}}-{{key}}"
+      [src]="index === indexSelected ? story.images[key].url : story.images[0].url"
+       class="w-100 h-100 object-fit-cover storyVideo" autoplay muted playsinline
+       >
+        Your browser does not support the video tag.
+    </video>
+        <div class="story__header" *ngIf="index === indexSelected">
+          <div class="time">
+            <div 
+              class="time__item" 
+              *ngFor="let elm of story.images; let timeIndex = index"
+            >
+              <div 
+                class="time__fill" 
+                [ngStyle]="{
+                  width: timeIndex === key ? percent + '%' : key > timeIndex ? '100%' : '0%'
+                }"
+              ></div>
+            </div>
+          </div>
+
+          <div class="story__top">
+            <div class="user">
+              <div class="user__image">
+                <img [src]="story.picture" alt="user image"/>
+              </div>
+              <div class="user__name">
+                {{ story.username }}
+              </div>
+            </div>
+            <div class="Play_Pause">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 cursor-pointer"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="#fff"
+                (click)="isPaused ? playStory() : pauseStory()"
+              >
+                <path
+                  *ngIf="!isPaused"
+                  d="M9 6a1 1 0 0 1 1 1v10a1 1 0 1 1-2 0V7a1 1 0 0 1 1-1zm6 0a1 1 0 0 1 1 1v10a1 1 0 1 1-2 0V7a1 1 0 0 1 1-1z"
+                  fill="#fff"
+                />
+                <path
+                  *ngIf="isPaused"
+                  d="M6 6.741c0-1.544 1.674-2.505 3.008-1.728l9.015 5.26c1.323.771 1.323 2.683 0 3.455l-9.015 5.258C7.674 19.764 6 18.803 6 17.26V6.741zM17.015 12L8 6.741V17.26L17.015 12z"
+                  fill="#fff"
+                />
+              </svg>
+              <button (click)="isMuted ? unmuteStory() : muteStory()" class="icon-button ms-2 h-6 w-6 cursor-pointer">
+                <i class="fas text-white" [ngClass]="isMuted ? 'fa-volume-mute' : 'fa-volume-up'" style="font-size: 17px;"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="story__body">
+          <div class="user" *ngIf="index !== indexSelected">
+            <div class="user__image">
+              <img [src]="story.picture" alt="user image"/>
+            </div>
+            <div class="user__name">
+              {{ story.username }}
+            </div>
+          </div>
+
+          <div *ngIf="index === indexSelected" class="Message_Wrapper">
+            <input 
+              type="text"
+              class="Message_InputText"
+              placeholder="Reply..."
+            >
+            <button class="Message_Icon">
+              <i class="fas fa-heart"></i>
+            </button>
+            <button class="Message_Icon">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <div 
+        *ngIf="index === indexSelected" 
+        class="story__icon story__icon--prev" 
+        (click)="prev(index)"
+      ></div>
+      <div 
+        *ngIf="index === indexSelected" 
+        class="story__icon story__icon--next" 
+        (click)="next(index)"
+      ></div>
+    </div>
+  </div>
+</div>
