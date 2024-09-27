@@ -7,7 +7,13 @@
   transition: var(--transition);
   text-align: center;
   background-color: #282a38;
-  padding: 25px 14px;
+  /* padding: 25px 14px; */
+  height: 100%;
+  display: flex;
+  max-height: 185px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   .icon {
       margin-bottom: 15px;
