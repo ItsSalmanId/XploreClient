@@ -1,5 +1,4 @@
 <app-dashboard-sidemenu></app-dashboard-sidemenu>
-
 <!-- Start Main Content Wrapper Area -->
 <div class="main-content d-flex flex-column">
     <app-dashboard-navbar></app-dashboard-navbar>
@@ -16,253 +15,229 @@
             <li class="item"><a routerLink="dashboard">{{Content.subTitle}}</a></li>
             <li class="item">{{Content.title}}</li>
         </ol>
-    </div>
-
-    
-    <!-- End Breadcrumb Area -->
-    <!-- <div class="add-listings-box">
-        <div class="bg-white p-3 mb-3" >
-            <div class="row" style="gap: 10px;">
-                <div class="col-lg-3 col-md-4">
-                    <div class="form-group">
-                        <label><i class='bx bx-briefcase-alt'></i> test1</label>
-                        <input type="text" class="form-control" placeholder="Enter your email">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="form-group">
-                        <label><i class='bx bx-briefcase-alt'></i> test1</label>
-                        <input type="text" class="form-control" placeholder="Enter your email">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="form-group">
-                        <label><i class='bx bx-briefcase-alt'></i> test1</label>
-                        <input type="text" class="form-control" placeholder="Enter your email">
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="buttons">
-    
-                        <button class="default-btn-mine">Search</button>
-                        <button class="default-btn-mine">Cancel</button>
-                    </div>
-                </div>
-            </div>
-         </div>
-        </div> -->
-     
-     
-        
+    </div>   
     <!-- Start -->
-    <div class="add-listings-box">
-        <h3>Basic Informations</h3>
-        <div class="grid-container">
-            <!-- Header Row -->
-            <div class="grid-header">
-                <div class="header-col">SR NO</div> 
-              <div class="header-col">User Name</div>
-              <div class="header-col" hidden>ID</div>
-              <div class="header-col">Email</div>
-              <div class="header-col">Account Status</div>
-              <div class="header-col">Action</div>
-            </div>
-          
-            <!-- Data Rows -->
-            <div *ngFor="let item of userAccountList; let i = index" class="grid-row">
-                <div class="grid-col">{{ i + 1 }}</div> <!-- Serial Number -->
-                <div class="grid-col">{{ item.User_Name }}</div>
-                <div class="grid-col" hidden>{{ item.APPLICATION_USER_ACCOUNTS_ID }}</div>
-              <div class="grid-col">{{ item.EMAIL_ADDRESS }}</div>
-              <div class="grid-col">{{ item.Blocked == false ? 'Active' : 'Blocked'}}</div>
-              <div class="grid-col">
-                <button > 
-                  <i class="fas fa-user" data-bs-toggle="modal" data-bs-target="#modal-Profile" (click)="selectUser(item.APPLICATION_USER_ACCOUNTS_ID)"></i> <!-- View Profile icon -->
-                </button>
-                <button >
-                  <i class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#modal-Profile-edit" (click)="selectUser(item.APPLICATION_USER_ACCOUNTS_ID)"></i> <!-- Edit icon -->
-                </button>
-                <button>
-                  <i class="fas fa-trash"  data-bs-toggle="modal" data-bs-target="#message_modal-Confirmation" (click)="selectUser(item.APPLICATION_USER_ACCOUNTS_ID)"></i> <!-- Delete icon -->
-                </button>
-            </div>
-          </div>
-    
-        <div class="row">
-           
-        </div>
-
-        <div class="modal fade" id="message_modal-Confirmation" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-   <div class="modal-dialog modal-dialog-centered">
-       <div class="modal-content">
-           <div class="modal-header">
-               <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmation</h1>
-               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-           </div>
-           <div class="modal-body">
-               <div class="send">
-                   <div class="search_person">
-                       <p>Are you sure want to delete the record.</p>
-                   </div>
-               </div>
-           </div>
-           <div class="modal-footer">
-               <button class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">No</button>
-               <button class="btn btn-primary"  data-bs-dismiss="modal" aria-label="Close" (click)="deleteUser()">Yes</button>
-           </div>
-       </div>
-   </div>
-</div>
-    
-
-<!-- Profile Review -->
-<div class="modal fade" id="modal-Profile" tabindex="-1" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered">
-   <div class="modal-content">
-       <div class="modal-header">
-           <h1 class="modal-title fs-5" id="exampleModalLabel">User Profile</h1>
-           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-       </div>
-       <div class="modal-body">
-        <div class="row">
-            <div class="col-lg-6 col-md-6">
-                <div class="form-group">
-                    <label><i class="bi bi-envelope"></i> Email</label>
-                    <input type="email" class="form-control" placeholder="Enter your email"
-                    [(ngModel)]="userAccount.EMAIL_ADDRESS" name="EMAIL_ADDRESS" disabled
-                    >
-                </div>
-            </div>
-
-            <div class="col-lg-6 col-md-6">
-                <div class="form-group">
-                    <label><i class="bi bi-pass"></i> Password</label>
-                    <input type="password" class="form-control" placeholder="Enter your password"
-                    [(ngModel)]="userAccount.PASSWORD" name="PASSWORD" disabled
-                    >
-                </div>
-            </div>
-        </div>
-
-        <div class="add-listings-box">
-            <h3>Account Status</h3>
-        
-            <div class="form-group">
-                <div class="sidebar-widgets" aria-disabled="true">
-                    <div class="box">
-                        <span class="title">Active/In-Active</span>
-                        <label class="switch">
-                            <input type="checkbox" [(ngModel)]="userAccount.Blocked" disabled>
-                            <span></span>
-                        </label>
+    <div class="card">
+        <div class="card-body">
+            <!-- Filter row -->
+            <div class="d-flex flex-wrap justify-content-between mb-3">
+                <div class="d-flex flex-wrap mb-2">
+                    <div class="input-group me-2 mb-2 flex-grow-1">
+                        <input type="text" class="form-control border-start-0" placeholder="Search here...">
+                    </div>
+                    <!-- Filter buttons with dropdown options -->
+                    <div class="dropdown me-2 mb-2">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownFilter1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Filter
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownFilter1">
+                            <li><a class="dropdown-item" href="#">Option 1</a></li>
+                            <li><a class="dropdown-item" href="#">Option 2</a></li>
+                            <li><a class="dropdown-item" href="#">Option 3</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown me-2 mb-2">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownFilter2" data-bs-toggle="dropdown" aria-expanded="false">
+                            Filter
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownFilter2">
+                            <li><a class="dropdown-item" href="#">Option 1</a></li>
+                            <li><a class="dropdown-item" href="#">Option 2</a></li>
+                            <li><a class="dropdown-item" href="#">Option 3</a></li>
+                        </ul>
                     </div>
                 </div>
-            </div>
-        </div>
-       </div>
-       <div class="modal-footer">
-           <!-- <button class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">No</button>
-           <button class="btn btn-primary"  data-bs-dismiss="modal" aria-label="Close" (click)="deleteUser()">Yes</button> -->
-       </div>
-   </div>
-</div>
-</div>
-
-<!-- Edit User -->
-<div class="modal fade" id="modal-Profile-edit" tabindex="-1" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered">
-   <div class="modal-content">
-       <div class="modal-header">
-           <h1 class="modal-title fs-5" id="exampleModalLabel">User Profile</h1>
-           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-       </div>
-       <div class="modal-body">
-        <div class="row">
-            <div class="col-lg-6 col-md-6">
-                <div class="form-group">
-                    <label><i class="bi bi-envelope"></i> Email</label>
-                    <input type="email" class="form-control" placeholder="Enter your email"
-                    [(ngModel)]="userAccount.EMAIL_ADDRESS" name="EMAIL_ADDRESS"
-                    >
-                </div>
-            </div>
-
-            <div class="col-lg-6 col-md-6">
-                <div class="form-group">
-                    <label><i class="bi bi-pass"></i> Password</label>
-                    <input type="password" class="form-control" placeholder="Enter your password"
-                    [(ngModel)]="userAccount.PASSWORD" name="PASSWORD"
-                    >
-                </div>
-            </div>
-
-            <div class="col-lg-6 col-md-6">
-                <div class="form-group">
-                    <label><i class="bi bi-pass"></i> User Name</label>
-                    <input type="text" class="form-control" placeholder="Enter your password"
-                    [(ngModel)]="userAccount.User_Name" name="User_Name"
-                    >
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-                <div class="form-group">
-                    <label><i class='bx bx-duplicate'></i> Account Type</label>
-                    <!--  -->
-                    <select [(ngModel)]="userAccount.ACCOUNT_TYPE">
-                        <option>Admin</option>
-                        <option>Business Account</option>
-                        <option>User</option>
+                <div class="d-flex align-items-center mb-2">
+                    <span class="me-2">Displaying 100 results</span>
+                    <select class="form-select w-auto">
+                        <option>Most Recent</option>
+                        <option>Oldest</option>
+                        <option>Highest Rated</option>
+                        <option>Lowest Rated</option>
                     </select>
                 </div>
             </div>
+            <!-- Table Wrapper for Horizontal Scroll on Small Devices -->
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                    <tr class="table-header">
+                        <th scope="col" style="background-color: #0ec6c6; color: white;padding: 15px 10px;">#</th> <!-- Serial number column -->
+                        <th scope="col" style="background-color: #0ec6c6; color: white;padding: 15px 10px;"><input type="checkbox"></th>
+                        <th scope="col" style="background-color: #0ec6c6; color: white;padding: 15px 10px;">Name</th>
+                        <th scope="col" style="background-color: #0ec6c6; color: white; padding: 15px 10px;">Email</th> 
+                        <th scope="col" style="background-color: #0ec6c6; color: white; padding: 15px 10px;">Status</th>
+                        <th scope="col"  style="background-color: #0ec6c6; color: white; padding: 15px 10px;"class="text-end">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                     
+                    <tr>
+                        <td>1</td> <!-- Serial number -->
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <img src="https://randomuser.me/api/portraits/women/10.jpg" alt="Profile Image" class="rounded-circle me-2 profile-img">
+                            Brittni Lando
+                        </td>
+                        <td>brittniLando&#64;gmail.com</td>
+                       
+                        <td><span class="badge bg-light-green">Active</span></td>
+                        <td class="text-end">
+                            <div class="dropdown">
+                                <button class="btn p-0 border-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-person-plus"></i> Add Profile</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil"></i> Edit</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-trash"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                  
+                    <tr>
+                        <td>2</td> <!-- Serial number -->
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <img src="https://randomuser.me/api/portraits/women/15.jpg" alt="Profile Image" class="rounded-circle me-2 profile-img">
+                            Kristin Watson
+                        </td>
+                        <td>kristinwatson&#64;gmail.com</td>
+                       
+                        <td><span class="badge bg-light-green">Active</span></td>
+                        <td class="text-end">
+                            <div class="dropdown">
+                                <button class="btn p-0 border-0" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-person-plus"></i> Add Profile</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil"></i> Edit</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-trash"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                   
+                    <tr>
+                        <td>3</td> <!-- Serial number -->
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <img src="https://randomuser.me/api/portraits/men/30.jpg" alt="Profile Image" class="rounded-circle me-2 profile-img">
+                            Rochel Foose
+                        </td>
+                        <td>rochelfoose&#64;gmail.com</td>
+                        
+                        <td><span class="badge bg-light-red">Inactive</span></td>
+                        <td class="text-end">
+                            <div class="dropdown">
+                                <button class="btn p-0 border-0" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton3">
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-person-plus"></i> Add Profile</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil"></i> Edit</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-trash"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td> <!-- Serial number -->
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <img src="https://randomuser.me/api/portraits/men/30.jpg" alt="Profile Image" class="rounded-circle me-2 profile-img">
+                            Rochel Foose
+                        </td>
+                        <td>rochelfoose&#64;gmail.com</td>
+                        
+                        <td><span class="badge bg-light-red">Inactive</span></td>
+                        <td class="text-end">
+                            <div class="dropdown">
+                                <button class="btn p-0 border-0" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton3">
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-person-plus"></i> Add Profile</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil"></i> Edit</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-trash"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td> <!-- Serial number -->
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <img src="https://randomuser.me/api/portraits/men/30.jpg" alt="Profile Image" class="rounded-circle me-2 profile-img">
+                            Rochel Foose
+                        </td>
+                        <td>rochelfoose&#64;gmail.com</td>
+                        
+                        <td><span class="badge bg-light-red">Inactive</span></td>
+                        <td class="text-end">
+                            <div class="dropdown">
+                                <button class="btn p-0 border-0" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton3">
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-person-plus"></i> Add Profile</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil"></i> Edit</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-trash"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td> <!-- Serial number -->
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <img src="https://randomuser.me/api/portraits/men/30.jpg" alt="Profile Image" class="rounded-circle me-2 profile-img">
+                            Rochel Foose
+                        </td>
+                        <td>rochelfoose&#64;gmail.com</td>
+                        
+                        <td><span class="badge bg-light-red">Inactive</span></td>
+                        <td class="text-end">
+                            <div class="dropdown">
+                                <button class="btn p-0 border-0" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton3">
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-person-plus"></i> Add Profile</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil"></i> Edit</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-trash"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td> <!-- Serial number -->
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <img src="https://randomuser.me/api/portraits/men/30.jpg" alt="Profile Image" class="rounded-circle me-2 profile-img">
+                            Rochel Foose
+                        </td>
+                        <td>rochelfoose&#64;gmail.com</td>
+                        
+                        <td><span class="badge bg-light-red">Inactive</span></td>
+                        <td class="text-end">
+                            <div class="dropdown">
+                                <button class="btn p-0 border-0" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton3">
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-person-plus"></i> Add Profile</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil"></i> Edit</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-trash"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div> <!-- End of table wrapper -->
         </div>
-
-        <div class="add-listings-box">
-            <h3>Account Status</h3>
-        
-            <div class="form-group">
-                <div class="sidebar-widgets" aria-disabled="true">
-                    <div class="box">
-                        <span class="title">Active/In-Active</span>
-                        <label class="switch">
-                            <input type="checkbox" [(ngModel)]="userAccount.Blocked">
-                            <span></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-       </div>
-       <div class="modal-footer">
-           <!-- <button class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">No</button> -->
-           <button class="btn btn-primary"  data-bs-dismiss="modal" aria-label="Close" (click)="editUser()">Save</button>
-       </div>
-   </div>
-</div>
-</div>
-
-
-
-
-
-</div>
-
-    
-    <div class="add-listings-btn">
-
-    <div class="col-xl-12 col-lg-12 col-md-12">
-        <div class="pagination-area text-center">
-            <pagination-controls (pageChange)="gridListings = $event"></pagination-controls>
-        </div>
-        <!-- <button type="submit" (click)="addUpdateBusiness()">Submit Listings</button> -->
     </div>
-    <!-- End -->
-
-    <div class="flex-grow-1"></div>
-    
-    <!-- <app-copyrights></app-copyrights> -->
-</div>
 <!-- End Main Content Wrapper Area -->
