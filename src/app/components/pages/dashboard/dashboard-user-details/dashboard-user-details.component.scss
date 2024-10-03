@@ -483,4 +483,89 @@
     
 
 }
+// table styling
 
+.card {
+    border: none;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: #f7f9fc;
+  }
+  
+  .table td {
+    vertical-align: middle;
+    padding: 10px 8px; /* Reduced padding between rows */
+    font-size: 0.875rem; /* Smaller text size in the table rows */
+  }
+  
+  .table-header {
+    background-color: #f0f2f5;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #7A7F91;
+  }
+  
+  .form-control, .btn {
+    border-radius: 20px;
+  }
+  
+  .badge {
+    padding: 5px 15px;
+    border-radius: 20px;
+  }
+  
+  .badge.bg-light-green {
+    background-color: #E6F9F1;
+    color: #33CC99;
+  }
+  
+  .badge.bg-light-red {
+    background-color: #FFE6E6;
+    color: #FF5C5C;
+  }
+  
+  .form-select {
+    border-radius: 20px;
+  }
+  
+  img.rounded-circle.profile-img {
+    border-radius: 50%;
+    width: 30px; /* Smaller profile picture size */
+    height: 30px; /* Ensure square shape */
+  }
+  
+  /* Add spacing between rows */
+  .table tbody tr {
+    border-bottom: 1px solid #EAEAEA;
+  }
+  
+  /* Three dots icon */
+  .bi-three-dots::before {
+    content: "\2026"; /* Using the Unicode ellipsis character */
+    font-size: 1.2rem;
+    color: #7A7F91;
+  }
+  
+  /* Enable horizontal scroll on smaller devices */
+  .table-responsive {
+    overflow-x: auto;
+  }
+  
+  /* Responsive design */
+  @media only screen and (max-width: 768px) {
+    .table td, .table th {
+        font-size: 0.8rem;
+        padding: 8px 6px;
+    }
+  
+    .form-control, .form-select {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+  
+    .d-flex.flex-wrap {
+        flex-direction: column; /* Stack input fields and filters */
+    }
+  }
