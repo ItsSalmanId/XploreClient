@@ -1,7 +1,5 @@
 .main-banner-area {
-    // height: 100vh;
-    // display: flex;
-    // align-items: center;
+    
     padding: {
         top: 110px;
         bottom: 30px;
@@ -472,7 +470,7 @@
         }
     }
     .listings-content {
-        padding: 28px 20px 25px;
+        padding: 20px 13px;
         position: relative;
         z-index: 2;
 
@@ -1509,4 +1507,11 @@
 @media only screen and (min-width: 1200px) and (max-width: 1355px) {}
 
 /* Min width 1550px */
-@media only screen and (min-width: 1550px) {}
+@media only screen and (min-width: 760px) {
+    .main-banner-area {
+        height: 107vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+}
+}
