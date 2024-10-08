@@ -22,6 +22,7 @@ export class DashboardNavbarComponent implements OnInit {
     classApplied = false;
     toggleClass() {
         this.classApplied = !this.classApplied;
+        this.classApplied2 = !this.classApplied2;
     }
 
     classApplied2 = false;

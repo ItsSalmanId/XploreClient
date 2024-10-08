@@ -1034,7 +1034,7 @@
                 padding: 20px;
                 margin-top: 15px;
                 max-height: 50vh;
-                background-color: #282a38;
+                // background-color: #282a38;
                 overflow: {
                     y: scroll;
                     x: hidden;
@@ -1179,6 +1179,7 @@
                 }
                 .collapse:not(.show) {
                     display: block;
+                    // height: 100vh;
                 }
             }
         }
@@ -1502,7 +1503,7 @@
                 padding: 20px 10px;
                 margin-top: 15px;
                 max-height: 50vh;
-                background-color: #f8f8f8;
+                // background-color: #f8f8f8;
                 overflow: {
                     y: scroll;
                     x: hidden;
@@ -1657,9 +1658,9 @@
         }
         &.navbar-style-two {
             .navbar {
-                .navbar-collapse {
-                    background-color: black;
-                }
+                // .navbar-collapse {
+                //     background-color: black;
+                // }
                 .navbar-nav {
                     .nav-item {
                         .dropdown-menu {
@@ -1776,4 +1777,117 @@
     .navbar-search-box {
         margin-left: 40px !important;
     }
+}
+
+/* Hidden by default */
+.hidden {
+    display: none;
+}
+
+/* Profile box styling */
+.profile-menu {
+    position: absolute;
+    top: 85px;
+    right: 2px;
+    width: 250px;
+    background-color: white;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    z-index: 1000;
+}
+
+/* Centering for smaller screens */
+@media (max-width: 768px) {
+    .profile-menu {
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;  /* Full width on mobile devices */
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        padding-bottom: 30px;
+        padding-top: 20px;
+        position: fixed; /* Fix the position at the bottom */
+        z-index: 1002;
+    }
+}
+
+/* Close button for mobile screens */
+.close-btn {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .close-btn {
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #333;
+    }
+}
+
+.profile-header {
+    text-align: center;
+    position: relative;
+}
+
+.profile-pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.profile-header h4 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.profile-header p {
+    font-size: 14px;
+    color: #777;
+}
+
+.profile-links {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0;
+}
+
+.profile-links li {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    cursor: pointer;
+    color: var(--blackColor);
+    font-weight: 500;
+    display: block;
+}
+
+.profile-links li i {
+    margin-right: 10px;
+    transition: var(--transition);
+    color: var(--mainColor);
+    font-size: 16px;
+}
+
+.logout i {
+    color: red !important;
+}
+
+.logout {
+    color: red !important;
+}
+
+/* Blur background styling */
+ 
+.cursor-pointer {
+    cursor: pointer;
 }

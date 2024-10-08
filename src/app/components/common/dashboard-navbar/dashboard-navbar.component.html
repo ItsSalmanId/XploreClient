@@ -9,7 +9,7 @@
                     <span class="bottom-bar"></span>
                 </span>
             </button>
-            <div class="collapse navbar-collapse" style="padding: 20px 0px;">
+            <div class="collapse navbar-collapse myHeight" style="padding: 20px 0px;">
                 <!-- <ul class="navbar-nav">
                     <li class="nav-item">
                         <a href="javascript:void(0)" class="dropdown-toggle nav-link">
@@ -108,7 +108,7 @@
                 <div class="others-option d-flex align-items-center">
                     <div class="option-item">
                         <div class="dropdown profile-nav-item">
-                            <button type="button" class="dropdown-toggle bg-transparent border-0" (click)="toggleClass2()">
+                            <button type="button" class="dropdown-toggle bg-transparent border-0 d_none" (click)="toggleClass2()">
                                 <div class="menu-profile">
                                     <img src="assets/img/user1.jpg" class="rounded-circle" alt="image">
                                     <span class="name">My Account</span>
@@ -124,7 +124,7 @@
                                         <p class="mb-3 email">hello&#64;androsmith.com</p>
                                     </div>
                                 </div>
-                                <div class="dropdown-body">
+                                <div class="dropdown-body myCenter ">
                                     <ul class="profile-nav p-0 pt-3">
                                         <li class="nav-item"><a  class="nav-link"><i class='bx bx-user'></i> <span>Dashboard</span></a></li>
                                         <li class="nav-item"><a class="nav-link"><i class='bx bx-envelope'></i> <span>Messages</span></a></li>
@@ -139,7 +139,7 @@
                                     </ul> -->
                                 </div>
                                 <div class="dropdown-footer">
-                                    <ul class="profile-nav">
+                                    <ul class="profile-nav myCenter m-23px ">
                                         <li class="nav-item" id="Logout">
                                             <a  class="nav-link"><i class='bx bx-log-out' (click)="Logout()"></i> <span (click)="Logout()">Logout</span></a>
                                         </li>

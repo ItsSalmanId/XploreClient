@@ -251,6 +251,19 @@ if (this.userAccount) {
         }
         return false;
     }
+    isProfileMenuVisible = false;
+
+    toggleProfileMenu() {
+      this.isProfileMenuVisible = !this.isProfileMenuVisible;
+      const profileBox = document.getElementById('profile-box');
+      if (profileBox) {
+        if (this.isProfileMenuVisible) {
+          profileBox.classList.remove('hidden');
+        } else {
+          profileBox.classList.add('hidden');
+        }
+      }
+    }
 
 }
 
