@@ -333,40 +333,43 @@
 
                     <section class="widget widget_vesax_posts_thumb">
                         <h3 class="widget-title">Popular Posts</h3>
-
-                        <article class="item">
-                            <a routerLink="/blog-details" class="thumb">
+                    
+                        <article class="item" (click)="showPopup()">
+                            <a class="thumb">
                                 <span class="fullimage cover bg1" role="img"></span>
                             </a>
                             <div class="info">
                                 <span>June 10, 2024</span>
-                                <h4 class="title usmall"><a routerLink="/blog-details">The Data Surrounding Higher Education</a></h4>
+                                <h4 class="title usmall">The Data Surrounding Higher Education</h4>
                             </div>
                             <div class="clear"></div>
                         </article>
-
-                        <article class="item">
-                            <a routerLink="/blog-details" class="thumb">
+                    
+                        <article class="item" (click)="showPopup()">
+                            <a class="thumb">
                                 <span class="fullimage cover bg2" role="img"></span>
                             </a>
                             <div class="info">
                                 <span>June 21, 2024</span>
-                                <h4 class="title usmall"><a routerLink="/blog-details">Conversion Rate the Sales Funnel Optimization</a></h4>
+                                <h4 class="title usmall">Conversion Rate and Sales Funnel Optimization</h4>
                             </div>
                             <div class="clear"></div>
                         </article>
-
-                        <article class="item">
-                            <a routerLink="/blog-details" class="thumb">
+                    
+                        <article class="item" (click)="showPopup()">
+                            <a class="thumb">
                                 <span class="fullimage cover bg3" role="img"></span>
                             </a>
                             <div class="info">
                                 <span>June 30, 2024</span>
-                                <h4 class="title usmall"><a routerLink="/blog-details">Business Data is changing the world’s Energy</a></h4>
+                                <h4 class="title usmall">Business Data is Changing the World’s Energy</h4>
                             </div>
                             <div class="clear"></div>
                         </article>
                     </section>
+                    
+                   
+                    
 
                     <section class="widget widget_categories">
                         <h3 class="widget-title">Categories</h3>
@@ -446,6 +449,24 @@
         </div>
     </div>
 </section>
+
 <!-- End Blog Details Area -->
 
 <app-footer-style-one></app-footer-style-one>
+ <!-- Popup Modal -->
+ <div class="custom-modal" *ngIf="isPopupVisible">
+    <div class="popup-overlay" (click)="closePopup()"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+        
+            <div class="modal-title">
+                <h2>Popup Title</h2>
+                <p>This is a simple popup message.</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="cancel-btn" (click)="closePopup()">Cancel</button>
+            <button class="accept-btn" (click)="closePopup()">Accept</button>
+        </div>
+    </div>
+</div>
