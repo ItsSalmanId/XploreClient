@@ -3,7 +3,7 @@
     <button type="button" class="close-button close-button" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
        
     <div
-      *ngFor="let story of stories; let index = index"
+      *ngFor="let story of reelsSatusDetailsList; let index = index"
       [ngClass]="{'story': true}"
       [ngStyle]="{
         transform: index === indexSelected ? 'translate(0px)' : 'translate(' + calculateTransform(index) + 'px) scale(0.3)',
@@ -20,15 +20,15 @@
         [src]="index === indexSelected ? story.images[key].url : story.images[0].url"
         class="h-full w-full rounded-lg"
       />
-      <video *ngIf="story.images[key]?.type=='video'"
+      <video  #videoElement *ngIf="story.images[key]?.type=='video'"
       id="storyVideo-{{indexSelected}}-{{key}}"
       [src]="index === indexSelected ? story.images[key].url : story.images[0].url"
-       class="w-100 h-100 object-fit-cover storyVideo" autoplay muted playsinline
-       >
+       class="object-fit-cover storyVideo"  muted playsinline
+       loop>
         Your browser does not support the video tag.
     </video>
-        <div class="story__header" *ngIf="index === indexSelected">
-          <div class="time">
+        <div id="1" class="story__header" *ngIf="index === indexSelected">
+          <div id="2" class="time">
             <div 
               class="time__item" 
               *ngFor="let elm of story.images; let timeIndex = index"
@@ -48,7 +48,8 @@
                 <img [src]="story.picture" alt="user image"/>
               </div>
               <div class="user__name">
-                {{ story.username }}
+                <!-- {{ story.username }} -->
+                salman
               </div>
             </div>
             <div class="Play_Pause">
@@ -84,7 +85,8 @@
               <img [src]="story.picture" alt="user image"/>
             </div>
             <div class="user__name">
-              {{ story.username }}
+              <!-- {{ story.username }} -->
+              salman
             </div>
           </div>
 

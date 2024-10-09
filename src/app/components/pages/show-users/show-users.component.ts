@@ -8,6 +8,17 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
   encapsulation:ViewEncapsulation.None
 })
 export class ShowUsersComponent {
+  storedList: any;
+
+  ngOnInit() {
+    console.log("userStories");
+    setTimeout(() => {
+      this.storedList = JSON.parse(localStorage.getItem('reelsSatusDetailsList') || '[]');
+
+    }, 900);
+
+  }
+
   customOptions: OwlOptions = {
     loop: false,
     mouseDrag: true,

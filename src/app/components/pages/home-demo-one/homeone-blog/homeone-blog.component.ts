@@ -32,6 +32,12 @@ export class HomeoneBlogComponent implements OnInit {
           this.childComponent.userToken();
         }
       }
+
+    selectedBlog(selectedBlogId: number)
+    {
+      localStorage.setItem('selectedBlogId', selectedBlogId.toString());
+    }
+    
     SubscribePlan(selectedPlan: string = "")
     {
 

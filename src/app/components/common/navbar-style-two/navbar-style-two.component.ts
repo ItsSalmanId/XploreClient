@@ -49,5 +49,9 @@ export class NavbarStyleTwoComponent implements OnInit {
         event.preventDefault();
         this.currentTab = tab;
     }
+    classApplied2 = false;
+    toggleClass2() {
+        this.classApplied2 = !this.classApplied2;
+    }
 
 }

@@ -8,12 +8,18 @@ import { CommonCallsService } from '../../../services/common-call/common-call.se
     styleUrls: ['./dashboard-navbar.component.scss']
 })
 export class DashboardNavbarComponent implements OnInit {
+    userName: string;
+    userEmail: string;
 
     constructor(
         private _commonCallsService: CommonCallsService
         ) { }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        
+        this.userName = localStorage.getItem('UserName');
+        this.userEmail = localStorage.getItem('UserEmail');
+    }
     Logout()
     {
      //this._commonCall.logout();

@@ -31,7 +31,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="dropdown-toggle nav-link" routerLink="/grid-listings-left-sidebar">
-                                Discovered <i class="bi bi-globe-americas"></i>
+                                Discover <i class="bi bi-globe-americas"></i>
                             </a>
                             <!-- <ul class="dropdown-menu">
                                 <li class="nav-item"><a href="javascript:void(0)" class="nav-link">List Layout <i class='bx bx-chevron-right'></i></a>
@@ -64,7 +64,10 @@
                             </ul> -->
                         </li>
                         <li class="nav-item">
-                            <a routerLink="/single-listings" class="dropdown-toggle nav-link" (click)="isCallFromNavBar()">
+                            <!-- <a  id="xploreNav1" routerLink="/single-listings" class="dropdown-toggle nav-link" (click)="isCallFromNavBar()">
+                                Xplore <i class="bi bi-briefcase-fill"></i>
+                            </a> -->
+                            <a id="xploreNav2" routerLink="/vertical-listings-right-sidebar" class="dropdown-toggle nav-link">
                                 Xplore <i class="bi bi-briefcase-fill"></i>
                             </a>
                             <!-- <ul class="dropdown-menu">
@@ -91,7 +94,7 @@
                         </li>
                         <li class="nav-item">
                             <a routerLink="/vertical-listings-right-sidebar"  class="dropdown-toggle nav-link">
-                                Xploradoor <i class="bi bi-alexa"></i>
+                                About Us <i class="bi bi-alexa"></i>
                             </a>
                             <!-- <ul class="dropdown-menu">
                                 <li class="nav-item"><a routerLink="/products-list" class="nav-link" routerLinkActive="active"[routerLinkActiveOptions]="{exact: true}">Products List</a></li>
@@ -168,9 +171,41 @@
                             </a>
                         </div>
                         <div class="option-item">
-                            <a  class="default-btn">
-                                <i class="bi-person-circle"></i>
+                            <a  class="default-btn" id="homepageProfile">
+                                <i class="bi-person-circle" (click)="toggleClass2()"></i>
                             </a>
+                            <div class="dropdown-menu" [class.active]="classApplied2">
+                                <div class="dropdown-header d-flex flex-column align-items-center">
+                                    <div class="figure mb-3">
+                                        <img src="assets/img/user1.jpg" class="rounded-circle" alt="image">
+                                    </div>
+                                    <div class="info text-center">
+                                        <span class="name">Salman</span>
+                                        <p class="mb-3 email">Salman</p>
+                                    </div>
+                                </div>
+                                <div class="dropdown-body">
+                                    <ul class="profile-nav p-0 pt-3">
+                                        <!-- <li class="nav-item"><a  class="nav-link"><i class='bx bx-user'></i> <span>Dashboard</span></a></li> -->
+                                        <!-- <li class="nav-item"><a class="nav-link"><i class='bx bx-envelope'></i> <span>Messages</span></a></li>
+                                        <li class="nav-item"><a class="nav-link"><i class='bx bx-edit-alt'></i> <span>Bookings</span></a></li>
+                                        <li class="nav-item"><a  class="nav-link"><i class='bx bx-cog'></i> <span>Settings</span></a></li> -->
+                                    </ul>
+                                    <!-- <ul class="profile-nav p-0 pt-3">
+                                        <li class="nav-item"><a routerLink="/dashboard" class="nav-link"><i class='bx bx-user'></i> <span>Dashboard</span></a></li>
+                                        <li class="nav-item"><a routerLink="/dashboard-messages" class="nav-link"><i class='bx bx-envelope'></i> <span>Messages</span></a></li>
+                                        <li class="nav-item"><a routerLink="/dashboard-bookings" class="nav-link"><i class='bx bx-edit-alt'></i> <span>Bookings</span></a></li>
+                                        <li class="nav-item"><a routerLink="/dashboard-my-profile" class="nav-link"><i class='bx bx-cog'></i> <span>Settings</span></a></li>
+                                    </ul> -->
+                                </div>
+                                <div class="dropdown-footer">
+                                    <ul class="profile-nav">
+                                        <li class="nav-item" id="Logout">
+                                            <a  class="nav-link"><i class='bx bx-log-out' ></i> <span >Logout</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

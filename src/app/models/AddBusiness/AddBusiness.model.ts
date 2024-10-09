@@ -47,6 +47,11 @@ export class  BusinessCategoryList {
     BUSINESS_CATEGORY: string;
     CategoryCount: number;
 }
+export class  images {
+    url: string;
+    type: string;
+    //CategoryCount: number;
+}
 
 
 export class BusinessFilesDetail {
@@ -224,6 +229,9 @@ export class ReelsDetails {
   IS_REEL_SAVED_OR_NOT: boolean;
   isPlaying: boolean = false;
   REEL_STATUS: boolean;
+  picture: string = 'https://randomuser.me/api/portraits/men/61.jpg';
+  username: string = 'salman';
+  images: images[];
 }
 
 export class ReelsCommentsDetails {

@@ -113,23 +113,24 @@
                                     <img src="assets/img/user1.jpg" class="rounded-circle" alt="image">
                                     <span class="name">My Account</span>
                                 </div>
-                            </button>
+                            </button>  
+
                             <div class="dropdown-menu" [class.active]="classApplied2">
                                 <div class="dropdown-header d-flex flex-column align-items-center">
                                     <div class="figure mb-3">
                                         <img src="assets/img/user1.jpg" class="rounded-circle" alt="image">
                                     </div>
                                     <div class="info text-center">
-                                        <span class="name">Andy Smith</span>
-                                        <p class="mb-3 email">hello&#64;androsmith.com</p>
+                                        <span class="name">{{this.userName}}</span>
+                                        <p class="mb-3 email">{{this.userEmail}}</p>
                                     </div>
                                 </div>
                                 <div class="dropdown-body">
                                     <ul class="profile-nav p-0 pt-3">
-                                        <li class="nav-item"><a  class="nav-link"><i class='bx bx-user'></i> <span>Dashboard</span></a></li>
-                                        <li class="nav-item"><a class="nav-link"><i class='bx bx-envelope'></i> <span>Messages</span></a></li>
+                                        <!-- <li class="nav-item"><a  class="nav-link"><i class='bx bx-user'></i> <span>Dashboard</span></a></li> -->
+                                        <!-- <li class="nav-item"><a class="nav-link"><i class='bx bx-envelope'></i> <span>Messages</span></a></li>
                                         <li class="nav-item"><a class="nav-link"><i class='bx bx-edit-alt'></i> <span>Bookings</span></a></li>
-                                        <li class="nav-item"><a  class="nav-link"><i class='bx bx-cog'></i> <span>Settings</span></a></li>
+                                        <li class="nav-item"><a  class="nav-link"><i class='bx bx-cog'></i> <span>Settings</span></a></li> -->
                                     </ul>
                                     <!-- <ul class="profile-nav p-0 pt-3">
                                         <li class="nav-item"><a routerLink="/dashboard" class="nav-link"><i class='bx bx-user'></i> <span>Dashboard</span></a></li>

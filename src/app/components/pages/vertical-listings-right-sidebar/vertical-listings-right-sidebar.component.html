@@ -79,18 +79,18 @@
             </li> -->
             <!-- <li class="notification_icon">
               <a href="#">
-                <i class="bi bi-bell" style="font-size: 17px;"></i>&nbsp;&nbsp;
+                <i class="bi bi-bell" style="f  ont-size: 17px;"></i>&nbsp;&nbsp;
                 <span class="d-none d-lg-block">Notifications</span>
               </a>
             </li> -->
             <li>
-              <a data-bs-toggle="modal" data-bs-target="#create_modal">
+              <a data-bs-toggle="modal" data-bs-target="#create_modal" *ngIf="IsLoginAdmin == true">
                 <i class="bi bi-plus-circle" style="font-size: 17px;"></i>&nbsp;&nbsp;
                 <span class="d-none d-lg-block">Create</span>
               </a>
             </li>
             <li>
-              <a >
+              <a *ngIf="IsLoginAdmin == true">
                 <img class="circle story" src="../../../../assets/images/profile_img.jpg">
                 <span class="d-none d-lg-block" (click)="toggleMenuOption('Profile')">Profile</span>
               </a>
@@ -375,7 +375,7 @@
   </div>
 
   <!-- comment model -->
-  <div *ngIf="this.isShowComments == true" class="modal fade" id="message_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div  class="modal fade" id="message_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" style="box-shadow: 5px 5px #16f5f5;
     border: 1px solid #96e3e3;">
@@ -398,7 +398,9 @@
                   </div>
                   <p>{{comment.COMMENT}}</p>
                   <div class="replay">
-                    <button class="replay" (click)="wantToReplay(comment.USER_ID, comment.REELS_COMMENTS_DETAILS_ID)">replay</button>
+                    <button class="replay" 
+                    (click)="isPublicUser == true ? userToken() : wantToReplay(comment.USER_ID, comment.REELS_COMMENTS_DETAILS_ID)"
+                    >replay</button>
                     <button class="translation">see translation</button>
                   </div>
                   <div class="answers" *ngIf="comment.replies && comment.replies.length > 0">
@@ -418,7 +420,9 @@
                 <p> 55</p>
               </div> -->
 
-              <div class="like" (click)="toggleLikeTest(comment, index)">
+              <div class="like" 
+              (click)="isPublicUser == true ? userToken() : toggleLikeTest(comment, index)"
+              >
                 <img [ngClass]="{ 'not_loved': !comment.IS_LIKED, 'loved': comment.IS_LIKED }" src="../../../../assets/images/heart.png" alt="Like">
                 <p>{{ comment.COMMENT_LIKE }}</p>
               </div>
@@ -448,7 +452,9 @@
                   <img class="loved" src="../../../../assets/images/heart.png" alt="">
                   <p> 55</p>
                   </div> -->
-                  <div class="like" (click)="toggleLikeTest(replay, indexC, true)">
+                  <div class="like" 
+                  (click)="isPublicUser == true ? userToken() : toggleLikeTest(replay, indexC, true)"
+                  >
                     <img [ngClass]="{ 'not_loved': !replay.IS_LIKED, 'loved': replay.IS_LIKED }" src="../../../../assets/images/heart.png" alt="Like">
                     <p>{{ replay.IS_REPLAY_LIKES }}</p>
                 </div>
@@ -467,7 +473,13 @@
               placeholder="Add a comment..." /> -->
           <input type="text" #commentInput name="comment-input" [(ngModel)]="this.reelsCommentsModel.COMMENT" id="emoji_comment" placeholder="Add a comment..." />
 
-              <button type="button" class="comment-btn" (click)="postComment()">
+              <button 
+              type="button" class="comment-btn" 
+               data-bs-dismiss="modal" aria-label="Close"
+              (click)="isPublicUser == true ? userToken() : postComment()"
+              [disabled]="!reelsCommentsModel.COMMENT || reelsCommentsModel.COMMENT.trim() === ''"
+
+              >
                 <i class="fa fa-paper-plane"></i> <!-- or use an appropriate send icon -->
               </button>
             </div>
@@ -608,39 +620,39 @@
             <span class="title_create">Create new story</span>
             <button class="next_btn_post btn_link"></button>
           </h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="clearDropzone()"></button>
         </div>
         <div class="modal-body" style="overflow-y: auto !important;">
           <img class="up_load" src="../../../../assets/images/upload.png" alt="upload">
-          <h3>Gallery</h3>
+          <!-- <h3>Gallery</h3> -->
           <p style="padding: 0px; margin: 0px;">Drag photos and videos here</p>
 
           <div>
-            <div class="col-md-12">
+            <!-- <div class="col-md-12">
               <ol id="ol-uploadimg-imgname">
                 <li *ngFor="let fileName of uploadedFilesName; let ndx=index" [id]="'opt-uploadimg-imgname-'+ndx"><a
                     [id]="'a-imgname-'+ndx" href="FoxDocumentDirectory\RequestForOrder\UploadImages\{{fileName}}"
                     target="_blank">{{fileName}}</a></li>
               </ol>
-            </div>
+            </div> -->
 
             <div class="clearfix"></div>
 
-            <dropzone id="p-uploadimg-dropzone" [config]="config" [message]="'Drag photos and videos here'"
+            <dropzone  #dropzoneComponent id="p-uploadimg-dropzone" [config]="config" [message]="'Drag photos and videos here'"
               (maxFilesExceeded)="onMaxFilesExceeded()" (maxFilesReached)="onMaxFilesReached()"
               (removedFile)="onRemoveFile($event)" (error)="onUploadError($event)" (success)="onUploadSuccess($event)"
               (canceled)="onCanceled($event)"></dropzone>
           </div>
-          <button class="btn btn-primary btn_upload" style="width: 100%;
+          <!-- <button class="btn btn-primary btn_upload" style="width: 100%;
     max-width: 270px; border:1px solid #0ec6c6;background-color: transparent;color: #0ec6c6;">
             select from your device
             <form id="upload-form">
               <input class="input_select" type="file" id="image-upload" name="image-upload">
             </form>
-          </button>
+          </button> -->
           <button class="btn btn-primary btn_upload" style="width: 100%;
     max-width: 270px;margin-top: 10px; border:1px solid #0ec6c6;background-color: transparent;color: #0ec6c6;"
-            (click)="addUpdateReels()">
+            (click)="addUpdateReels()" >
             Post
           </button>
 
@@ -846,7 +858,9 @@
             <p> 55</p>
           </div> -->
 
-          <div class="like" (click)="toggleLikeTest(comment, index)">
+          <div class="like" 
+          (click)="isPublicUser == true ? userToken() : toggleLikeTest(comment, index)"
+          >
             <img [ngClass]="{ 'not_loved': !comment.IS_LIKED, 'loved': comment.IS_LIKED }" src="../../../../assets/images/heart.png" alt="Like">
             <p>{{ comment.COMMENT_LIKE }}</p>
           </div>
@@ -877,7 +891,9 @@
               <img class="loved" src="../../../../assets/images/heart.png" alt="">
               <p> 55</p>
               </div> -->
-              <div class="like" (click)="toggleLikeTest(replay, indexC, true)">
+              <div class="like" 
+              (click)="isPublicUser == true ? userToken() : toggleLikeTest(replay, indexC, true)"
+              >
                 <img [ngClass]="{ 'not_loved': !replay.IS_LIKED, 'loved': replay.IS_LIKED }" src="../../../../assets/images/heart.png" alt="Like">
                 <p>{{ replay.IS_REPLAY_LIKES }}</p>
             </div>
@@ -973,7 +989,7 @@
         <div class="video">
           <video #videoElement [id]="'video-' + i" [src]="video.uploadedFilesName" loop></video>
           <div class="content">
-            <div class="sound" (click)="toggleProfileMute(i)">
+            <div class="sound" (click)="toggleReelsMute(i)">
               <img class="volume-up" src="../../../../assets/images/volume-up.png" *ngIf="!video.isMuted">
               <img class="volume-mute" src="../../../../assets/images/volume-mute.png" *ngIf="video.isMuted">
             </div>
@@ -1011,34 +1027,22 @@
           </div>
         </div>
         <div class="likes">
-          <div class="like" (click)="toggleLike(i, video)" >
-            <!-- <img *ngIf="!video.liked" class="not_loved" src="../../../../assets/images/love.png" alt="Not Loved">
-            <img *ngIf="video.liked" class="loved" src="../../../../assets/images/heart.png" alt="Loved">
-            <p>{{ video.likesCount }}</p> -->
+          <div class="like" 
+          (click)="isPublicUser == true ? userToken() : toggleLike(i, video)"
+          >
             <img [ngClass]="{ 'not_loved': !video.IS_REEL_LIKED, 'loved': video.IS_REEL_LIKED }" src="../../../../assets/images/heart.png" alt="Like">
-                <p>{{ video.REEL_LIKES_COUNT }}</p>
+                <p>{{ !NullCheckFun(video.REEL_LIKES_COUNT) ? 0 : video.REEL_LIKES_COUNT }}</p>
           </div>
 
           <div class="message">
-            <!-- <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#message_modal">
-              <img src="../../../../assets/images/bubble-chat.png">
-              <p class="m-0">555</p>
-            </button> -->
             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#message_modal" (click)="selectedReel(video.REELS_DETAILS_ID)">
               <img src="../../../../assets/images/bubble-chat.png">
               <p class="m-0">{{video.reelsCommentsModelList.length}}</p>
-          </button>
-          </div>
-          <div class="send">
-            <button type="button" class="btn">
-              <img src="../../../../assets/images/send.png">
             </button>
           </div>
-          <!-- <div class="save" (click)="toggleBookmark(i, video)">
-            <i *ngIf="!video.isBookmarked" class="bi bi-bookmark" style="font-size: 21px;"></i>
-            <i *ngIf="video.isBookmarked" class="bi bi-bookmark-fill" style="font-size: 21px;"></i>
-          </div> -->
-          <div class="bookmark-action" (click)="toggleBookmark(i, video)">
+          <div class="bookmark-action" 
+          (click)="isPublicUser == true ? userToken() : toggleBookmark(i, video)"
+          >
             <i *ngIf="!video.isBookmarked" class="bi bi-bookmark"></i>
             <i *ngIf="video.isBookmarked" class="bi bi-bookmark-fill"></i>
         </div>
@@ -1074,7 +1078,7 @@
                 <img src="assets/img/user1.jpg" alt="{{user.User_Name}}" class="profile-picture" />
                 
                 <h4 class="username">{{ user.User_Name }}</h4>
-                <button class="follow-button ml-3" (click)="toggleFollow(user)"
+                <button class="follow-button ml-3" (click)="isPublicUser == true ? userToken() : toggleFollow(user)"
                 [ngClass]="user.IS_FOLLOWING ? 'following' : 'follow-button'" 
                 >
                   {{ user.IS_FOLLOWING ? 'Following' : 'Follow' }}
@@ -1092,9 +1096,6 @@
     <!-- profile page -->
 
   <div class="profile-page-container" *ngIf="this.currentOption == 'ProfileTab'">
-    <div class="" style="width: 100%; max-width: 800px; margin: 0 170px 0 auto;">
-      <app-show-users></app-show-users>
-    </div>
     <div class="profile-header">
       <div class="profile-header-box">
         <img src="assets/img/user1.jpg" alt="Profile Picture" class="profile-picture" />
@@ -1117,6 +1118,11 @@
           <!-- <button class="edit-profile-button">Edit Profile</button> -->
         </div>
       </div>
+    </div>
+
+    <div class="" style="width: 100%; max-width: 857px; margin: 0 170px 0 auto;">
+      <!-- <app-category></app-category> -->
+      <app-show-users></app-show-users>
     </div>
   
     <div class="profile-content">

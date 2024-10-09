@@ -21,7 +21,7 @@
             <div class="col-lg-8 col-md-12">
                 <div class="blog-details-desc">
                     <div class="article-image">
-                        <img src="assets/img/blog/blog4.jpg" alt="image">
+                        <img src="{{blogModal.uploadedFilesName[0]}}" alt="image">
                     </div>
 
                     <div class="article-content">
@@ -30,7 +30,7 @@
                                 <li>
                                     <i class='bx bx-folder-open'></i>
                                     <span>Category</span>
-                                    <a routerLink="/blog-grid">Xploradoor</a>
+                                    <a routerLink="/blog-grid">{{blogModal.BUSINESS_BLOG_CATEGORY}}</a>
                                 </li>
                                 <li>
                                     <i class='bx bx-group'></i>
@@ -44,13 +44,15 @@
                                 </li>
                             </ul>
                         </div>
-                        <h3>10 Types of Social Proof & What Makes Them Effective</h3>
-                        <p>They endure great pains because they follow the reasoning of obtaining pleasure. There is no one who loves, pursues, or desires pain itself because it is pain, but occasionally circumstances occur in which toil and pain can procure some great pleasure.</p>
+                        <!-- <h3>10 Types of Social Proof & What Makes Them Effective</h3> -->
+                        <h3>{{this.blogModal.BLOG_TITLE}}</h3>
+                        <p>{{this.blogModal.BUSINESS_IMPORTANT_NOTES}}</p>
+                        <!-- <p>They endure great pains because they follow the reasoning of obtaining pleasure. There is no one who loves, pursues, or desires pain itself because it is pain, but occasionally circumstances occur in which toil and pain can procure some great pleasure.</p> -->
                         <blockquote class="wp-block-quote">
                             <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
                             <cite>Tom Cruise</cite>
                         </blockquote>
-                        <p>At the heart of our platform lies the satisfaction of our users. Their stories and feedback reveal the true impact of our services. Many have found great success and joy in listing their properties, services, or products with us. These testimonials are a testament to the dedication and effort we put into ensuring a seamless and efficient experience for everyone.</p>
+                        <!-- <p>At the heart of our platform lies the satisfaction of our users. Their stories and feedback reveal the true impact of our services. Many have found great success and joy in listing their properties, services, or products with us. These testimonials are a testament to the dedication and effort we put into ensuring a seamless and efficient experience for everyone.</p>
                         <ul class="wp-block-gallery columns-3">
                             <li class="blocks-gallery-item">
                                 <figure>
@@ -68,8 +70,8 @@
                                 </figure>
                             </li>
                         </ul>
-                        <h3>Four major elements that we offer:</h3>
-                        <ul class="features-list">
+                        <h3>Four major elements that we offer:</h3> -->
+                        <!-- <ul class="features-list">
                             <li><i class='bx bx-badge-check'></i> Scientific skills for getting a better result</li>
                             <li><i class='bx bx-badge-check'></i> Communication skills to getting in touch</li>
                             <li><i class='bx bx-badge-check'></i> A career overview opportunity available</li>
@@ -78,7 +80,7 @@
                         <h3>Setting the mood with incense</h3>
                         <p>Creating the perfect atmosphere in your home or workspace can make a significant difference in your overall well-being. Incense has been used for centuries to evoke a sense of calm, enhance meditation, and purify the air. By choosing the right scent, you can transform your environment into a sanctuary of peace and tranquility. Whether you prefer the earthy aroma of sandalwood, the floral notes of jasmine, or the refreshing scent of eucalyptus, lighting incense can help set the tone for relaxation, focus, or celebration.</p>
                         <h3>The rise of marketing and why you need it</h3>
-                        <p>In today's digital age, marketing has become more crucial than ever. With the rise of social media, search engines, and online marketplaces, businesses have unprecedented opportunities to reach their target audiences. Effective marketing strategies can drive brand awareness, foster customer engagement, and ultimately lead to increased sales and growth. Whether you're a small startup or an established company, understanding and leveraging the power of marketing can set you apart from the competition and ensure long-term success. Investing in marketing is no longer optional—it's essential for staying relevant and competitive in a rapidly evolving market landscape.</p>
+                        <p>In today's digital age, marketing has become more crucial than ever. With the rise of social media, search engines, and online marketplaces, businesses have unprecedented opportunities to reach their target audiences. Effective marketing strategies can drive brand awareness, foster customer engagement, and ultimately lead to increased sales and growth. Whether you're a small startup or an established company, understanding and leveraging the power of marketing can set you apart from the competition and ensure long-term success. Investing in marketing is no longer optional—it's essential for staying relevant and competitive in a rapidly evolving market landscape.</p> -->
                     </div>
 
                     <div class="article-footer">
@@ -105,7 +107,7 @@
                         <div class="author-profile">
                             <div class="author-profile-title">
                                 <img src="assets/img/user1.jpg" class="shadow-sm" alt="image">
-                                <h4>Chris Orwig</h4>
+                                <h4>{{blogModal.AUTHOR_NAME}}</h4>
                                 <span class="d-block">Photographer, Author, Writer</span>
                                 <p>Chris Orwig is a celebrated photographer, author, and writer who brings passion to everything he does. Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor.</p>
                             </div>
@@ -332,7 +334,7 @@
                     </section>
 
                     <section class="widget widget_vesax_posts_thumb">
-                        <h3 class="widget-title">Popular Posts</h3>
+                        <h3 class="widget-title">Announcements</h3>
 
                         <article class="item">
                             <a routerLink="/blog-details" class="thumb">

@@ -16,6 +16,9 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { CommonCall } from '../../../components/common/commonCall/commonCall.component';
+import { CommonCallService } from '../../../services/commonCall/commonCall.service';
+import { SurveyAutomation, SurveyQuestions, SurveyLink, NavigationAndToggle, UserProfileToken } from "../../../models/login/login.model";
+
 
 
 
@@ -97,6 +100,9 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
 
 
     @ViewChild(DropzoneComponent, { static: false }) dropzoneComponent!: DropzoneComponent;
+
+    @ViewChild('dropzoneComponent', { static: false }) componentRef?: DropzoneComponent;
+
 
 
 
@@ -249,14 +255,18 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
   containerFocused: boolean;
   selectiveSavedIndex: number;
   videoPlayed: any;
-
-
+  accountType: string;
+  IsLoginAdmin: boolean;
+  userProfileToken: UserProfileToken;
+  isPublicUser: boolean;
+  checkInterval: any;
+  
 
     constructor(private cdr: ChangeDetectorRef, private _addBusinessService: AddBusinessService, 
         public _globalSettingService: GlobalSettingService, 
         private _genericUtilities: GenericUtility, private router: Router, 
         private toastr: ToastrService, private renderer: Renderer2, private datePipe: DatePipe,
-        private eRef: ElementRef
+        private eRef: ElementRef, private _commonCallService: CommonCallService
       ) { 
 
             this.reelsCommentsModel = new ReelsCommentsDetails();
@@ -270,6 +280,7 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
             this.isShowStories = false;
             this.userReelsAccountModel = new UserAccount();
             this.userReelsAccount = [];
+            this.userProfileToken = new UserProfileToken();
             //this.userReelsAccountModel = new UserAccount();
 
 
@@ -285,11 +296,17 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
                this.config.acceptedFiles = ".pdf, .png, .jpg, .jpeg, .tif, .tiff, .bmp, .mp4, .mov, .avi", // Add video formats here
                this.config.init = function () {
                 this.on('addedfile', function (file) {
-                  if (this.files.length > 1) {
+                  const isModalVisible = $('#create_modal').is(':visible');
+
+                  if (isModalVisible && this.files.length > 1) {
                     this.removeFile(file);   // Automatically remove the additional file
                     //alert('You can only upload one video!');
                     this.ShowToast("Xplore", "You can only upload one video!", false); 
 
+                  }
+                  else if(this.files.length > 3)
+                  {
+                    this.removeFile(file);
                   }
                 });
               }
@@ -351,8 +368,47 @@ export class VerticalListingsRightSidebarComponent implements OnInit, AfterViewI
               
 
         }
+
+        checkAccountType(): void {
+          // Get the value from localStorage and update userAccount
+          this.userAccount.APPLICATION_USER_ACCOUNTS_ID = Number(localStorage.getItem('Temp'));
+      
+          // Check accountType and update isPublicUser
+          if (this.userAccount.APPLICATION_USER_ACCOUNTS_ID == 0) {
+            this.isPublicUser = true;
+          } else {
+            this.isPublicUser = false;
+          }
+        }
+      
+        ngOnDestroy(): void {
+          // Clear the interval when the component is destroyed
+          if (this.checkInterval) {
+            clearInterval(this.checkInterval);
+          }
+        }
+
+        
         ngOnInit(): void {
-            this.currentOption = 'HomeTab';
+          this.checkInterval = setInterval(() => {
+            this.checkAccountType();
+          }, 1000);
+          this.accountType = localStorage.getItem("ACCOUNT_TYPE");
+          if(this.accountType == "Admin" || (this.accountType == "BusinessAccount"))
+            {
+              this.IsLoginAdmin = true;
+            }
+            this.userAccount.APPLICATION_USER_ACCOUNTS_ID = Number(localStorage.getItem("Temp"));
+            if(this.accountType == "" )
+            {
+              this.isPublicUser = true;
+            }
+            else
+            {
+              this.isPublicUser = false;  
+            }
+
+            
             this.videoSrc = '../../../../assets/video/video1.mp4',
             this.authorImg ='../../../../assets/images/profile_img.jpg',
             // Scroll to the top when the component initializes
@@ -643,6 +699,7 @@ closeReel() {
   }
           
         toggleFollow(user: any) {
+
             user.isFollowing = !user.isFollowing;
             this.userFollowDetail.USER_FOLLOWERS_ID = user.APPLICATION_USER_ACCOUNTS_ID;
             this.addUpdateFollower();
@@ -796,9 +853,10 @@ closeReel() {
     }
 
     ngAfterViewInit(): void {
-        if (this.childComponent) {
-            this.childComponent.userToken();
-          }
+        // if (this.childComponent) {
+        //     this.childComponent.userToken();
+        //   }
+        this.currentOption = 'ReelsTab';
         if (this.reelContainer) {
             this.reelContainer.nativeElement.focus();
         } else {
@@ -817,7 +875,12 @@ closeReel() {
 
         const observer = new IntersectionObserver(this.handleIntersection.bind(this), options);
 
-        
+        setTimeout(() => {
+          if (this.videoElements.first) {
+            this.playFirstVideo();
+        }
+              this.cdr.detectChanges();
+        }, 900);
         setTimeout(() => {
             document.getElementById('comment-input')?.focus();
           }, 200);
@@ -836,12 +899,12 @@ closeReel() {
               }
               this.reelContainer.nativeElement.focus();
               const firstVideo = this.videoElements.first;
-          if (firstVideo) {
-            firstVideo.nativeElement.play(); // Play the first video
-          }
-          this.videoElements.forEach((videoElement, index) => {
-              observer.observe(videoElement.nativeElement);
-          });
+          // if (firstVideo) {
+          //   firstVideo.nativeElement.play(); // Play the first video
+          // }
+          // this.videoElements.forEach((videoElement, index) => {
+          //     observer.observe(videoElement.nativeElement);
+          // });
       
           // Play the first video when the page loads
           if (this.videoElements.first) {
@@ -851,8 +914,28 @@ closeReel() {
               
           }, 900);
           }
+
+
+         
+            this.currentReelIndex = 0;
+                this.currentOption = 'ReelsTab';
+                this.onFocus();
+                // this.videoElements.forEach((videoElement, index) => {
+                //     observer.observe(videoElement.nativeElement);
+                // });
+            
+                // Play the first video when the page loads
+                //if (this.videoElements.first) {
+                    //this.playFirstVideo();
+                      this.cdr.detectChanges();
           
     }
+    trim(str: string): string {
+      if (this.NullCheckFun(str)) {
+          return str.trim();
+      }
+      return '';
+  }
     ngOnChanges() {
         // Detect changes when currentOption changes to 'ReelsTab'
         if (this.currentOption == 'ReelsTab') {
@@ -871,7 +954,7 @@ closeReel() {
   selectedReel(selectedReel: number)
     {
       this.isSelectedReel = selectedReel;
-      this.isShowComments = true;
+      //this.isShowComments = true;
       this.reelsCommentsModel.USER_ID = Number(localStorage.getItem("Temp"));
       this.reelsCommentsModel.REELS_DETAILS_ID = this.isSelectedReel;
       this.getCommentsByReel();
@@ -905,8 +988,47 @@ closeReel() {
 
     }
 
+    userToken()
+    {
+        console.log("click on RegisterNow");
+        if (this.userProfileToken) {
+            //this._spinner.show();
+            this.userProfileToken.USER_ID = Number(localStorage.getItem("Temp"));
+            if(this.userProfileToken.USER_ID == 0)
+            {
+              this.ShowToast("Xplore", 'To perform this function, login is required.', true);
+              this.router.navigate(['/products-list']);
+            }else
+            {
+              this._commonCallService.userToken(this.userProfileToken).subscribe(
+                response => {
+                    this.userProfileToken = response;
+                   // this._spinner.hide();
+                   //this.ShowToast("Alert", response.Message, response.success);
+                   //this.toastr.success(response.Message, 'Toastr fun!');
+                   //this.ShowToast("Xplore", response.Message, response.Success);
+                   if(!this.NullCheckFun(this.userProfileToken))
+                   {
+                    this.ShowToast("Xplore", 'To perform this function, login is required.', true);
+                    //this.router.navigate(['/products-list']);
+                    //this.ShowToast("Xplore", 'JWT Token Expired, Please login again!!', true);
+                    //this.currentTab = 'tab1';
+                   }
+                   else
+                   {
+                    //this.ShowToast("Xplore", 'JWT Token verified', true);
+                   }
+                });
+            }
+            
+        }
+    }
     postComment()
     {
+      this.userToken();
+      //  if (this.childComponent) {
+      //       this.childComponent.userToken();
+      //     }
         
              console.log(this.reelsDetails);
              console.log("click on RegisterNow");
@@ -965,9 +1087,14 @@ closeReel() {
              }
 
     }
+    clearDropzone(): void {
+      if (this.componentRef) {
+        this.componentRef.directiveRef.dropzone().removeAllFiles(true);  // Clears all files
+      }
+    }
     addUpdateReels()
     {
-        
+
            if(this.uploadedFilesName.length == 0)
            {
             this.ShowToast("Xplore", "At least one picture is required. Please upload one.", false);
@@ -983,7 +1110,38 @@ closeReel() {
                 //this._spinner.show();
                 this._addBusinessService.addUpdateReels(this.reelsDetails).subscribe(
                     response => {
+
+                      this.clearDropzone();
+      if (this.dropzoneComponent && this.dropzoneComponent.directiveRef.dropzone()) {
+        this.dropzoneComponent.directiveRef.dropzone().removeAllFiles(); // Clear all uploaded files
+      }
+    
+      // Remove the modal backdrop manually
+      const backdropElement = document.querySelector('.modal-backdrop');
+      if (backdropElement) {
+        backdropElement.remove(); // Remove the backdrop element from the DOM
+      }
+      
+      const modalElement = document.getElementById('create_modal-story');
+      if (modalElement) {
+        const backdropElement = document.querySelector('.modal-backdrop');
+        if (backdropElement) {
+          backdropElement.remove(); // Remove the backdrop element from the DOM
+        }
+       
+        // Hide the modal
+        // modalElement.classList.remove('show');
+        // modalElement.style.display = 'none';
+        // document.body.classList.remove('modal-open'); // Remove the 'modal-open' class from the body
+      
+        // Manually remove the backdrop if it's present
+       
+      }
+                      
+
+
                         this.ShowToast("Xplore", "Your Reels has been successfully added.", true);
+                        
                         //this.router.navigate(['/dashboard-my-listings']);
                        // this._spinner.hide();
                        //this.ShowToast("Alert", response.Message, response.success);
@@ -993,7 +1151,7 @@ closeReel() {
                     });
             }
            }
-    //   }
+      
     }
 
     onRemoveFiles(file: { name: string }) {
@@ -1304,6 +1462,16 @@ this.allReelsCommentsDetails.forEach(mainComment => {
       const videoProfileElement = this.videoProfileElements.nativeElement;
       videoProfileElement.muted = video.isMuted;
   }
+
+  toggleReelsMute(index: number) {
+    //const video = this.videos[index];
+    const video = this.reelsDetailsList[index];
+    //const video = this.reelsDetailsListSaved[0];
+    video.isMuted = !video.isMuted;
+    const videoElement = this.videoElements.toArray()[index].nativeElement;
+    //const videoProfileElement = this.videoProfileElements.nativeElement;
+    videoElement.muted = video.isMuted;
+}
     
     toggleProfilePlay(index: number) {
       //const video = this.videos[index];
@@ -1395,6 +1563,7 @@ playVideoOnIndexChange(newIndex: number) {
     }
     getLikeByReel()
     {
+             this.reelsDetails.USER_ID = Number(localStorage.getItem("Temp"));
              this.reelsCommentsModel.REELS_DETAILS_ID = this.isSelectedReel;
              if (this.reelsDetails) {
                  this._addBusinessService.getLikeByReel(this.reelsDetails).subscribe(
@@ -1438,8 +1607,26 @@ playVideoOnIndexChange(newIndex: number) {
                 //this._spinner.show();
                 this.reelsDetails.isLikeUnlikeReel = true;
                 
-                this._addBusinessService.addUpdateReels(this.reelsDetails).subscribe(
+                this._addBusinessService.addUpdateReelsStatus(this.reelsDetails).subscribe(
                     response => {
+
+                      if (this.dropzoneComponent && this.dropzoneComponent.directiveRef.dropzone()) {
+                        this.dropzoneComponent.directiveRef.dropzone().removeAllFiles();
+                      }
+const modalElement = document.getElementById('create_modal');
+if (modalElement) {
+  // Remove the 'show' class and hide the modal
+  modalElement.classList.remove('show');
+  modalElement.style.display = 'none';
+  document.body.classList.remove('modal-open'); // Remove the modal-open class from body
+
+  // Remove the backdrop manually
+  const backdropElement = document.querySelector('.modal-backdrop');
+  if (backdropElement) {
+    backdropElement.remove(); // Remove the backdrop element from the DOM
+  }
+}
+    
                         this.isLikeOrDislikeReel = false;
                         this.getLikeByReel();
                         this.ShowToast("Xplore", "Your Reels like or dislike has been successfully added.", true);

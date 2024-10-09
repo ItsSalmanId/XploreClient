@@ -52,3 +52,20 @@
      width: 94.049px!important;
      margin-right: 10px!important;
    }
+
+
+   .add-story-icon {
+    position: absolute;
+    top: 30px;
+  right: 2px;
+    background-color: #fff;
+    color: #000;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border: 1px solid #ddd;
+  }

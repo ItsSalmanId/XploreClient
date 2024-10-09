@@ -44,6 +44,7 @@ export class HomeoneBannerComponent implements OnInit {
                     this.businessDetailsList = response;
                     if(this.businessDetailsList.length > 0)
                     {
+                        // Define the URL you want to push
                         localStorage.setItem('selectedBusinessId', this.businessDetailsList[0].BUSINESS_DETAIL_ID.toString() );
                     }
                    // this._spinner.hide();

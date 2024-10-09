@@ -28,6 +28,9 @@ export class CommonCallsService {
           this._commonCallService.logoutUser(this.userAccount).subscribe(
               response => {
                   this.userAccount = response;
+                  localStorage.removeItem("ACCOUNT_TYPE");
+                  localStorage.removeItem("Temp");
+                  localStorage.removeItem("token");
                  // this._spinner.hide();
                  //this.ShowToast("Alert", response.Message, response.success);
                  //this.toastr.success(response.Message, 'Toastr fun!');

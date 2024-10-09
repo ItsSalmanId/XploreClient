@@ -148,6 +148,8 @@ if (this.userAccount) {
                 if (response.token) {
                     localStorage.setItem('token', response.token);
                     this.ShowToast("Xplore", "login successfully", true);
+                    localStorage.setItem('UserEmail', this.userAccount.EMAIL_ADDRESS);
+                    localStorage.setItem('UserName', this.userAccount.User_Name);
                     if(response.Success)
                     {
                      this.currentTab = 'tab1';

@@ -263,6 +263,10 @@ if (this.userAccount) {
         }
         return false;
     }
+    classApplied2 = false;
+    toggleClass2() {
+        this.classApplied2 = !this.classApplied2;
+    }
 
 }
 
