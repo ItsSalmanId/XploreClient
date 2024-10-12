@@ -35,6 +35,14 @@ export class AccountService {
   validateUser(data: UserAccount) {
     return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/ValidateUser', data);
   }
+
+  getUserDetails(data: UserAccount) {
+    return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/GetUserAccountDetails', data);
+  }
+  saveUserDetails(data: UserAccount) {
+    return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/SaveUserDetails', data);
+  }
+  
   
 //   updatePatientSurvey(data: PatientSurveyModel) {
 //     return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/UpdatePatientSurvey', data);

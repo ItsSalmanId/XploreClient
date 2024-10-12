@@ -38,12 +38,25 @@ export class UserAccount {
     APPLICATION_USER_ACCOUNTS_ID: number;
     User_Name: string;
     EMAIL_ADDRESS: string;
+    NEW_PASSWORD: string;
     PASSWORD: string;
     CONFIRM_PASSWORD: string;
     UserNameEmail: string;
     LoginPassword: string;
     Blocked: boolean;
     ACCOUNT_TYPE: string;
+    NAME: string;
+    PHONE_NUMBER: string;
+    ADDRESS: string;
+    USER_BIO: string;
+    ZIP_CODE: string;
+    FACEBOOK_LINK: string;
+    INSTAGRAM_LINK: string;
+    TWITTER_LINK: string;
+    TIKTOK_LINK: string;
+    LINKEDIN_LINK: string;
+    YOUTUBE_LINK: string;
+
 }
 
 export class UserProfileToken {

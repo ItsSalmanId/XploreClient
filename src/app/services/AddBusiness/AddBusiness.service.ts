@@ -120,6 +120,9 @@ export class AddBusinessService {
   getReelsStatus(data: ReelsDetails) {
     return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/GetReelsStatus', data);
   }
+  addBusinessReviews(data: BusinessDetail) {
+    return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/AddBusinessReviews', data);
+  }
 
 
 }

@@ -13,6 +13,7 @@ import * as $ from 'jquery'; // Import jQuery
 import { Router } from '@angular/router';
 import { VerticalListingsLeftSidebarComponent } from '../../../components/pages/vertical-listings-left-sidebar/vertical-listings-left-sidebar.component';
 import { ToastrService } from 'ngx-toastr';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -22,6 +23,39 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ListingsDetailsComponent implements OnInit {
 
+    center: google.maps.LatLngLiteral = { lat: 33.7153, lng: 73.1021 }; // Example coordinates for Karachi
+    zoom = 15; // Zoom level for map
+    // label = {
+    //   color: 'blue',
+    //   text: 'Your Place Name'
+    // };
+    options: google.maps.MapOptions = {
+      disableDefaultUI: true, // Disable default controls
+      fullscreenControl: true, // Allow fullscreen mode
+    };
+
+
+
+    label = 'Serena Hotel';
+  infoWindowVisible = false;
+
+//   hotel = {
+//     name: 'Serena Hotel Islamabad',
+//     rating: '4.5',
+//     address: 'Khayaban-e-Suhrwardy, Islamabad, Pakistan'
+//   };
+hotel: any = {};
+    restaurantPosition: google.maps.LatLngLiteral = { lat: 33.7153, lng: 73.1021 }; // Aapka restaurant ka location
+    
+
+    apiKey: string = 'AIzaSyDMbS_znmP26X5P1guVyFxUI_6LXKVhQw4'; // Google API key
+  address: string = 'serena hotel islamabad'; // Input address
+  latitude: number;
+  longitude: number;
+
+  //private apiKey = 'YOUR_API_KEY'; // Replace with your Google Places API key
+   placeId = '';
+    
     config: DropzoneConfig;
     
     businessDetail: BusinessDetail; 
@@ -56,9 +90,10 @@ export class ListingsDetailsComponent implements OnInit {
     halfStar: boolean = false;
     emptyStars: number = 4;
     isLoading: boolean;
+    selectedBusinessReviews: any;
 
 
-    constructor(private _addBusinessService: AddBusinessService, 
+    constructor(private http: HttpClient, private _addBusinessService: AddBusinessService, 
         public _globalSettingService: GlobalSettingService, 
         private _genericUtilities: GenericUtility, private router: Router, private toastr: ToastrService) 
         { 
@@ -121,7 +156,55 @@ export class ListingsDetailsComponent implements OnInit {
         this.getBusiness();
         this.getBusinessList();
         this.getBusinessRating();
+        this.saveBussinessCount();
+        //this.onMarkerClick()
     }
+    fetchHotelDetails() {
+        const lat = this.center.lat;
+        const lng = this.center.lng;
+    
+        // Fetch place details using Places API
+        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=1500&type=restaurant&key=${this.apiKey}`;
+    
+        this.http.get<any>(url).subscribe(response => {
+          if (response.results.length > 0) {
+            const place = response.results[0]; // Get the first result
+            this.hotel = {
+              name: place.name,
+              rating: place.rating,
+              address: place.vicinity
+            };
+            this.placeId = place.place_id; // Save place ID if needed
+          }
+        });
+      }
+    
+      toggleInfoWindow() {
+        this.infoWindowVisible = !this.infoWindowVisible; // Toggle info window visibility
+      }
+    
+      closeInfoWindow() {
+        this.infoWindowVisible = false; // Close the info window
+      }
+    onMarkerClick() {
+        const destination = `${this.restaurantPosition.lat},${this.restaurantPosition.lng}`;
+        window.open(`https://www.google.com/maps/dir/?api=1&destination=${destination}`, '_blank');
+      }
+
+      getCoordinates() {
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(this.address)}&key=${this.apiKey}`;
+        
+        this.http.get(url).subscribe((response: any) => {
+          if (response.status === 'OK' && response.results.length > 0) {
+            const location = response.results[0].geometry.location;
+            this.latitude = location.lat;
+            this.longitude = location.lng;
+            console.log('Latitude:', this.latitude, 'Longitude:', this.longitude);
+          } else {
+            console.error('Geocoding failed:', response.status);
+          }
+        });
+      }
     onTabChange(newTab: string) {
         this.currentTab = newTab;
       }
@@ -260,6 +343,33 @@ export class ListingsDetailsComponent implements OnInit {
                     this.businessDetail = response;
                     this.isLoading = false;
                     
+                   // this._spinner.hide();
+                   //this.ShowToast("Alert", response.Message, response.success);
+                   //this.toastr.success(response.Message, 'Toastr fun!');
+                   //this.ShowToast("Xplore", response.Message, response.Success);
+                 
+                });
+        }
+    }
+    saveBussinessCount()
+    {
+        
+        this.isLoading = true;
+        let selectedBusinessId = localStorage.getItem("selectedBusinessId");
+        console.log(this.businessDetail);
+        this.businessRating.BUSINESS_ID = this.businessDetail.BUSINESS_DETAIL_ID = Number(selectedBusinessId);
+        this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+        this.businessDetail.USER_ID = Number(localStorage.getItem("Temp"));
+        this.isLoading = true;
+        if (this.businessDetail) {
+            //this.businessDetail.uploadedFilesName = this.uploadedFilesName;
+            //this._spinner.show();
+            this._addBusinessService.addBusinessReviews(this.businessDetail).subscribe(
+                response => {
+                  this.isLoading = false;
+                  this.selectedBusinessReviews =  response.Message
+                    this.ShowToast("Xplore", "Your business has been successfully added.", true);
+                    //this.router.navigate(['/dashboard-my-listings']);
                    // this._spinner.hide();
                    //this.ShowToast("Alert", response.Message, response.success);
                    //this.toastr.success(response.Message, 'Toastr fun!');

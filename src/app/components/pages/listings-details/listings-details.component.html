@@ -22,6 +22,9 @@
                     </div>
                     <ul class="d-flex align-items-center">
                         <li class="phone-number">
+                            <a href="#"><i class='bx bx-message-square-detail'></i>Profile Review Count  {{this.selectedBusinessReviews}}</a>
+                        </li>
+                        <li class="phone-number">
                             <a href="#"><i class='bx bx-phone-call'></i> +{{businessDetail.CONTACT_NO}}</a>
                         </li>
                         <li class="time">
@@ -149,6 +152,32 @@
                     class="listings-details-desc"
                     *ngIf="currentTab === 'tab1'"
                 >
+                <div style="height: 500px; width: 100%;">
+                    <google-map [center]="center" [zoom]="zoom" [options]="options">
+                      <map-marker 
+                        [position]="center" 
+                        [label]="label" 
+                        (mapClick)="toggleInfoWindow()"
+                        (markerClick)="toggleInfoWindow()">
+                      </map-marker>
+                      
+                      <map-info-window *ngIf="infoWindowVisible" [position]="center">
+                        <div style="text-align: center;">
+                          <h3>{{ hotel.name }}</h3>
+                          <p>Rating: {{ hotel.rating }}</p>
+                          <p>{{ hotel.address }}</p>
+                          <button (click)="closeInfoWindow()">Close</button>
+                        </div>
+                      </map-info-window>
+                    </google-map>
+                  </div>
+                  
+                  <div class="col-lg-12 col-md-12">
+                    <button type="submit" (click)="fetchHotelDetails()">redirect</button>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                    <button type="submit" (click)="getCoordinates()">checkcoordinate</button>
+                </div>
                     <h3>Details</h3>
                     <p>{{businessDetail.BUSINESS_IMPORTANT_NOTES}}</p>
                     <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur.</p>

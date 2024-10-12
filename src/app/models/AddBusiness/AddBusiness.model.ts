@@ -1,6 +1,9 @@
 export class BusinessDetail {
     BUSINESS_DETAIL_ID: number;
     PASSWORD: string;
+    VERIFY_PASSWORD: string;
+    STATE: string;
+    ZIP_CODE: string;
     EMAIL_ADDRESS: string;
     BUSINESS_NAME: string;
     BUSINESS_ADDRESS: string;
@@ -37,6 +40,13 @@ export class BusinessDetail {
     OpenClose: string;
     CurrentDayOpeningTime: string;
     CurrentDayClosingTime: string;
+    FACEBOOK_LINK: string;
+    INSTAGRAM_LINK: string;
+    TWITTER_LINK: string;
+    TIKTOK_LINK: string;
+    LINKEDIN_LINK: string;
+    YOUTUBE_LINK: string;
+    USER_ID: number;
 }
 
 export class  BusinessFilesDetailList {
@@ -109,6 +119,7 @@ export class UserAccount {
     APPLICATION_USER_ACCOUNTS_ID: number;
     User_Name: string;
     EMAIL_ADDRESS: string;
+    NEW_PASSWORD: string;
     PASSWORD: string;
     CONFIRM_PASSWORD: string;
     UserNameEmail: string;
@@ -122,6 +133,17 @@ export class UserAccount {
     UserReelsDetails: ReelsDetails[] = [];
     UserSavedReelsDetails: ReelsDetails[] = [];
     REEL_STATUS: boolean;
+    NAME: string;
+    PHONE_NUMBER: string;
+    ADDRESS: string;
+    USER_BIO: string;
+    ZIP_CODE: string;
+    FACEBOOK_LINK: string;
+    INSTAGRAM_LINK: string;
+    TWITTER_LINK: string;
+    TIKTOK_LINK: string;
+    LINKEDIN_LINK: string;
+    YOUTUBE_LINK: string;
 
 }
 
