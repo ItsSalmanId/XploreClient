@@ -97,6 +97,7 @@ import { ReelsStatusComponent } from './components/pages/reels-status/reels-stat
 import { ReelsVertical } from './components/pages/reels-listings/reels-listings.component';
 import { ShowStoriesComponent } from './components/pages/show-stories/show-stories.component';
 import { ShowUsersComponent } from './components/pages/show-users/show-users.component';
+import { GoogleMapsModule } from '@angular/google-maps'
 
 const DROPZONECONFIG: DropzoneConfigInterface = {
     url: 'C:/new1/Xploradoor-main/main/Xploradoor/images',
@@ -197,7 +198,8 @@ const DROPZONECONFIG: DropzoneConfigInterface = {
         HttpClientModule,
         ToastrModule.forRoot(), // ToastrModule added
         NgxDropzoneModule,
-        DropzoneModule
+        DropzoneModule,
+        GoogleMapsModule
     ],
     providers: [
         AccountUtility,

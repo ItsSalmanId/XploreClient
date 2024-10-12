@@ -37,6 +37,10 @@ export class DashboardAddListingsComponent implements OnInit {
      timeSlots: string[] = [];
      weeklyTimeSlots: WeeklyTimeSlots;
   isLoading: boolean;
+  showPassword: boolean = false;
+  showVerifyPassword: boolean = false;
+  passwordMismatch: boolean = false;
+
 
     constructor(private _addBusinessService: AddBusinessService, public _globalSettingService: GlobalSettingService, private _genericUtilities: GenericUtility, private router: Router, private toastr: ToastrService) 
     { 
@@ -72,6 +76,18 @@ export class DashboardAddListingsComponent implements OnInit {
 
     ngOnInit(): void {
         this.timeSlots = TimeSlots;
+    }
+    togglePasswordVisibility() {
+      this.showPassword = !this.showPassword;
+    }
+  
+    toggleVerifyPasswordVisibility() {
+      this.showVerifyPassword = !this.showVerifyPassword;
+    }
+  
+    // Watch for changes in both password fields
+    ngDoCheck() {
+      this.passwordMismatch = this.businessDetail.PASSWORD !== this.businessDetail.VERIFY_PASSWORD;
     }
     
     breadcrumb = [

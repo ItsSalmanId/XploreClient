@@ -47,16 +47,44 @@
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
                     <label><i class="bi bi-pass"></i> Password</label>
-                    <input type="password" class="form-control" placeholder="Enter your password" maxlength="20"
-                    [(ngModel)]="businessDetail.PASSWORD" name="PASSWORD"
-                    >
+                    <div class="input-group">
+                        <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Enter your password"
+                            maxlength="20" [(ngModel)]="businessDetail.PASSWORD" name="PASSWORD">
+                        <span class="input-group-text">
+                            <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePasswordVisibility()"></i>
+                        </span>
+                    </div>
                 </div>
             </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class="bi bi-pass"></i> Verify Password</label>
+                    <div class="input-group">
+                        <input [type]="showVerifyPassword ? 'text' : 'password'" class="form-control" placeholder="Enter your password"
+                            [(ngModel)]="businessDetail.VERIFY_PASSWORD" name="VERIFY_PASSWORD">
+                        <span class="input-group-text">
+                            <i class="bi" [ngClass]="showVerifyPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="toggleVerifyPasswordVisibility()"></i>
+                        </span>
+                    </div>
+                    <small *ngIf="passwordMismatch" style="color:red;">Passwords do not match</small>
+                </div>
+            </div>
+
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
                     <label><i class="bi bi-calendar2-event"></i> Hours</label>
                     <input type="number" class="form-control" placeholder="Enter your email"
                     [(ngModel)]="businessDetail.BUSINESS_HOURS" name="BUSINESS_HOURS"
+                    >
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class='bx bx-menu-alt-left'></i> Address
+                        <span style="color: red;"> *</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="e.g. 55 County Laois"
+                    [(ngModel)]="businessDetail.BUSINESS_ADDRESS" name="BUSINESS_ADDRESS" maxlength="50"
                     >
                 </div>
             </div>
@@ -72,11 +100,21 @@
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
-                    <label><i class='bx bx-menu-alt-left'></i> Address
+                    <label><i class="bi bi-bricks"></i> Zip Code
                         <span style="color: red;"> *</span>
                     </label>
-                    <input type="text" class="form-control" placeholder="e.g. 55 County Laois"
-                    [(ngModel)]="businessDetail.BUSINESS_ADDRESS" name="BUSINESS_ADDRESS" maxlength="50"
+                    <input type="text" class="form-control" placeholder="Enter your city"
+                    [(ngModel)]="businessDetail.ZIP_CODE" name="ZIP_CODE" maxlength="20"
+                    >
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class="bi bi-bricks"></i> State
+                        <span style="color: red;"> *</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter your city"
+                    [(ngModel)]="businessDetail.STATE" name="STATE" maxlength="20"
                     >
                 </div>
             </div>
@@ -94,7 +132,7 @@
 
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
-                    <label><i class='bx bx-phone-call'></i> Contact No
+                    <label><i class='bx bx-phone-call'></i> Phone No
                         <span style="color: red;"> *</span>
                     </label>
                     <input type="text" class="form-control" placeholder="Phone Number"
@@ -135,6 +173,66 @@
                         <option>Plumbers</option>
                         <!-- <option>Others (submit request for other category)</option> -->
                     </select>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class="bi bi-instagram instagram-icon"></i> Instagram
+                        <span style="color: red;"> *</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Instagram Link"
+                    [(ngModel)]="businessDetail.INSTAGRAM_LINK" name="BUSINESS_ADDRESS" maxlength="500"
+                    >
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class="bi bi-twitter twitter-icon"></i> Twitter
+                        <span style="color: red;"> *</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Twitter Link"
+                    [(ngModel)]="businessDetail.TWITTER_LINK" name="TWITTER_LINK" maxlength="500"
+                    >
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class='bi bi-tiktok tiktok-icon'></i> Tiktok
+                        <span style="color: red;"> *</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Tiktok Link"
+                    [(ngModel)]="businessDetail.TIKTOK_LINK" name="TIKTOK_LINK" maxlength="500"
+                    >
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class="bi bi-facebook facebook-icon"></i> Facebook
+                        <span style="color: red;"> *</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Facebook Link"
+                    [(ngModel)]="businessDetail.FACEBOOK_LINK" name="FACEBOOK_LINK" maxlength="500"
+                    >
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class="bi bi-linkedin linkedin-icon"></i> Linkedin
+                        <span style="color: red;"> *</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Linkedin Link"
+                    [(ngModel)]="businessDetail.LINKEDIN_LINK" name="LINKEDIN_LINK" maxlength="500"
+                    >
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class="bi bi-youtube youtube-icon"></i> Youtube
+                        <span style="color: red;"> *</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Youtube Link"
+                    [(ngModel)]="businessDetail.YOUTUBE_LINK" name="YOUTUBE_LINK" maxlength="500"
+                    >
                 </div>
             </div>
 
