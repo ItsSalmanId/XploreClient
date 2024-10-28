@@ -339,25 +339,25 @@
 
 }
 /* Min width 992px to Max width 1199px */
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
+// @media only screen and (min-width: 992px) and (max-width: 1199px) {
 
-    .blog-area {
-        .events-item-list {
-            margin-top: 60px;
-        }
-        &.with-events {
-            .col-lg-8 {
-                flex: 0 0 100%;
-                max-width: 100%;
-            }
-            .col-lg-4 {
-                flex: 0 0 100%;
-                max-width: 100%;
-            }
-        }
-    }
+//     .blog-area {
+//         .events-item-list {
+//             margin-top: 60px;
+//         }
+//         &.with-events {
+//             .col-lg-8 {
+//                 flex: 0 0 100%;
+//                 max-width: 100%;
+//             }
+//             .col-lg-4 {
+//                 flex: 0 0 100%;
+//                 max-width: 100%;
+//             }
+//         }
+//     }
 
-}
+// }
 /* Min width 1200px to Max width 1355px */
 @media only screen and (min-width: 1200px) and (max-width: 1355px) {
 
@@ -376,14 +376,7 @@
 
 ////////
 /// 
-.subscription-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    padding: 2rem;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
+
   
   .subscription-card {
     background: #fff;
@@ -391,11 +384,10 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 2rem;
     text-align: center;
-    width: 300px;
     transition: transform 0.3s ease;
     display: flex;
   flex-direction: column;
-  height: 700px;
+  height: 630px;
   }
   
   .subscription-card:hover {
@@ -421,12 +413,16 @@
     font-size: 2rem;
     margin: 1rem 0;
     font-weight: bold;
+    color: aquamarine;
   }
   
   .features {
     list-style: none;
     padding: 0;
-    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
   
   .features li {
@@ -451,13 +447,7 @@
   }
   
   @media (max-width: 768px) {
-    .subscription-container {
-      flex-direction: column;
-      align-items: center;
-    }
-  
     .subscription-card {
-      width: 80%;
       margin-bottom: 2rem;
     }
   }

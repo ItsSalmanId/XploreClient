@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AddBusinessService } from '../../../services/AddBusiness/AddBusiness.service'
-import { BusinessDetail, BusinessFilesDetailList, TimeSlots, BusinessBlogDetail } from "../../../models/AddBusiness/AddBusiness.model";
+import { BusinessDetail, BusinessFilesDetailList, TimeSlots, BusinessBlogDetail,
+  AnnouncementDetails
+
+ } from "../../../models/AddBusiness/AddBusiness.model";
 import { Observable } from 'rxjs';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { DropzoneConfig } from 'ngx-dropzone-wrapper';
@@ -31,6 +34,10 @@ export class BlogDetailsComponent implements OnInit {
     selectedBlogId: string;
     blogModal: BusinessBlogDetail;
     blogImage: string;
+    announcementDetailsList: AnnouncementDetails[] = [];
+    announcementDetails: AnnouncementDetails;
+  selectedTitle: string;
+  selectedDetails: string;
   
       constructor(private router: Router, private _addBusinessService: AddBusinessService, public _globalSettingService: GlobalSettingService, private _genericUtilities: GenericUtility) {
         this.config = new DropzoneConfig();
@@ -53,10 +60,13 @@ export class BlogDetailsComponent implements OnInit {
            this.businessDetail = new BusinessDetail();
            this.businessBlogDetails = new BusinessBlogDetail();
       this.businessBlogDetailsList = [];
+      this.announcementDetailsList = [];
+      this.announcementDetails = new AnnouncementDetails()
        }
 
     ngOnInit(): void {
         this.getBlogsDetails();
+        this.getAnnouncementDetails();
     }
     getBlogsDetails()
     {
@@ -82,7 +92,47 @@ export class BlogDetailsComponent implements OnInit {
                 });
         //}
      }
+     getAnnouncementDetails()
+     {
+         this.selectedBlogId = localStorage.getItem('selectedBlogId');
+ 
+         console.log(this.businessDetail);
+         console.log("click on RegisterNow");
+         this.announcementDetails.USER_ID = 138;
+         
+         // if (this.businessDetail) {
+         //     //this._spinner.show();
+             this._addBusinessService.getAnnouncementDetails(this.announcementDetails).subscribe(
+                 response => {
+                     console.log(response);
+                     this.announcementDetailsList = response;
+                 });
+         //}
+      }
 
+     isPopupVisible: boolean = false;
+     // Show popup
+     showPopup(selectedAnnouncemnet: AnnouncementDetails) {
+
+       this.isPopupVisible = true;
+       this.selectedTitle = selectedAnnouncemnet.ANNOUNCEMENT_TITLE;
+       this.selectedDetails = selectedAnnouncemnet.ANNOUNCEMENT_DETAILS;
+       setTimeout(() => {
+         const modal = document.querySelector('.custom-modal');
+         if (modal) modal.classList.add('show');
+       }, 0); // Trigger the show class after rendering
+     }
+     // Close popup
+     closePopup() {
+       const modal = document.querySelector('.custom-modal');
+       if (modal) {
+         modal.classList.remove('show');
+         setTimeout(() => {
+           this.isPopupVisible = false;
+         }, 500); // Delay the removal until after the transition
+       }
+     }
+   
     pageTitleContent = [
         {
             title: 'Blog Details',

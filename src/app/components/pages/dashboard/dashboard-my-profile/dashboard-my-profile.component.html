@@ -26,11 +26,32 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12">
                             <div class="form-group profile-box">
-                                <img src="assets/img/user1.jpg" alt="image">
+                                <!-- <img src="assets/img/user1.jpg" alt="image"> -->
+                                <img src="{{userAccountDetails.PROFILE_PICTURE}}" alt="image">
                                 <div class="file-upload">
-                                    <input type="file" name="file" id="file" class="inputfile" />
+                                    <input type="file" name="file" id="file" class="inputfile" 
+                                    (change)="onUploadSuccess($event)"
+                                    />
                                     <label for="file"><i class='bx bx-upload'></i> Upload Photo</label>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="add-listings-box">
+                            <h3>Profile Picture</h3>
+                            <div>
+                                <div class="col-md-12">
+                                    <ol id="ol-uploadimg-imgname">
+                                        <li *ngFor="let fileName of uploadedLogoFilesName; let ndx=index" [id]="'opt-uploadimg-imgname-'+ndx"><a [id]="'a-imgname-'+ndx" href="FoxDocumentDirectory\RequestForOrder\UploadImages\{{fileName}}"
+                                                target="_blank">{{fileName}}</a></li>
+                                    </ol>
+                                </div>
+                                
+                                <div class="clearfix"></div>
+                                
+                                <dropzone id="p-uploadimg-dropzone" [config]="config" [message]="'Click or Drag Images and Documents here to upload (.pdf, .png, .jpg/.jpeg, .tif/.tiff, .bmp)'" (maxFilesExceeded)="onMaxFilesExceeded()"
+                        (maxFilesReached)="onMaxFilesReached()" (removedFile)="onRemoveFile($event)" (error)="onUploadError($event)"
+                        (success)="onUploadSuccess($event, true)" (canceled)="onCanceled($event)"></dropzone>
                             </div>
                         </div>
     

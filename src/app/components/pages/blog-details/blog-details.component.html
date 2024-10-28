@@ -336,38 +336,18 @@
                     <section class="widget widget_vesax_posts_thumb">
                         <h3 class="widget-title">Announcements</h3>
 
-                        <article class="item">
-                            <a routerLink="/blog-details" class="thumb">
+                        <article class="item" *ngFor="let article of announcementDetailsList">
+                            <a  class="thumb" (click)="showPopup(article)">
                                 <span class="fullimage cover bg1" role="img"></span>
                             </a>
                             <div class="info">
-                                <span>June 10, 2024</span>
-                                <h4 class="title usmall"><a routerLink="/blog-details">The Data Surrounding Higher Education</a></h4>
+                                <span>{{ article.CREATED_DATE | date:'medium' }}</span>
+                                <h4 class="title usmall"><a>
+                                    {{article.ANNOUNCEMENT_TITLE}}</a></h4>
                             </div>
                             <div class="clear"></div>
                         </article>
-
-                        <article class="item">
-                            <a routerLink="/blog-details" class="thumb">
-                                <span class="fullimage cover bg2" role="img"></span>
-                            </a>
-                            <div class="info">
-                                <span>June 21, 2024</span>
-                                <h4 class="title usmall"><a routerLink="/blog-details">Conversion Rate the Sales Funnel Optimization</a></h4>
-                            </div>
-                            <div class="clear"></div>
-                        </article>
-
-                        <article class="item">
-                            <a routerLink="/blog-details" class="thumb">
-                                <span class="fullimage cover bg3" role="img"></span>
-                            </a>
-                            <div class="info">
-                                <span>June 30, 2024</span>
-                                <h4 class="title usmall"><a routerLink="/blog-details">Business Data is changing the world’s Energy</a></h4>
-                            </div>
-                            <div class="clear"></div>
-                        </article>
+                        <span *ngif="announcementDetailsList == null">No Announcement Exist!</span>
                     </section>
 
                     <section class="widget widget_categories">
@@ -451,3 +431,21 @@
 <!-- End Blog Details Area -->
 
 <app-footer-style-one></app-footer-style-one>
+ <!-- Popup Modal -->
+ <div class="custom-modal" *ngIf="isPopupVisible">
+    <div class="popup-overlay" (click)="closePopup()"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+        
+            <div class="modal-title">
+                <h1 style="text-align: center;">Announcement</h1>
+                <h2>{{selectedTitle }}</h2>
+                <p>{{selectedDetails }}</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="cancel-btn" (click)="closePopup()">Cancel</button>
+            <button class="accept-btn" (click)="closePopup()">Accept</button>
+        </div>
+    </div>
+</div>

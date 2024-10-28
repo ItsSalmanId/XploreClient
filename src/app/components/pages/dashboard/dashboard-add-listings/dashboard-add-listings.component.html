@@ -104,7 +104,7 @@
                         <span style="color: red;"> *</span>
                     </label>
                     <input type="text" class="form-control" placeholder="Enter your city"
-                    [(ngModel)]="businessDetail.ZIP_CODE" name="ZIP_CODE" maxlength="20"
+                    [(ngModel)]="businessDetail.ZIP_CODE" name="ZIP_CODE" maxlength="10"
                     >
                 </div>
             </div>
@@ -158,19 +158,44 @@
                     <select  [(ngModel)]="businessDetail.BUSINESS_CATEGORY">
                         <!-- <option>Select Category</option> -->
                         <option value="" disabled selected>Choose an option</option>
-                        <option>Agency</option>
+                        <option>Food And Beverage</option>
+                        <option>Retail</option>
+                        <!-- <option>Restaurants</option> -->
+                        <option>Health and Wellness</option>
+                        <option>Personal Care Services</option>
                         <option>Home Services</option>
-                        <option>Restaurants</option>
-                        <option>Car Service</option>
-                        <option>Fitness</option>
-                        <option>Shopping</option>
-                        <option>Beauty & Spa</option>
+                        <!-- <option>Beauty & Spa</option>
                         <option>Events</option>
                         <option>Health Care</option>
                         <option>Travel and Public</option>
                         <option>Auto Insurance</option>
                         <option>Attorney</option>
-                        <option>Plumbers</option>
+                        <option>Plumbers</option> -->
+                        <!-- <option>Others (submit request for other category)</option> -->
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label><i class='bx bx-duplicate'></i> Select Sub Category
+                        <span style="color: red;"> *</span>
+                    </label>
+                    <select  [(ngModel)]="businessDetail.BUSINESS_CATEGORY_TYPE">
+                        <!-- <option>Select Category</option> -->
+                        <option value="" disabled selected>Choose an option</option>
+                        <option>Food And Beverage</option>
+                        <option>Retail</option>
+                        <!-- <option>Restaurants</option> -->
+                        <option>Health and Wellness</option>
+                        <option>Personal Care Services</option>
+                        <option>Home Services</option>
+                        <!-- <option>Beauty & Spa</option>
+                        <option>Events</option>
+                        <option>Health Care</option>
+                        <option>Travel and Public</option>
+                        <option>Auto Insurance</option>
+                        <option>Attorney</option>
+                        <option>Plumbers</option> -->
                         <!-- <option>Others (submit request for other category)</option> -->
                     </select>
                 </div>
@@ -249,6 +274,24 @@
                     </select>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="add-listings-box">
+        <h3>Business Logo</h3>
+        <div>
+            <div class="col-md-12">
+                <ol id="ol-uploadimg-imgname">
+                    <li *ngFor="let fileName of uploadedLogoFilesName; let ndx=index" [id]="'opt-uploadimg-imgname-'+ndx"><a [id]="'a-imgname-'+ndx" href="FoxDocumentDirectory\RequestForOrder\UploadImages\{{fileName}}"
+                            target="_blank">{{fileName}}</a></li>
+                </ol>
+            </div>
+            
+            <div class="clearfix"></div>
+            
+            <dropzone id="p-uploadimg-dropzone" [config]="config" [message]="'Click or Drag Images and Documents here to upload (.pdf, .png, .jpg/.jpeg, .tif/.tiff, .bmp)'" (maxFilesExceeded)="onMaxFilesExceeded()"
+    (maxFilesReached)="onMaxFilesReached()" (removedFile)="onRemoveFile($event)" (error)="onUploadError($event)"
+    (success)="onUploadSuccess($event, true)" (canceled)="onCanceled($event)"></dropzone>
         </div>
     </div>
 

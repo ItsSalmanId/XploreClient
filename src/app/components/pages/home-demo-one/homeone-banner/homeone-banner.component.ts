@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AddBusinessService } from '../../../../services/AddBusiness/AddBusiness.service'
 import { BusinessDetail, BusinessBlogDetail, BusinessCategoryList } from "../../../../models/AddBusiness/AddBusiness.model";
+import { SurveyAutomation, SurveyQuestions, SurveyLink, NavigationAndToggle, UserProfileToken } from "../../../../models/login/login.model";
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { CommonCallService } from '../../../../services/commonCall/commonCall.service';
+
 
 @Component({
     selector: 'app-homeone-banner',
@@ -15,16 +20,32 @@ export class HomeoneBannerComponent implements OnInit {
     BusinessCategoryList
     businessBlogDetails: BusinessBlogDetail;
     businessBlogDetailsList: BusinessBlogDetail[] = [];
+    isFollowDetails: any;
+    checkInterval: any;
+    isPublicUser: boolean = false;
+    userProfileToken: UserProfileToken;
+    averageRating: string = "0.0";
+    fullStars: number = 1;
+    halfStar: boolean = false;
+    emptyStars: number = 4;
+    selectedImagePath: string;
 
-    constructor(private _addBusinessService: AddBusinessService) {
+    constructor(private _addBusinessService: AddBusinessService,
+        private toastr: ToastrService, private _commonCallService: CommonCallService,
+        private router: Router
+    ) {
         this.businessDetail = new BusinessDetail();
         this.businessDetailsList = [];
         this.businessBlogDetails = new BusinessBlogDetail();
         this.businessBlogDetailsList = [];
         this.businessCategoryList = [];
+        this.userProfileToken = new UserProfileToken();
      }
 
     ngOnInit(): void {
+        this.checkInterval = setInterval(() => {
+            this.checkAccountType();
+          }, 1000);
         this.resetOption = [this.options[0]];
         this.getBusiness();
         this.getBlogsDetails();
@@ -36,14 +57,23 @@ export class HomeoneBannerComponent implements OnInit {
         console.log(this.businessDetail);
         console.log("click on RegisterNow");
         this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+        this.businessDetail.USER_ID = Number(localStorage.getItem("Temp"));
         if (this.businessDetail) {
             //this._spinner.show();
             this._addBusinessService.getBusinessDetails(this.businessDetail).subscribe(
                 response => {
                     console.log(response);
                     this.businessDetailsList = response;
+                    
                     if(this.businessDetailsList.length > 0)
                     {
+                        this.businessDetailsList.forEach(business => {
+                            let averageRating = Number(business.AverageRating); // Store the average rating in a variable
+
+  business.fullStars = Math.floor(averageRating); // Full stars based on the integer part
+  business.halfStar = averageRating % 1 !== 0; // Check if there's a half star
+  business.emptyStars = 5 - business.fullStars - (business.halfStar ? 1 : 0);
+                          });
                         // Define the URL you want to push
                         localStorage.setItem('selectedBusinessId', this.businessDetailsList[0].BUSINESS_DETAIL_ID.toString() );
                     }
@@ -77,10 +107,18 @@ export class HomeoneBannerComponent implements OnInit {
         }
 
   }
-  selectBusiness(selectedBusinessId: number)
+  selectBusiness(selectedBusiness: BusinessDetail)
   {
-    console.log(selectedBusinessId);
-    localStorage.setItem('selectedBusinessId', selectedBusinessId.toString());
+    if(selectedBusiness.IsFollow == true)
+    {
+        console.log(selectedBusiness.BUSINESS_DETAIL_ID);
+        localStorage.setItem('selectedBusinessId', selectedBusiness.BUSINESS_DETAIL_ID.toString());
+        this.router.navigate(['/single-listings']);
+    }
+    else
+    {
+        this.ShowToast('Alert','To review the business, please follow it first.', false)
+    }
   }
 
   getBlogsDetails()
@@ -372,4 +410,125 @@ export class HomeoneBannerComponent implements OnInit {
             "<i class='flaticon-right-chevron'></i>"
         ]
     }
+
+    isPopupVisible = false;
+
+  openPopup(selectedImagePath: string) {
+  this.selectedImagePath = selectedImagePath;
+    this.isPopupVisible = true;
+
+  }
+  ngOnDestroy(): void {
+    // Clear the interval when the component is destroyed
+    if (this.checkInterval) {
+      clearInterval(this.checkInterval);
+    }
+  }
+checkAccountType(): void {
+    // Get the value from localStorage and update userAccount
+    var loginId = Number(localStorage.getItem('Temp'));
+
+    // Check accountType and update isPublicUser
+    if (loginId == 0) {
+      this.isPublicUser = true;
+    } else {
+      this.isPublicUser = false;
+    }
+  }
+  userToken()
+  {
+      console.log("click on RegisterNow");
+      if (this.userProfileToken) {
+          //this._spinner.show();
+          this.userProfileToken.USER_ID = Number(localStorage.getItem("Temp"));
+          if(this.userProfileToken.USER_ID == 0)
+          {
+            this.ShowToast("Xplore", 'To perform this function, login is required.', true);
+            this.router.navigate(['/products-list']);
+          }else
+          {
+            this._commonCallService.userToken(this.userProfileToken).subscribe(
+              response => {
+                  this.userProfileToken = response;
+                 // this._spinner.hide();
+                 //this.ShowToast("Alert", response.Message, response.success);
+                 //this.toastr.success(response.Message, 'Toastr fun!');
+                 //this.ShowToast("Xplore", response.Message, response.Success);
+                 if(!this.NullCheckFun(this.userProfileToken))
+                 {
+                  this.ShowToast("Xplore", 'To perform this function, login is required.', true);
+                  //this.router.navigate(['/products-list']);
+                  //this.ShowToast("Xplore", 'JWT Token Expired, Please login again!!', true);
+                  //this.currentTab = 'tab1';
+                 }
+                 else
+                 {
+                  //this.ShowToast("Xplore", 'JWT Token verified', true);
+                 }
+              });
+          }
+          
+      }
+  }
+  NullCheckFun(obj: any): boolean {
+    if (obj != null && obj !== undefined && obj != 'NaN' && obj !== '') {
+        return true;
+    }
+    return false;
+}
+ShowToast(message: string, title: string, success: boolean) {
+    let timeOut: number = success ? 2000 : 4000;
+    //let toastOptions: ToastOptions = { title: title, msg: message, timeout: timeOut };
+    if (success)
+      this.toastr.success(title, message);
+    else {
+      this.toastr.error(title, message);
+    }
+  }
+  followBusiness(selectedBusinessI: number)
+  {
+    //this.isLoading = true;
+        let selectedBusinessId = localStorage.getItem("selectedBusinessId");
+        console.log(this.businessDetail);
+        this.businessDetail.BUSINESS_DETAIL_ID = Number(selectedBusinessI);
+        this.businessDetail.EMAIL_ADDRESS = "itssalmanid@gmail.com";
+        this.businessDetail.USER_ID = Number(localStorage.getItem("Temp"));
+        //this.isLoading = true;
+        if (this.businessDetail) {
+            //this.businessDetail.uploadedFilesName = this.uploadedFilesName;
+            //this._spinner.show();
+            this._addBusinessService.followBusiness(this.businessDetail).subscribe(
+                response => {
+                  //this.isLoading = false;
+                  if(response.Message == 'isFollow')
+                  {
+                    this.isFollowDetails = true;
+                  }
+                  else
+                  {
+                    this.isFollowDetails = false;
+                  }
+                  const business = this.businessDetailsList.find(b => b.BUSINESS_DETAIL_ID === selectedBusinessI);
+
+    if (business) {
+      // Set IsFollow to true for the found business
+      business.IsFollow = this.isFollowDetails;
+     /// console.log(`Business with ID ${businessId} is now followed.`);
+    } 
+                    //this.ShowToast("Xplore", "Your business has been successfully added.", true);
+                    //this.router.navigate(['/dashboard-my-listings']);
+                   // this._spinner.hide();
+                   //this.ShowToast("Alert", response.Message, response.success);
+                   //this.toastr.success(response.Message, 'Toastr fun!');
+                   //this.ShowToast("Xplore", response.Message, response.Success);
+                 
+                });
+        }
+  }
+
+  closePopup() {
+
+    this.isPopupVisible = false;
+
+  }
 }

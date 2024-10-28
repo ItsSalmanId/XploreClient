@@ -23,7 +23,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ListingsDetailsComponent implements OnInit {
 
-    center: google.maps.LatLngLiteral = { lat: 33.7153, lng: 73.1021 }; // Example coordinates for Karachi
+    center: google.maps.LatLngLiteral = { lat: 36.7783, lng: 119.4179 }; // Example coordinates for Karachi
     zoom = 15; // Zoom level for map
     // label = {
     //   color: 'blue',
@@ -36,7 +36,7 @@ export class ListingsDetailsComponent implements OnInit {
 
 
 
-    label = 'Serena Hotel';
+    label = '';
   infoWindowVisible = false;
 
 //   hotel = {
@@ -152,14 +152,32 @@ hotel: any = {};
             this.currentTab = 'tab1';
             localStorage.removeItem('isCallFromVertical-left');
         }
-        
         this.getBusiness();
         this.getBusinessList();
         this.getBusinessRating();
         this.saveBussinessCount();
+
         //this.onMarkerClick()
     }
+    // Geocode the address to get latitude and longitude
+  geocodeAddress(address: string) {
+    const geocoder = new google.maps.Geocoder();
+
+    geocoder.geocode({ address }, (results, status) => {
+      if (status === google.maps.GeocoderStatus.OK && results[0]) {
+        // Set the map center to the coordinates returned by the Geocoder
+        const location = results[0].geometry.location;
+        this.center = {
+          lat: location.lat(),
+          lng: location.lng()
+        };
+      } else {
+        console.error('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  }
     fetchHotelDetails() {
+        this.geocodeAddress('Margalla Town Phase 1 DSF Park')
         const lat = this.center.lat;
         const lng = this.center.lng;
     
@@ -192,6 +210,7 @@ hotel: any = {};
       }
 
       getCoordinates() {
+        this.geocodeAddress('writers colony multan')
         const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(this.address)}&key=${this.apiKey}`;
         
         this.http.get(url).subscribe((response: any) => {
@@ -342,6 +361,7 @@ hotel: any = {};
                     console.log(response);
                     this.businessDetail = response;
                     this.isLoading = false;
+                    this.geocodeAddress(this.businessDetail.BUSINESS_ADDRESS);
                     
                    // this._spinner.hide();
                    //this.ShowToast("Alert", response.Message, response.success);

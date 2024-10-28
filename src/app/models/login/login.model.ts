@@ -56,6 +56,7 @@ export class UserAccount {
     TIKTOK_LINK: string;
     LINKEDIN_LINK: string;
     YOUTUBE_LINK: string;
+    PROFILE_PICTURE: string;
 
 }
 

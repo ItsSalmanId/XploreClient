@@ -30,6 +30,7 @@ export class DashboardAddListingsComponent implements OnInit {
 
   //uploadedFilesName: string[];
     uploadedFilesName: string[] = [];
+    uploadedLogoFilesName: string[] = [];
     uploadedFilesNameClient: string[] = [];
     disableTreatmentLocation: boolean;
     list : any[];
@@ -58,6 +59,7 @@ export class DashboardAddListingsComponent implements OnInit {
         this.config.dictCancelUploadConfirmation = "Are you sure you want to cancel upload?";
 
         this.uploadedFilesName = [];
+        this.uploadedLogoFilesName = [];
         this.uploadedFilesNameClient = [];
         this.weeklyTimeSlots = new WeeklyTimeSlots();
         this.isLoading = false;
@@ -147,6 +149,11 @@ export class DashboardAddListingsComponent implements OnInit {
             console.log("click on RegisterNow");
             if (this.businessDetail) {
                 this.businessDetail.uploadedFilesName = this.uploadedFilesName;
+                this.businessDetail.uploadedFilesName = this.uploadedFilesName;
+
+                this.businessDetail.uploadedLogoFilesName = this.uploadedLogoFilesName[0];
+
+
                 //this._spinner.show();
                 this._addBusinessService.addUpdateBusiness(this.businessDetail).subscribe(
                     response => {
@@ -188,10 +195,18 @@ export class DashboardAddListingsComponent implements OnInit {
         //console.log("onCanceled");
         //console.log($event);
     }
-    onUploadSuccess($event) {
+    onUploadSuccess($event, isCallFromLog: boolean = false) {
         //console.log("onUploadSuccess");
-        this.uploadedFilesName.push($event[1].FilePath);
-        this.uploadedFilesNameClient.push($event[0].name);
+        if(isCallFromLog == true)
+        { 
+          this.uploadedLogoFilesName.push($event[1].FilePath);
+        }
+        else
+        {
+          this.uploadedFilesName.push($event[1].FilePath);
+          this.uploadedFilesNameClient.push($event[0].name);
+        }
+        
         this.disableTreatmentLocation = false;
         console.log(this.uploadedFilesNameClient);
         console.log(this.uploadedFilesName);

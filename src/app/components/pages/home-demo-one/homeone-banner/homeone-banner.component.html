@@ -30,13 +30,38 @@
 
                                 </div>
                             </div>
+                            <div class="author-2">
+
+                                <div class="d-flex align-items-center">
+                
+                                  <img
+                
+                                  [src]="(Content.LOGO_PICTURE && Content.LOGO_PICTURE.trim() !== '') ? Content.LOGO_PICTURE : 'assets/images/no-avatar.png'"                
+                                    alt="image"
+                
+                                    class="profile-img"
+                
+                                    (click)="openPopup(Content.LOGO_PICTURE)"
+                
+                                  />
+                
+                                </div>
+                
+                              </div>
                             <ul class="listings-meta">
                                 <li><a routerLink="/single-listings"><i class="flaticon-furniture-and-household"></i> {{Content.BUSINESS_CATEGORY}}</a></li>
 
                                 <!-- <li><a routerLink="/{{Content.categoryLink}}"><i class="flaticon-furniture-and-household"></i> {{Content.BUSINESS_CATEGORY}}</a></li> -->
                                 <li><i class="flaticon-pin"></i> {{Content.BUSINESS_ADDRESS}}</li>
                             </ul>
-                            <h3><a routerLink="/single-listings" (click)="selectBusiness(Content.BUSINESS_DETAIL_ID)">{{Content.BUSINESS_NAME}}</a></h3>
+                            <h3><a (click)="selectBusiness(Content)">{{Content.BUSINESS_NAME}}</a></h3>
+                            
+                            <button class="follow-btn mb-3" 
+                            (click)="isPublicUser == true ? userToken() : followBusiness(Content.BUSINESS_DETAIL_ID)"
+                            >
+                                {{ Content.IsFollow ? 'Following' : 'Follow' }}
+
+                            </button>
 
                             <!-- <h3><a routerLink="/{{Content.detailsLink}}">{{Content.BUSINESS_NAME}}</a></h3> -->
                             <span class="status {{'status-open'}}"><i class="flaticon-save"></i> Open Now</span>
@@ -46,8 +71,14 @@
                                     <!-- <i class='{{Star.icon}}' *ngFor="let Star of Content.rating;"></i>
                                     <span class="count">({{Content.ratingCount}})</span> -->
                                     <!-- <i class='{{Star.icon}}' *ngFor="let Star of Content.rating;"></i> -->
-                                <span class="count">200</span>
-                                <!-- <span class="count">({{Content.ratingCount}})</span> -->
+                                    <span *ngFor="let star of [].constructor(Content.fullStars)" class="bx bxs-star full-star"></span>
+
+                                    <!-- Half Star (if any) -->
+                                    <span *ngIf="Content.halfStar" class="bx bxs-star-half full-star"></span>
+
+                                    <!-- Empty Stars -->
+                                    <span *ngFor="let star of [].constructor(Content.emptyStars)" class="bx bxs-star empty-star"></span>
+                                    <!-- <span class="count">({{Content.ratingCount}})</span> -->
                                 </div>
                                 <div class="price">
                                     <!-- {{Content.price}} -->
@@ -63,3 +94,23 @@
     </div>
 </div>
 <!-- End Main Banner Area -->
+
+<div
+
+  class="popup-overlay"
+
+  [ngClass]="{ visible: isPopupVisible }"
+
+  (click)="closePopup()"
+
+>
+
+  <div class="popup" [ngClass]="{ visible: isPopupVisible }">
+
+    <span class="close-btn" (click)="closePopup()">&times;</span>
+
+    <img src="{{selectedImagePath}}" alt="image" class="popup-img" />
+
+  </div>
+
+</div>

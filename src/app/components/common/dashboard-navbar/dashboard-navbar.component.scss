@@ -317,8 +317,8 @@
                         }
                         &.dropdown {
                             .dropdown-menu {
-                                right: auto;
-                                left: 0;
+                                right: 0px;
+                                left: 5px;
                             }
                         }
                     }
@@ -388,4 +388,23 @@
 @media only screen and (min-width: 1200px) and (max-width: 1355px) {}
 
 /* Min width 1550px */
-@media only screen and (min-width: 1550px) {}
+@media only screen and (max-width: 1024px) {
+    .myHeight {
+        height: 50vh;
+        background: white !important;
+    }
+    .myCenter {
+        display: flex;
+        justify-content: center;
+    }
+    .dropdown-menu {
+        min-width: 100% !important;
+        box-shadow: none !important;
+    }
+    .m-23px {
+        margin-right: 23px !important;
+    }
+    .d_none {
+        display: none !important;
+    }
+}

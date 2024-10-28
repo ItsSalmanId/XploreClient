@@ -98,6 +98,9 @@ import { ReelsVertical } from './components/pages/reels-listings/reels-listings.
 import { ShowStoriesComponent } from './components/pages/show-stories/show-stories.component';
 import { ShowUsersComponent } from './components/pages/show-users/show-users.component';
 import { GoogleMapsModule } from '@angular/google-maps'
+import { NgxStripeModule } from 'ngx-stripe';
+import { DashboardAddAnnouncementComponent } from './components/pages/dashboard/dashboard-add-announcement/dashboard-add-announcement.component';
+
 
 const DROPZONECONFIG: DropzoneConfigInterface = {
     url: 'C:/new1/Xploradoor-main/main/Xploradoor/images',
@@ -183,7 +186,10 @@ const DROPZONECONFIG: DropzoneConfigInterface = {
         CommonCall,
         ReelsStatusComponent,
         ShowStoriesComponent,
-        ShowUsersComponent
+        ShowUsersComponent,
+        DashboardAddAnnouncementComponent
+        //NgxStripeModule
+        //NgxStripeModule.forRoot('your-publishable-key') // Replace with your Stripe public key
     ],
     imports: [
         BrowserModule,
@@ -199,7 +205,8 @@ const DROPZONECONFIG: DropzoneConfigInterface = {
         ToastrModule.forRoot(), // ToastrModule added
         NgxDropzoneModule,
         DropzoneModule,
-        GoogleMapsModule
+        GoogleMapsModule,
+        NgxStripeModule.forRoot('your-publishable-key')
     ],
     providers: [
         AccountUtility,

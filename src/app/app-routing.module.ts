@@ -48,6 +48,8 @@ import { ReelsStatusComponent } from './components/pages/reels-status/reels-stat
 import { ReelsVertical } from './components/pages/reels-listings/reels-listings.component';
 import { ShowStoriesComponent } from './components/pages/show-stories/show-stories.component';
 import { ShowUsersComponent } from './components/pages/show-users/show-users.component';
+import { DashboardAddAnnouncementComponent } from './components/pages/dashboard/dashboard-add-announcement/dashboard-add-announcement.component';
+
 
 const routes: Routes = [
     {path: '', component: HomeDemoOneComponent},
@@ -85,6 +87,7 @@ const routes: Routes = [
     {path: 'dashboard-bookings', component: DashboardBookingsComponent},
     {path: 'dashboard-wallet', component: DashboardWalletComponent},
     {path: 'dashboard-add-blog', component: DashboardAddBlogComponent},
+    {path: 'dashboard-add-announcement', component: DashboardAddAnnouncementComponent},
     {path: 'dashboard-reviews', component: DashboardReviewsComponent},
     {path: 'dashboard-invoice', component: DashboardInvoiceComponent},
     {path: 'dashboard-my-profile', component: DashboardMyProfileComponent},

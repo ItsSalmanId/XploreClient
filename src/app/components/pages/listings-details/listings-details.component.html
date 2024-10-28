@@ -171,15 +171,242 @@
                       </map-info-window>
                     </google-map>
                   </div>
-                  
-                  <div class="col-lg-12 col-md-12">
-                    <button type="submit" (click)="fetchHotelDetails()">redirect</button>
-                </div>
-                <div class="col-lg-12 col-md-12">
-                    <button type="submit" (click)="getCoordinates()">checkcoordinate</button>
-                </div>
                     <h3>Details</h3>
                     <p>{{businessDetail.BUSINESS_IMPORTANT_NOTES}}</p>
+
+<!-- Review section -->
+
+<h3>Review</h3>
+<div class="listings-review">
+    <div class="rating d-flex align-items-center">
+         <!-- Full Stars -->
+<span *ngFor="let star of [].constructor(fullStars)" class="bx bxs-star checked"></span>
+
+<!-- Half Star (if any) -->
+<span *ngIf="halfStar" class="bx bxs-star-half checked"></span>
+
+<!-- Empty Stars -->
+<span *ngFor="let star of [].constructor(emptyStars)" class="bx bxs-star"></span>
+
+        <span class="overall-rating">{{this.averageRating}}</span>
+        <span class="rating-count">({{this.reviewsCount}} reviews)</span>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="row m-0">
+                <div class="side">
+                    <div>Rating</div>
+                </div>
+                <div class="middle">
+                    <div class="bar-container">
+                        <div class="bar-{{this.fullStars}}"></div>
+                    </div>
+                </div>
+                <div class="side right">
+                    <div>{{this.averageRating}}</div>
+                </div>
+
+                <!-- <div class="side">
+                    <div>Accuracy</div>
+                </div>
+                <div class="middle">
+                    <div class="bar-container">
+                        <div class="bar-5"></div>
+                    </div>
+                </div>
+                <div class="side right">
+                    <div>5.0</div>
+                </div>
+
+                <div class="side">
+                    <div>Location</div>
+                </div>
+                <div class="middle">
+                    <div class="bar-container">
+                        <div class="bar-5"></div>
+                    </div>
+                </div>
+                <div class="side right">
+                    <div>5.0</div>
+                </div> -->
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="row m-0">
+                <!-- <div class="side">
+                    <div>Check-in</div>
+                </div>
+                <div class="middle">
+                    <div class="bar-container">
+                        <div class="bar-4"></div>
+                    </div>
+                </div>
+                <div class="side right">
+                    <div>4.0</div>
+                </div>
+
+                <div class="side">
+                    <div>Communication</div>
+                </div>
+                <div class="middle">
+                    <div class="bar-container">
+                        <div class="bar-5"></div>
+                    </div>
+                </div>
+                <div class="side right">
+                    <div>5.0</div>
+                </div>
+
+                <div class="side">
+                    <div>Value</div>
+                </div>
+                <div class="middle">
+                    <div class="bar-container">
+                        <div class="bar-5"></div>
+                    </div>
+                </div>
+                <div class="side right">
+                    <div>5.0</div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+ <div class="write-a-review">
+    <h4>Tell people what you think.</h4>
+    <p>Help others by sharing your experience with this business.</p>
+    <a routerLink="/single-listings" class="default-btn">Write A Review</a>
+</div>
+<div id="review">
+    <div class="listings-review-comments">
+        <div class="user-review" *ngFor="let rating of businessRatingList">
+            <div class="row m-0">
+                <div class="col-lg-4 col-md-4 p-0">
+                    <div class="user">
+                        <div class="d-flex">
+                            <img src="assets/img/user1.jpg" alt="image">
+                            <div class="title">
+                                <h4>James Andy</h4>
+                                <span>New York, USA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-8 p-0">
+                    <div class="comments">
+                        <div class="rating">
+                       
+
+<span *ngFor="let star of [].constructor(+rating.CLEANLINESS_RATING)" class="bx bxs-star checked"></span>
+<!-- Loop through the remaining stars to show empty ones -->
+<span *ngFor="let star of [].constructor(5 - +rating.CLEANLINESS_RATING)" class="bx bxs-star"></span>
+                        </div>
+                        <p>{{rating.FEEDBACK}}</p>
+                        <div class="row m-0">
+                            <div class="col-lg-8 col-md-8 col-8 col-sm-8 p-0">
+                                <ul class="like-unlike">
+                                    <li><a routerLink="/single-listings">Like</a></li>
+                                    <li><a routerLink="/single-listings">Unlike</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-4 col-sm-4 p-0 text-end">
+                                <a routerLink="/single-listings">Comment</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<div id="add-review">
+    <div class="review-form-wrapper">
+        <h3>Add A Review</h3>
+        <p class="comment-notes">Your email address will not be published. Required fields are marked <span>*</span></p>
+        <form>
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="sub-ratings">
+                        <div class="row">
+
+                            
+                                
+                                   
+                                        <div *ngFor="let rating of ratings" class="col-lg-4 col-md-4 col-6 col-sm-6">
+                                            <div class="add-sub-rating">
+                                                <h4>Rating</h4>
+                                                <div  class="cleanliness-rating"  (change)="onRatingChange(rating)">
+                                                  <ng-container *ngFor="let star of stars; let i = index">
+                                                    <input
+                                                      type="radio"
+                                                      [id]="rating.label + 'Star' + (5 - i)"
+                                                      name="{{ rating.label }}-rating"
+                                                      [value]="5 - i"
+                                                      [(ngModel)]="rating.value"
+                                                    />
+                                                    <label [for]="rating.label + 'Star' + (5 - i)"></label>
+                                                  </ng-container>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                      
+                            <!-- <div class="col-lg-4 col-md-4 col-6 col-sm-6">
+                                <div class="add-sub-rating">
+                                    <h4>Accuracy</h4>
+                                    <div class="cleanliness-rating" (change)="onRatingChange($event)">
+                                        <ng-container *ngFor="let star of stars; let i = index">
+                                          <input
+                                            type="radio"
+                                            [id]="'cleanlinessStar' + (5 - i)"
+                                            name="cleanliness-rating"
+                                            [value]="5 - i"
+                                            [(ngModel)]="businessRating.ACCURACY_RATING"
+                                          />
+                                          <label [for]="'cleanlinessStar' + (5 - i)"></label>
+                                        </ng-container>
+                                      </div>
+                                </div>
+                            </div> -->
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Name *"  name="name_Rating" [(ngModel)]="businessRating.NAME">
+                        <!-- <input type="text" class="form-control" placeholder="e.g. 55 County Laois"
+[(ngModel)]="businessRating.NAME" name="BUSINESS_ADDRESS" maxlength="50"
+> -->
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Email *" name="Email_Rating" [(ngModel)]="businessRating.EMAIL_ADDRESS">
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                    <div class="form-group">
+                        <textarea placeholder="Your review" class="form-control" name="feedback_Rating" cols="30" rows="6" [(ngModel)]="businessRating.FEEDBACK"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                    <p class="comment-form-cookies-consent">
+                        <input type="checkbox" id="test1" [(ngModel)]="this.businessRating.SAVE_INFORMATION_OR_NOT" name="confirm_Rating">
+                        <label for="test1">Save my name, email, and website in this browser for the next time I comment.</label>
+                    </p>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                    <button type="submit" (click)="submitRating()">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
                     <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur.</p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.</p> -->
                     <h3>Amenities</h3> 
@@ -224,235 +451,7 @@
                             <li>Orange Juice <span>$05</span></li>
                         </ul>
                     </div>
-                    <h3>Review</h3>
-                    <div class="listings-review">
-                        <div class="rating d-flex align-items-center">
-                             <!-- Full Stars -->
-  <span *ngFor="let star of [].constructor(fullStars)" class="bx bxs-star checked"></span>
-  
-  <!-- Half Star (if any) -->
-  <span *ngIf="halfStar" class="bx bxs-star-half checked"></span>
-  
-  <!-- Empty Stars -->
-  <span *ngFor="let star of [].constructor(emptyStars)" class="bx bxs-star"></span>
-
-                            <span class="overall-rating">{{this.averageRating}}</span>
-                            <span class="rating-count">({{this.reviewsCount}} reviews)</span>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6">
-                                <div class="row m-0">
-                                    <div class="side">
-                                        <div>Rating</div>
-                                    </div>
-                                    <div class="middle">
-                                        <div class="bar-container">
-                                            <div class="bar-{{this.fullStars}}"></div>
-                                        </div>
-                                    </div>
-                                    <div class="side right">
-                                        <div>{{this.averageRating}}</div>
-                                    </div>
-
-                                    <!-- <div class="side">
-                                        <div>Accuracy</div>
-                                    </div>
-                                    <div class="middle">
-                                        <div class="bar-container">
-                                            <div class="bar-5"></div>
-                                        </div>
-                                    </div>
-                                    <div class="side right">
-                                        <div>5.0</div>
-                                    </div>
-
-                                    <div class="side">
-                                        <div>Location</div>
-                                    </div>
-                                    <div class="middle">
-                                        <div class="bar-container">
-                                            <div class="bar-5"></div>
-                                        </div>
-                                    </div>
-                                    <div class="side right">
-                                        <div>5.0</div>
-                                    </div> -->
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="row m-0">
-                                    <!-- <div class="side">
-                                        <div>Check-in</div>
-                                    </div>
-                                    <div class="middle">
-                                        <div class="bar-container">
-                                            <div class="bar-4"></div>
-                                        </div>
-                                    </div>
-                                    <div class="side right">
-                                        <div>4.0</div>
-                                    </div>
-
-                                    <div class="side">
-                                        <div>Communication</div>
-                                    </div>
-                                    <div class="middle">
-                                        <div class="bar-container">
-                                            <div class="bar-5"></div>
-                                        </div>
-                                    </div>
-                                    <div class="side right">
-                                        <div>5.0</div>
-                                    </div>
-
-                                    <div class="side">
-                                        <div>Value</div>
-                                    </div>
-                                    <div class="middle">
-                                        <div class="bar-container">
-                                            <div class="bar-5"></div>
-                                        </div>
-                                    </div>
-                                    <div class="side right">
-                                        <div>5.0</div>
-                                    </div> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                     <div class="write-a-review">
-                        <h4>Tell people what you think.</h4>
-                        <p>Help others by sharing your experience with this business.</p>
-                        <a routerLink="/single-listings" class="default-btn">Write A Review</a>
-                    </div>
-                    <div id="review">
-                        <div class="listings-review-comments">
-                            <div class="user-review" *ngFor="let rating of businessRatingList">
-                                <div class="row m-0">
-                                    <div class="col-lg-4 col-md-4 p-0">
-                                        <div class="user">
-                                            <div class="d-flex">
-                                                <img src="assets/img/user1.jpg" alt="image">
-                                                <div class="title">
-                                                    <h4>James Andy</h4>
-                                                    <span>New York, USA</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-8 col-md-8 p-0">
-                                        <div class="comments">
-                                            <div class="rating">
-                                           
-
-        <span *ngFor="let star of [].constructor(+rating.CLEANLINESS_RATING)" class="bx bxs-star checked"></span>
-        <!-- Loop through the remaining stars to show empty ones -->
-        <span *ngFor="let star of [].constructor(5 - +rating.CLEANLINESS_RATING)" class="bx bxs-star"></span>
-                                            </div>
-                                            <p>{{rating.FEEDBACK}}</p>
-                                            <div class="row m-0">
-                                                <div class="col-lg-8 col-md-8 col-8 col-sm-8 p-0">
-                                                    <ul class="like-unlike">
-                                                        <li><a routerLink="/single-listings">Like</a></li>
-                                                        <li><a routerLink="/single-listings">Unlike</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-lg-4 col-md-4 col-4 col-sm-4 p-0 text-end">
-                                                    <a routerLink="/single-listings">Comment</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <div id="add-review">
-                        <div class="review-form-wrapper">
-                            <h3>Add A Review</h3>
-                            <p class="comment-notes">Your email address will not be published. Required fields are marked <span>*</span></p>
-                            <form>
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12">
-                                        <div class="sub-ratings">
-                                            <div class="row">
-
-                                                
-                                                    
-                                                       
-                                                            <div *ngFor="let rating of ratings" class="col-lg-4 col-md-4 col-6 col-sm-6">
-                                                                <div class="add-sub-rating">
-                                                                    <h4>Rating</h4>
-                                                                    <div  class="cleanliness-rating"  (change)="onRatingChange(rating)">
-                                                                      <ng-container *ngFor="let star of stars; let i = index">
-                                                                        <input
-                                                                          type="radio"
-                                                                          [id]="rating.label + 'Star' + (5 - i)"
-                                                                          name="{{ rating.label }}-rating"
-                                                                          [value]="5 - i"
-                                                                          [(ngModel)]="rating.value"
-                                                                        />
-                                                                        <label [for]="rating.label + 'Star' + (5 - i)"></label>
-                                                                      </ng-container>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                          
-                                                <!-- <div class="col-lg-4 col-md-4 col-6 col-sm-6">
-                                                    <div class="add-sub-rating">
-                                                        <h4>Accuracy</h4>
-                                                        <div class="cleanliness-rating" (change)="onRatingChange($event)">
-                                                            <ng-container *ngFor="let star of stars; let i = index">
-                                                              <input
-                                                                type="radio"
-                                                                [id]="'cleanlinessStar' + (5 - i)"
-                                                                name="cleanliness-rating"
-                                                                [value]="5 - i"
-                                                                [(ngModel)]="businessRating.ACCURACY_RATING"
-                                                              />
-                                                              <label [for]="'cleanlinessStar' + (5 - i)"></label>
-                                                            </ng-container>
-                                                          </div>
-                                                    </div>
-                                                </div> -->
-                                               
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Name *"  name="name_Rating" [(ngModel)]="businessRating.NAME">
-                                            <!-- <input type="text" class="form-control" placeholder="e.g. 55 County Laois"
-                    [(ngModel)]="businessRating.NAME" name="BUSINESS_ADDRESS" maxlength="50"
-                    > -->
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Email *" name="Email_Rating" [(ngModel)]="businessRating.EMAIL_ADDRESS">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12">
-                                        <div class="form-group">
-                                            <textarea placeholder="Your review" class="form-control" name="feedback_Rating" cols="30" rows="6" [(ngModel)]="businessRating.FEEDBACK"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12">
-                                        <p class="comment-form-cookies-consent">
-                                            <input type="checkbox" id="test1" [(ngModel)]="this.businessRating.SAVE_INFORMATION_OR_NOT" name="confirm_Rating">
-                                            <label for="test1">Save my name, email, and website in this browser for the next time I comment.</label>
-                                        </p>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12">
-                                        <button type="submit" (click)="submitRating()">Submit</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                   
 
                     <!-- <h3>Other Nearby Services</h3>
                     <div class="row">

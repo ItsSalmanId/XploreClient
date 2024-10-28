@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { AccountUtility } from '../../utilities/account-utility';
 import { SurveyAutomation, SurveyLink, UserAccount } from "../../models/login/login.model";
 import { BusinessDetail, BusinessFilesDetailList, BusinessBlogDetail, BusinessRating, ReelsDetails, 
-  ReelsCommentsDetails, UserFollowDetails, ReelSaved } from "../../models/AddBusiness/AddBusiness.model";
+  ReelsCommentsDetails, UserFollowDetails, ReelSaved, CheckoutSessionRequest, AnnouncementDetails } from "../../models/AddBusiness/AddBusiness.model";
 //import { PatientSurveyModel } from "../../models/patient-survey/patient-survey-model";
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -122,6 +123,27 @@ export class AddBusinessService {
   }
   addBusinessReviews(data: BusinessDetail) {
     return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/AddBusinessReviews', data);
+  }
+  followBusiness(data: BusinessDetail) {
+    return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/FollowBusiness', data);
+  }
+
+  saveAnnouncementDetails(data: AnnouncementDetails) {
+    return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/SaveAnnouncementDetails', data);
+  }
+  getAnnouncementDetails(data: AnnouncementDetails) {
+    return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/GetAnnouncementDetails', data);
+  }
+  
+
+
+
+  // createCheckoutSession(amount: number): Observable<any> {
+  //   return this.http.post(`${this.apiUrl}/create-checkout-session`, { amount });
+  // }
+  createCheckoutSession(data: CheckoutSessionRequest) {
+    return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/createcheckoutsession', data);
+   // return this.accountUtility.getUnauthorizeGetCall(`SurveyAutomation/createcheckoutsession?amount=${amount}`);
   }
 
 

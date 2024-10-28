@@ -47,6 +47,13 @@ export class BusinessDetail {
     LINKEDIN_LINK: string;
     YOUTUBE_LINK: string;
     USER_ID: number;
+    IsFollow: boolean;
+    uploadedLogoFilesName: string;
+    LOGO_PICTURE: string;
+    fullStars: number = 1;
+    halfStar: boolean = false;
+    emptyStars: number = 4;
+    AverageRating: string;
 }
 
 export class  BusinessFilesDetailList {
@@ -92,6 +99,19 @@ export class BusinessBlogDetail {
     DELETED: boolean = false;
     uploadedFilesName: string[] = [];
     BusinessFilesDetail: BusinessFilesDetail[];
+}
+export class AnnouncementDetails {
+    ANNOUNCEMENT_ID: number;
+    USER_ID: number;
+    FROM_DATE: Date | null;
+    TO_DATE: Date | null;
+    CREATED_BY: string;
+    CREATED_DATE: Date;
+    MODIFIED_BY: string;
+    ANNOUNCEMENT_DETAILS: string;
+    ANNOUNCEMENT_TITLE: string;
+    MODIFIED_DATE: Date;
+    DELETED: boolean;
 }
 
 export class SurveyLink {
@@ -144,6 +164,7 @@ export class UserAccount {
     TIKTOK_LINK: string;
     LINKEDIN_LINK: string;
     YOUTUBE_LINK: string;
+    PROFILE_PICTURE: string;
 
 }
 
@@ -310,6 +331,10 @@ export class ReelSaved {
     MODIFIED_DATE: Date;
     DELETED: boolean;
     isClickOnSave: boolean;
+}
+
+export class CheckoutSessionRequest {
+    Amount: number;
 }
 
 

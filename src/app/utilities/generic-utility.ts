@@ -286,7 +286,7 @@ export class EnvironmentUrl {
     let _url: string;
 
     if (clientDomain.includes('localhost')) {
-      return 'http://localhost:11492/api/';
+      return 'http://45.61.134.14:80/api/';
     } 
     else if (clientDomain.includes('http://172.16.0.207'))
     {
@@ -301,10 +301,26 @@ export class EnvironmentUrl {
       // let domainConcate= domainWithEnvironment[0]+ "api"
       // _url  = `https://${domainConcate}.mtbc.com/api/`;
 
-      let domainWithoutHttp = clientDomain.split('https://');
-      let domainWithEnvironment = (domainWithoutHttp[1].split('.xplore.com'));
-      let domainConcate= domainWithEnvironment[0]+ ":81"
-      _url  = `https://${domainConcate}/api/`;
+      // let domainWithoutHttp = clientDomain.split('https://');
+      // let domainWithEnvironment = (domainWithoutHttp[1].split('.xplore.com'));
+      // let domainConcate= domainWithEnvironment[0];
+      // _url  = `https://${domainConcate}/api/`;
+      //https://45.61.134.14:81
+     // https://www.xploradoor.com/
+//       let domainWithoutHttp = clientDomain.split('https://');
+// let domainWithEnvironment = (domainWithoutHttp[1].split('.xplore.com'));
+// let domainConcate= domainWithEnvironment[0];
+// _url  = `https://${domainConcate}/api/`;
+
+// let domainWithoutHttp = clientDomain.split('https://');
+// let domainWithEnvironment = (domainWithoutHttp[1].split('.xplore.com'));
+// let domainConcate= domainWithEnvironment[0];
+// _url  = `https://${domainConcate}/api/`;
+
+
+// let domainParts = clientDomain.split('http://172.16.0.207:');
+// let portNumber = parseInt(domainParts[1]) - 1;
+_url  = `http://45.61.134.14:80/api/`;
 
     }
     return _url;

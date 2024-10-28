@@ -1,158 +1,109 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../../services/AuthService/AuthService.service'
-import { SurveyAutomation, SurveyQuestions, SurveyLink, NavigationAndToggle, UserAccount } from "../../../../models/login/login.model";
-import { AccountService } from '../../../../services/login/login.service';
-import { AccountTestService } from '../../../../services/loginTest/loginTest.service';
 import { AddBusinessService } from '../../../../services/AddBusiness/AddBusiness.service'
-import { BusinessDetail, TimeSlots, WeeklyTimeSlots } from "../../../../models/AddBusiness/AddBusiness.model";
+import { BusinessDetail, BusinessFilesDetailList, TimeSlots, BusinessBlogDetail, AnnouncementDetails } from "../../../../models/AddBusiness/AddBusiness.model";
 import { Observable } from 'rxjs';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { DropzoneConfig } from 'ngx-dropzone-wrapper';
 import { GlobalSettingService } from '../../../../services/Global/global-setting.service';
 import { GenericUtility } from '../../../../utilities/generic-utility';
 //declare var $: any;
-import * as $ from 'jquery'; // Import jQuery
+import Dropzone from 'dropzone';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import * as $ from 'jquery'; // Import jQuery
 
 @Component({
-    selector: 'app-dashboard-my-profile',
-    templateUrl: './dashboard-my-profile.component.html',
-    styleUrls: ['./dashboard-my-profile.component.scss']
+    selector: 'app-dashboard-add-announcement',
+    templateUrl: './dashboard-add-announcement.component.html',
+    styleUrls: ['./dashboard-add-announcement.component.scss']
 })
-export class DashboardMyProfileComponent implements OnInit {
-    username: string = '';
-    password: string = '';
-    userAccount: UserAccount;
-    isDisableRegisterBtn: boolean;
-    errorRegisterUserName: any = { isError: false, errorMessage: "" };
-    errorEmail: any = { isError: false, errorMessage: "" };
-    errorPassword: any = { isError: false, errorMessage: "" };
-    errorConfirmPassword: any = { isError: false, errorMessage: "" };
-    errorUserNameEmail: any = { isError: false, errorMessage: "" };
-    errorLoginPassword: any = { isError: false, errorMessage: "" };
-    isLoading: boolean;
-    userAccountDetails: UserAccount;
-
-    showPassword: boolean = false;
-  showVerifyPassword: boolean = false;
-  passwordMismatch: boolean = false;
-
+export class DashboardAddAnnouncementComponent implements OnInit {
   config: DropzoneConfig;
   uploadedFilesName: string[] = [];
-  uploadedLogoFilesName: string[] = [];
   uploadedFilesNameClient: string[] = [];
-    disableTreatmentLocation: boolean;
-    
+  disableTreatmentLocation: boolean;
+  selectedImagesList: BusinessFilesDetailList[];
+  businessBlogDetail: BusinessBlogDetail;
+    isLoading: boolean;
+    announcementDetails: AnnouncementDetails;
 
-    constructor(private _genericUtilities: GenericUtility, 
-        public _globalSettingService: GlobalSettingService,
-        private router: Router, private authService: AuthService, private _accountServiceService: AccountService, private toastr: ToastrService, private _accountTestService: AccountTestService ) { 
-        this.userAccount = new UserAccount();
-        this.isDisableRegisterBtn = false;   
-        
-        this.config = new DropzoneConfig();
-        this.config.url = this._genericUtilities.getBaseIp()+'UploadFiles/UploadFilesAPI';
-        this.config.headers = { 'Authorization': `Bearer ${this._globalSettingService.getAuthToken}` };
-        // this.config.acceptedFiles = '.pdf, .png, .jpg, .JPG, .jpeg, .tiff, .tif, .docx';//.pdf .png .jpg .JPG .jpeg .tiff .tif .docx
-        this.config.acceptedFiles = '.pdf, .jpg, .jpeg, .png, .tif, .gif, .tiff, .bmp'; //, .docx, .txt
-        this.config.maxFiles = 1;
-        this.config.maxFilesize = 20;
-        this.config.addRemoveLinks = true;
-        this.config.dictCancelUploadConfirmation = "Are you sure you want to cancel upload?";
-
-        this.uploadedFilesName = [];
-        this.uploadedLogoFilesName = [];
-        this.uploadedFilesNameClient = [];
-    }
+    constructor(private router: Router, private _addBusinessService: AddBusinessService, public _globalSettingService: GlobalSettingService, private _genericUtilities: GenericUtility) {
+      this.config = new DropzoneConfig();
+      this.config.url = this._genericUtilities.getBaseIp()+'UploadFiles/UploadFilesAPI';
+      //this.config.url = "http://localhost:4200";
+      
+         this.config.headers = { 'Authorization': `Bearer ${this._globalSettingService.getAuthToken}` };
+         // this.config.acceptedFiles = '.pdf, .png, .jpg, .JPG, .jpeg, .tiff, .tif, .docx';//.pdf .png .jpg .JPG .jpeg .tiff .tif .docx
+         this.config.acceptedFiles = '.pdf, .jpg, .jpeg, .png, .tif, .gif, .tiff, .bmp'; //, .docx, .txt
+         this.config.maxFiles = 5;
+         this.config.maxFilesize = 20;
+         this.config.addRemoveLinks = true;
+         this.config.dictCancelUploadConfirmation = "Are you sure you want to cancel upload?";
+ 
+         this.uploadedFilesName = [];
+         this.uploadedFilesNameClient = [];
+         this.selectedImagesList = [];
+         this.selectedImagesList = [];
+         this.businessBlogDetail = new BusinessBlogDetail();
+         this.announcementDetails = new AnnouncementDetails();
+     }
 
     ngOnInit(): void {
-        this.GetUserDetails();
     }
 
-    togglePasswordVisibility() {
-        this.showPassword = !this.showPassword;
-      }
-    
-      toggleVerifyPasswordVisibility() {
-        this.showVerifyPassword = !this.showVerifyPassword;
-      }
-// Watch for changes in both password fields
-ngDoCheck() {
-    if(this.userAccountDetails != null)
+    addUpdateBlogBusiness()
     {
-        this.passwordMismatch = this.userAccountDetails.NEW_PASSWORD !== 
-        this.userAccountDetails.CONFIRM_PASSWORD;
-    }
-   
-  }
-    saveUserDetails()
-    {
-
+        console.log(this.businessBlogDetail);
+        console.log("click on RegisterNow");
         this.isLoading = true;
-console.log("click on login");
-this.userAccountDetails.PROFILE_PICTURE = this.uploadedLogoFilesName[0];
-        //this.userAccount.APPLICATION_USER_ACCOUNTS_ID = Number(localStorage.getItem('Temp'));
-if (this.userAccountDetails) {
-    //this._spinner.show();
-    this._accountServiceService.saveUserDetails(this.userAccountDetails).subscribe(
-        response => {
-            this.isLoading = false;
-            if(response != null)
-            {
-                this.userAccountDetails = response;
-                console.log(this.userAccountDetails);
-                //localStorage.setItem('Temp', this.userAccount.APPLICATION_USER_ACCOUNTS_ID.toString());
-                //this.login();
-            }
-            else
-            {
-                //this.ShowToast("Xplore", "The username or password is incorrect.", false);
-            }
-
-        });
-}
-
-
+        if (this.announcementDetails) {
+            this.businessBlogDetail.uploadedFilesName = this.uploadedFilesName;
+            //this._spinner.show();
+            this._addBusinessService.saveAnnouncementDetails(this.announcementDetails).subscribe(
+                response => {
+                  console.log("test");
+                  this.isLoading = true;
+                    this.router.navigate(['/dashboard-user-details']);
+                   // this._spinner.hide();
+                   //this.ShowToast("Alert", response.Message, response.success);
+                   //this.toastr.success(response.Message, 'Toastr fun!');
+                   //this.ShowToast("Xplore", response.Message, response.Success);
+                 
+                });
+        }
     }
-    
-    GetUserDetails()
-    {
-
-        this.isLoading = true;
-console.log("click on login");
-        this.userAccount.APPLICATION_USER_ACCOUNTS_ID = Number(localStorage.getItem('Temp'));
-if (this.userAccount) {
-    //this._spinner.show();
-    this._accountServiceService.getUserDetails(this.userAccount).subscribe(
-        response => {
-            this.isLoading = false;
-            if(response != null)
-            {
-                this.userAccountDetails = response;
-                console.log(this.userAccountDetails);
-                //localStorage.setItem('Temp', this.userAccount.APPLICATION_USER_ACCOUNTS_ID.toString());
-                //this.login();
-            }
-            else
-            {
-                //this.ShowToast("Xplore", "The username or password is incorrect.", false);
-            }
-
-        });
-}
-
-
-    }
-
 
     breadcrumb = [
         {
-            title: 'My Profile',
+            title: 'Add Announcement',
             subTitle: 'Dashboard'
         }
     ]
-    onRemoveFile($event) {
+
+    images = [
+        { id: 1, src: 'assets/img/listings/listings4.jpg', alt: 'Image 1' },
+        { id: 2, src: 'assets/img/listings/listings4.jpg', alt: 'Image 2' },
+        { id: 3, src: 'assets/img/listings/listings4.jpg', alt: 'Image 3' },
+        // Add more images as needed
+      ];
+
+      selectedImages: Set<number> = new Set();
+
+      toggleSelection(imageId: number) {
+        if (this.selectedImages.has(imageId)) {
+          this.selectedImages.delete(imageId);
+        } else {
+          this.selectedImages.add(imageId);
+        }
+      }
+
+      deleteSelectedImages() {
+        this.images = this.images.filter(image => !this.selectedImages.has(image.id));
+        this.selectedImages.clear();
+      }
+
+      //Dropzone
+      onRemoveFile($event) {
         //console.log("onRemoveFile");
         let index: number = this.uploadedFilesNameClient.indexOf($event.name);
         if (index > -1) {
@@ -176,18 +127,27 @@ if (this.userAccount) {
         //console.log("onCanceled");
         //console.log($event);
     }
-    onUploadSuccess($event, isCallFromLog: boolean = false) {
+
+    customOptions: OwlOptions = {
+		loop: true,
+		nav: true,
+		dots: false,
+		animateOut: 'fadeOut',
+		animateIn: 'fadeIn',
+		autoplayHoverPause: true,
+		autoplay: true,
+		mouseDrag: false,
+		items: 1,
+        navText: [
+            "<i class='flaticon-left-chevron'></i>",
+            "<i class='flaticon-right-chevron'></i>"
+        ]
+    }
+
+    onUploadSuccess($event) {
         //console.log("onUploadSuccess");
-        if(isCallFromLog == true)
-        { 
-          this.uploadedLogoFilesName.push($event[1].FilePath);
-        }
-        else
-        {
-          this.uploadedFilesName.push($event[1].FilePath);
-          this.uploadedFilesNameClient.push($event[0].name);
-        }
-        
+        this.uploadedFilesName.push($event[1].FilePath);
+        this.uploadedFilesNameClient.push($event[0].name);
         this.disableTreatmentLocation = false;
         console.log(this.uploadedFilesNameClient);
         console.log(this.uploadedFilesName);

@@ -4,6 +4,8 @@ import { SurveyAutomation, SurveyQuestions, SurveyLink, NavigationAndToggle, Use
 import { AccountService } from '../../../services/login/login.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { CommonCallsService } from '../../../services/common-call/common-call.service';
+
 
 @Component({
     selector: 'app-navbar-style-one',
@@ -22,9 +24,14 @@ export class NavbarStyleOneComponent implements OnInit {
     errorUserNameEmail: any = { isError: false, errorMessage: "" };
     errorLoginPassword: any = { isError: false, errorMessage: "" };
     accountType: string;
+    userName: string;
+    userEmail: string;
+    isPublicUser: boolean;
+    checkInterval: any;
+    profilePicture: string;
     
 
-    constructor(private router: Router, private _accountServiceService: AccountService, private toastr: ToastrService) { 
+    constructor(private _commonCallsService: CommonCallsService, private router: Router, private _accountServiceService: AccountService, private toastr: ToastrService) { 
    this.surveyLink = new SurveyLink();
    this.userAccount = new UserAccount();
    this.isDisableRegisterBtn = false;
@@ -32,10 +39,37 @@ export class NavbarStyleOneComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
+        this.checkInterval = setInterval(() => {
+            this.checkAccountType();
+          }, 1000);
         this.surveyLink.ENCRYPTED_PATIENT_ACCOUNT = "123456";
          this.accountType = localStorage.getItem('ACCOUNT_TYPE');
+         this.userName = localStorage.getItem('UserName');
+        this.userEmail = localStorage.getItem('UserEmail');
+        this.profilePicture = localStorage.getItem('ProfilePicture');
 
+    }
+    ngOnDestroy(): void {
+        // Clear the interval when the component is destroyed
+        if (this.checkInterval) {
+          clearInterval(this.checkInterval);
+        }
+      }
+    checkAccountType(): void {
+        // Get the value from localStorage and update userAccount
+        this.userAccount.APPLICATION_USER_ACCOUNTS_ID = Number(localStorage.getItem('Temp'));
+    
+        // Check accountType and update isPublicUser
+        if (this.userAccount.APPLICATION_USER_ACCOUNTS_ID == 0) {
+          this.isPublicUser = true;
+        } else {
+          this.isPublicUser = false;
+        }
+      }
+    Logout()
+    {
+     //this._commonCall.logout();
+     this._commonCallsService.logout();
     }
 
     isClickDashboard()
@@ -266,6 +300,22 @@ if (this.userAccount) {
     classApplied2 = false;
     toggleClass2() {
         this.classApplied2 = !this.classApplied2;
+    }
+    isProfileMenuVisible = false;
+    toggleProfileMenu() {
+     var isLogin = Number(localStorage.getItem('Temp'));
+     if(isLogin != 0)
+    {
+        this.isProfileMenuVisible = !this.isProfileMenuVisible;
+        const profileBox = document.getElementById('profile-box');
+        if (profileBox) {
+          if (this.isProfileMenuVisible) {
+            profileBox.classList.remove('hidden');
+          } else {
+            profileBox.classList.add('hidden');
+          }
+        }
+    }
     }
 
 }

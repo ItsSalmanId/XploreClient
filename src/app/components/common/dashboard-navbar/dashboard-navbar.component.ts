@@ -10,6 +10,7 @@ import { CommonCallsService } from '../../../services/common-call/common-call.se
 export class DashboardNavbarComponent implements OnInit {
     userName: string;
     userEmail: string;
+    profilePicture: string;
 
     constructor(
         private _commonCallsService: CommonCallsService
@@ -19,6 +20,8 @@ export class DashboardNavbarComponent implements OnInit {
         
         this.userName = localStorage.getItem('UserName');
         this.userEmail = localStorage.getItem('UserEmail');
+        this.profilePicture = localStorage.getItem('ProfilePicture');
+        
     }
     Logout()
     {
@@ -28,6 +31,7 @@ export class DashboardNavbarComponent implements OnInit {
     classApplied = false;
     toggleClass() {
         this.classApplied = !this.classApplied;
+        this.classApplied2 = !this.classApplied2;
     }
 
     classApplied2 = false;

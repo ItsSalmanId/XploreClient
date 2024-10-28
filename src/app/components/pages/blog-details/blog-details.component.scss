@@ -903,3 +903,130 @@ blockquote, .blockquote {
     
 
 }
+
+/* Popup Overlay */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease;
+}
+/* Modal container styling */
+.custom-modal .modal-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9); /* Initial scale for animation */
+    background-color: #223042; /* Dark background */
+    color: #E0E6F2; /* Light text color */
+    width: 80%;
+    max-width: 500px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Montserrat', sans-serif;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+/* Adjust for smaller screens */
+@media (max-width: 768px) {
+    .custom-modal .modal-content {
+        width: 90%; /* Increase width on small screens */
+        max-width: 400px; /* Ensure it fits smaller screens */
+        padding: 15px;
+    }
+    .modal-footer {
+        flex-direction: column; /* Stack buttons vertically on mobile */
+        gap: 10px;
+    }
+    .accept-btn, .cancel-btn {
+        width: 100%; /* Buttons take full width on small screens */
+    }
+    .cancel-btn {
+        margin-right: 0px !important;
+    }
+}
+/* Show popup with transition */
+.custom-modal.show .popup-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+.custom-modal.show .modal-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1); /* Scale back to full size */
+}
+/* Modal Header */
+.modal-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+/* Centered check icon inside the circle */
+.icon-container {
+    background-color: #AEB8D1;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+}
+.check-icon {
+    color: #223042;
+    font-size: 24px;
+    line-height: 0; /* Ensure icon stays centered */
+}
+/* Modal title */
+.modal-title h2 {
+    margin: 0;
+    color: #E0E6F2;
+    font-size: 22px;
+}
+.modal-title p {
+    margin: 5px 0 0;
+    color: #AEB8D1; /* Lighter text */
+    font-size: 16px;
+}
+/* Modal footer */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+/* Cancel button */
+.cancel-btn {
+    background-color: transparent;
+    color: #E0E6F2;
+    border: 1px solid #E0E6F2;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.cancel-btn:hover {
+    background-color: rgba(224, 230, 242, 0.1); /* Slight hover effect */
+}
+/* Accept button */
+.accept-btn {
+    background-color: #50E3C2; /* Accent green color */
+    color: #223042;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.accept-btn:hover {
+    background-color: #45d4ad; /* Darker shade for hover effect */
+}
