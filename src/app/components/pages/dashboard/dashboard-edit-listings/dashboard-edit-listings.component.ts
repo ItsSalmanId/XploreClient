@@ -38,6 +38,7 @@ export class DashboardEditListingsComponent implements OnInit {
     selectedListStr: string;
     timeSlots: string[] = [];
     isLoading: boolean;
+    uploadedLogoFilesName: string[] = [];
      
 
     constructor(private _addBusinessService: AddBusinessService, public _globalSettingService: GlobalSettingService, private _genericUtilities: GenericUtility, private toastr: ToastrService
@@ -61,6 +62,7 @@ export class DashboardEditListingsComponent implements OnInit {
         this.uploadedFilesNameClient = [];
         this.selectedImagesList = [];
         this.selectedImagesList = [];
+        this.uploadedLogoFilesName = [];
 
     }
 
@@ -143,6 +145,8 @@ this.getBusiness();
                 console.log("click on RegisterNow");
                 if (this.businessDetail) {
                     this.businessDetail.uploadedFilesName = this.uploadedFilesName;
+                    this.businessDetail.uploadedLogoFilesName = this.uploadedLogoFilesName[0];
+
                     //this._spinner.show();
                     this._addBusinessService.addUpdateBusiness(this.businessDetail).subscribe(
                         response => {
@@ -267,9 +271,17 @@ console.log(this.selectedImagesList);
         ]
     }
 
-    onUploadSuccess($event) {
+    onUploadSuccess($event, isCallFromLog: boolean = false) {
         //console.log("onUploadSuccess");
-        this.uploadedFilesName.push($event[1].FilePath);
+        if(isCallFromLog == true)
+            { 
+              this.uploadedLogoFilesName.push($event[1].FilePath);
+            }
+            else
+            {
+              this.uploadedFilesName.push($event[1].FilePath);
+              this.uploadedFilesNameClient.push($event[0].name);
+            }
         this.uploadedFilesNameClient.push($event[0].name);
         this.disableTreatmentLocation = false;
         console.log(this.uploadedFilesNameClient);

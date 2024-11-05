@@ -53,5 +53,10 @@ export class NavbarStyleTwoComponent implements OnInit {
     toggleClass2() {
         this.classApplied2 = !this.classApplied2;
     }
+    isClickBlog()
+    {
+        this.router.navigate(['/blog-details']);
+    }
+
 
 }

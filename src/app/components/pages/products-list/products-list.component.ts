@@ -138,6 +138,10 @@ if (this.userAccount) {
 
     }
 
+    closePopup()
+    {
+        this.router.navigate(['/']);  
+    }
 
     login() {
         this.isLoading = true;
@@ -150,6 +154,7 @@ if (this.userAccount) {
                     this.ShowToast("Xplore", "login successfully", true);
                     localStorage.setItem('UserEmail', this.userAccount.EMAIL_ADDRESS);
                     localStorage.setItem('UserName', this.userAccount.User_Name);
+                    localStorage.setItem('ProfilePicture', this.userAccount.PROFILE_PICTURE);
                     if(response.Success)
                     {
                      this.currentTab = 'tab1';

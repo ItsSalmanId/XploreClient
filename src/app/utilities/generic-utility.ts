@@ -286,7 +286,8 @@ export class EnvironmentUrl {
     let _url: string;
 
     if (clientDomain.includes('localhost')) {
-      return 'http://45.61.134.14:80/api/';
+      return 'http://localhost:11492/api/';
+      //return 'http://45.61.134.14:80/api/';
     } 
     else if (clientDomain.includes('http://172.16.0.207'))
     {
@@ -320,7 +321,9 @@ export class EnvironmentUrl {
 
 // let domainParts = clientDomain.split('http://172.16.0.207:');
 // let portNumber = parseInt(domainParts[1]) - 1;
-_url  = `http://45.61.134.14:80/api/`;
+//_url  = `https://45.61.134.14:80/api/`;
+_url  = `https://api.xploradoor.com/api/`;
+//http://api.xploradoor.com/
 
     }
     return _url;

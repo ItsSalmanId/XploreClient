@@ -86,6 +86,15 @@ ngDoCheck() {
     }
    
   }
+  ShowToast(message: string, title: string, success: boolean) {
+    let timeOut: number = success ? 2000 : 4000;
+    //let toastOptions: ToastOptions = { title: title, msg: message, timeout: timeOut };
+    if (success)
+      this.toastr.success(title, message);
+    else {
+      this.toastr.error(title, message);
+    }
+  }
     saveUserDetails()
     {
 
@@ -102,6 +111,8 @@ if (this.userAccountDetails) {
             {
                 this.userAccountDetails = response;
                 console.log(this.userAccountDetails);
+                this.ShowToast("Xplore", 'Changes have been saved.', true);
+                this.router.navigate(['/']);  
                 //localStorage.setItem('Temp', this.userAccount.APPLICATION_USER_ACCOUNTS_ID.toString());
                 //this.login();
             }

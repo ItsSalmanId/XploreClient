@@ -99,7 +99,7 @@
                             </ul> -->
                         </li>
                         <li class="nav-item">
-                            <a routerLink="/vertical-listings-right-sidebar"  class="dropdown-toggle nav-link">
+                            <a (click)="isClickBlog()" class="dropdown-toggle nav-link">
                                 About Us <i class="bi bi-alexa"></i>
                             </a>
                             <!-- <ul class="dropdown-menu">
@@ -184,6 +184,7 @@
                                 </div>
                                 <div class="dropdown-body">
                                     <ul class="profile-nav p-0 pt-3">
+                                        <li class="nav-item"><a  routerLink="/homeone-banner-wishlist" class="nav-link"><i class='bx bx-user'></i> <span>WishList</span></a></li>
                                         <!-- <li class="nav-item"><a  class="nav-link"><i class='bx bx-user'></i> <span>Dashboard</span></a></li> -->
                                         <!-- <li class="nav-item"><a class="nav-link"><i class='bx bx-envelope'></i> <span>Messages</span></a></li>
                                         <li class="nav-item"><a class="nav-link"><i class='bx bx-edit-alt'></i> <span>Bookings</span></a></li>

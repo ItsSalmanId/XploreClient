@@ -49,6 +49,7 @@ export class NavbarStyleOneComponent implements OnInit {
         this.profilePicture = localStorage.getItem('ProfilePicture');
 
     }
+
     ngOnDestroy(): void {
         // Clear the interval when the component is destroyed
         if (this.checkInterval) {
@@ -79,6 +80,11 @@ export class NavbarStyleOneComponent implements OnInit {
                 //localStorage.setItem('ACCOUNT_TYPE', this.userAccount.ACCOUNT_TYPE);
                 this.router.navigate(['/dashboard-user-details']);
             }
+    }
+
+    isClickBlog()
+    {
+        this.router.navigate(['/blog-details']);
     }
 
     isCallFromNavBar()

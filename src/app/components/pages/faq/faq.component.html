@@ -14,6 +14,52 @@
 </div>
 <!-- End Page Title Area -->
 
+
+<div style="height: 500px; width: 100%;">
+    <google-map [center]="center" [zoom]="zoom" [options]="options">
+        <!-- Provided location marker -->
+        <map-marker 
+            [position]="center" 
+            [icon]="markerColors.provided" 
+            [label]="{ text: 'Your Location', color: 'white' }" 
+            (mapClick)="toggleInfoWindow()" 
+            (markerClick)="toggleInfoWindow()">
+        </map-marker>
+
+        <map-info-window *ngIf="infoWindowVisible" [position]="center">
+            <div style="text-align: center;">
+                <h3>{{ hotel.name }}</h3>
+                <p>Rating: {{ hotel.rating }}</p>
+                <p>{{ hotel.address }}</p>
+                <button (click)="closeInfoWindow()">Close</button>
+            </div>
+        </map-info-window>
+
+        <!-- Markers for top 3 closest locations -->
+        <map-marker 
+            *ngFor="let location of top3ClosestLocations; let i = index" 
+            [position]="{ lat: location.lat, lng: location.lng }" 
+            [icon]="getMarkerColor(i)" 
+            [label]="{ text: location.label, color: 'black' }" 
+            (markerClick)="openDistanceInfo(location)">
+        </map-marker>
+
+        
+
+        <!-- Info window for each closest location with distance -->
+        <map-info-window *ngIf="distanceInfoVisible" [position]="selectedLocation">
+            <div style="text-align: center;">
+                <h3>Distance Info</h3>
+                <p>{{ selectedLocation.distanceText }}</p>
+                <button (click)="closeDistanceInfo()">Close</button>
+            </div>
+        </map-info-window>
+    </google-map>
+</div>
+
+  
+  
+
 <!-- Start FAQ Area -->
 <section class="faq-area bg-f9f9f9 pt-100 pb-70">
     <div class="container">

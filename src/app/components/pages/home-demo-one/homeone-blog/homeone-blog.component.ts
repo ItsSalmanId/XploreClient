@@ -176,6 +176,8 @@ export class HomeoneBlogComponent implements OnInit {
                 response => {
                     console.log(response);
                     this.businessBlogDetailsList = response;
+                    localStorage.setItem('selectedBlogId', this.businessBlogDetailsList[0].BUSINESS_BLOG_ID.toString());
+
                    // this._spinner.hide();
                    //this.ShowToast("Alert", response.Message, response.success);
                    //this.toastr.success(response.Message, 'Toastr fun!');

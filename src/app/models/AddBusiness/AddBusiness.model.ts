@@ -48,6 +48,7 @@ export class BusinessDetail {
     YOUTUBE_LINK: string;
     USER_ID: number;
     IsFollow: boolean;
+    IsfavoriteBusiness: boolean;
     uploadedLogoFilesName: string;
     LOGO_PICTURE: string;
     fullStars: number = 1;
@@ -336,6 +337,14 @@ export class ReelSaved {
 export class CheckoutSessionRequest {
     Amount: number;
 }
+export class LatLngtest {
+    lat: number;       // Change from latitude to lat
+    lng: number;       // Change from longitude to lng
+    distance: number;  // Keep this as is, or make it optional
+    label?: string;
+    distanceText?: string;
+    
+  }
 
 
 

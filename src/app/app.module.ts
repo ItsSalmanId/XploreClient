@@ -20,6 +20,7 @@ import { HomeoneDestinationsComponent } from './components/pages/home-demo-one/h
 import { CategoryComponent } from './components/common/category/category.component';
 import { HomeoneListingsComponent } from './components/pages/home-demo-one/homeone-listings/homeone-listings.component';
 import { FeaturesComponent } from './components/common/features/features.component';
+import { HomeoneBannerWishlistComponent } from './components/pages/home-demo-one/homeone-banner-wishlist/homeone-banner-wishlist.component';
 import { HomeoneBannerComponent } from './components/pages/home-demo-one/homeone-banner/homeone-banner.component';
 import { FooterStyleOneComponent } from './components/common/footer-style-one/footer-style-one.component';
 import { NavbarStyleOneComponent } from './components/common/navbar-style-one/navbar-style-one.component';
@@ -123,6 +124,7 @@ const DROPZONECONFIG: DropzoneConfigInterface = {
         HomeoneListingsComponent,
         FeaturesComponent,
         HomeoneBannerComponent,
+        HomeoneBannerWishlistComponent,
         FooterStyleOneComponent,
         NavbarStyleOneComponent,
         NavbarStyleTwoComponent,

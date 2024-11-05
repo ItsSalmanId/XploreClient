@@ -49,6 +49,7 @@ import { ReelsVertical } from './components/pages/reels-listings/reels-listings.
 import { ShowStoriesComponent } from './components/pages/show-stories/show-stories.component';
 import { ShowUsersComponent } from './components/pages/show-users/show-users.component';
 import { DashboardAddAnnouncementComponent } from './components/pages/dashboard/dashboard-add-announcement/dashboard-add-announcement.component';
+import { HomeoneBannerWishlistComponent } from './components/pages/home-demo-one/homeone-banner-wishlist/homeone-banner-wishlist.component';
 
 
 const routes: Routes = [
@@ -76,6 +77,7 @@ const routes: Routes = [
     {path: 'reels-vertical', component: ReelsVertical},
     {path: 'vertical-listings-full-width', component: VerticalListingsFullWidthComponent},
     {path: 'grid-listings-left-sidebar', component: GridListingsLeftSidebarComponent},
+    {path: 'homeone-banner-wishlist', component: HomeoneBannerWishlistComponent},
     {path: 'grid-listings-right-sidebar', component: GridListingsRightSidebarComponent},
     {path: 'grid-listings-full-width', component: GridListingsFullWidthComponent},
     {path: 'single-listings', component: ListingsDetailsComponent},

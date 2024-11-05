@@ -83,6 +83,8 @@ export class BlogDetailsComponent implements OnInit {
                     this.businessBlogDetailsList = response;
                     this.blogModal = this.businessBlogDetailsList.find(blog => blog.BUSINESS_BLOG_ID === Number(this.selectedBlogId));
                     this.blogImage = this.blogModal.uploadedFilesName[0];
+                    localStorage.setItem('selectedBlogId', this.businessBlogDetailsList[0].BUSINESS_BLOG_ID.toString());
+
 
                    // this._spinner.hide();
                    //this.ShowToast("Alert", response.Message, response.success);

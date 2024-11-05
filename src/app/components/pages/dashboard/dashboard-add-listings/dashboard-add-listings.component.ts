@@ -41,6 +41,8 @@ export class DashboardAddListingsComponent implements OnInit {
   showPassword: boolean = false;
   showVerifyPassword: boolean = false;
   passwordMismatch: boolean = false;
+  tempList: string[] = []; // Temporary list to hold specific values
+  categories: { name: string; }[];
 
 
     constructor(private _addBusinessService: AddBusinessService, public _globalSettingService: GlobalSettingService, private _genericUtilities: GenericUtility, private router: Router, private toastr: ToastrService) 
@@ -71,6 +73,14 @@ export class DashboardAddListingsComponent implements OnInit {
         {name :'China',checked : false},
         {name :'France',checked : false}
       ]
+      
+      this.categories = [
+        { name: 'Food And Beverage' },
+        { name: 'Retail' },
+        { name: 'Health and Wellness' },
+        { name: 'Personal Care Services' },
+        { name: 'Home Services' }
+      ];
 
 
       
@@ -83,6 +93,53 @@ export class DashboardAddListingsComponent implements OnInit {
       this.showPassword = !this.showPassword;
     }
   
+    // Function to populate tempList based on selected category
+  onCategoryChange(selectedCategory: string) {
+    this.tempList = []; // Clear temp list each time
+
+    // Add specific values based on selected category
+    switch (selectedCategory) {
+      case 'Food And Beverage':
+        this.tempList = [
+          'Chinese Cuisine',
+          'Japanese Cuisine',
+          'Indian Cuisine',
+          'Coffee shop or Cafe',
+          'Thai Cuisine',
+          'Korean Cuisine',
+          'Bakery',
+          'Restaurant',
+          'Food Truck'
+        ];
+        break;
+      case 'Retail':
+        this.tempList = ['Clothing Boutique', 'Jewlery'];
+        break;
+      case 'Health and Wellness':
+        this.tempList = ['Yoga', 'Fitness'];
+        break;
+      case 'Personal Care Services':
+        this.tempList = [
+          'Beauty salon',
+          'Barber',
+          'Wax salon',
+          'General cleaning',
+          'Handyman Services',
+          'Event Services',
+          'Photography or videography'
+        ];
+        break;
+      case 'Home Services':
+        this.tempList = ['Exterior Home Service', 'Pest Control Services', 'Landscaping'
+, 'Security Services', 'HVAC services', 'Plumbing Services'
+
+        ];
+        break;
+      default:
+        this.tempList = [];
+    }
+  }
+
     toggleVerifyPasswordVisibility() {
       this.showVerifyPassword = !this.showVerifyPassword;
     }

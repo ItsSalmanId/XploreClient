@@ -91,6 +91,8 @@ hotel: any = {};
     emptyStars: number = 4;
     isLoading: boolean;
     selectedBusinessReviews: any;
+    LatLng: any;
+    
 
 
     constructor(private http: HttpClient, private _addBusinessService: AddBusinessService, 
@@ -136,6 +138,20 @@ hotel: any = {};
         this.businessDetailCountList = [];
         this.businessRating = new BusinessRating();
         this.businessRatingList = [];
+
+        this.LatLng = [
+            { latitude: 40.6782, longitude: -73.9442 },
+            { latitude: 40.6795, longitude: -73.9415 },
+            { latitude: 40.6808, longitude: -73.9463 },
+            { latitude: 40.6820, longitude: -73.9427 },
+            { latitude: 40.6767, longitude: -73.9489 },
+            { latitude: 40.6753, longitude: -73.9450 },
+            { latitude: 40.6779, longitude: -73.9430 },
+            { latitude: 40.6811, longitude: -73.9475 },
+            { latitude: 40.6800, longitude: -73.9444 },
+            { latitude: 40.6790, longitude: -73.9490 }
+          ];
+        
         
         }
 
@@ -156,6 +172,7 @@ hotel: any = {};
         this.getBusinessList();
         this.getBusinessRating();
         this.saveBussinessCount();
+        this.geocodeAddressTest("Brooklyn, New York");
 
         //this.onMarkerClick()
     }
@@ -171,6 +188,52 @@ hotel: any = {};
           lat: location.lat(),
           lng: location.lng()
         };
+      } else {
+        console.error('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  }
+
+
+ calculateDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
+    const toRadians = (degrees: number) => degrees * (Math.PI / 180);
+    const earthRadiusKm = 6371; // Radius of Earth in kilometers
+  
+    const dLat = toRadians(lat2 - lat1);
+    const dLng = toRadians(lng2 - lng1);
+  
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+      Math.sin(dLng / 2) * Math.sin(dLng / 2);
+  
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  
+    return earthRadiusKm * c; // Distance in kilometers
+  }
+  
+
+  geocodeAddressTest(address: string) {
+    const geocoder = new google.maps.Geocoder();
+  
+    geocoder.geocode({ address }, (results, status) => {
+      if (status === google.maps.GeocoderStatus.OK && results[0]) {
+        const location = results[0].geometry.location;
+        const currentLocation = {
+          latitude: location.lat(),
+          longitude: location.lng()
+        };
+  
+        // Calculate distances to all locations in brooklynNearbyLocations
+        const distances = this.LatLng.map((loc) => ({
+          ...loc,
+          distance: this.calculateDistance(currentLocation.latitude, currentLocation.longitude, loc.latitude, loc.longitude)
+        }));
+  
+        // Sort locations by distance and get the top 3 closest locations
+        const top3Closest = distances.sort((a, b) => a.distance - b.distance).slice(0, 3);
+  
+        console.log("Top 3 closest locations:", top3Closest);
       } else {
         console.error('Geocode was not successful for the following reason: ' + status);
       }
@@ -388,7 +451,7 @@ hotel: any = {};
                 response => {
                   this.isLoading = false;
                   this.selectedBusinessReviews =  response.Message
-                    this.ShowToast("Xplore", "Your business has been successfully added.", true);
+                    //this.ShowToast("Xplore", "Your business has been successfully added.", true);
                     //this.router.navigate(['/dashboard-my-listings']);
                    // this._spinner.hide();
                    //this.ShowToast("Alert", response.Message, response.success);

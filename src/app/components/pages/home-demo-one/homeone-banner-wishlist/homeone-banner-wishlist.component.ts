@@ -9,11 +9,11 @@ import { CommonCallService } from '../../../../services/commonCall/commonCall.se
 
 
 @Component({
-    selector: 'app-homeone-banner',
-    templateUrl: './homeone-banner.component.html',
-    styleUrls: ['./homeone-banner.component.scss']
+    selector: 'app-homeone-banner-wishlist',
+    templateUrl: './homeone-banner-wishlist.component.html',
+    styleUrls: ['./homeone-banner-wishlist.component.scss']
 })
-export class HomeoneBannerComponent implements OnInit {
+export class HomeoneBannerWishlistComponent implements OnInit {
     businessDetail: BusinessDetail;
     businessDetailsList: BusinessDetail[] = [];
     businessCategoryList: BusinessCategoryList[] = [];
@@ -51,8 +51,8 @@ export class HomeoneBannerComponent implements OnInit {
           }, 1000);
         this.resetOption = [this.options[0]];
         this.getBusiness();
-        this.getBlogsDetails();
-        this.getBusinessByCategory();
+        // this.getBlogsDetails();
+        // this.getBusinessByCategory();
 
         var temp = localStorage.getItem('AcceptTerms');
         if(temp != 'Yes')
@@ -84,16 +84,32 @@ export class HomeoneBannerComponent implements OnInit {
                     
                     if(this.businessDetailsList.length > 0)
                     {
-                        this.businessDetailsList.forEach(business => {
-                            let averageRating = Number(business.AverageRating); // Store the average rating in a variable
-
-  business.fullStars = Math.floor(averageRating); // Full stars based on the integer part
-  business.halfStar = averageRating % 1 !== 0; // Check if there's a half star
-  business.emptyStars = 5 - business.fullStars - (business.halfStar ? 1 : 0);
-                          });
-                        // Define the URL you want to push
-                        localStorage.setItem('selectedBusinessId', this.businessDetailsList[0].BUSINESS_DETAIL_ID.toString() );
+                        this.businessDetailsList = this.businessDetailsList.filter(item => item.IsfavoriteBusiness === true);
+                        if(this.businessDetailsList.length > 0)
+                            {
+                                this.businessDetailsList.forEach(business => {
+                                    let averageRating = Number(business.AverageRating); // Store the average rating in a variable
+        
+          business.fullStars = Math.floor(averageRating); // Full stars based on the integer part
+          business.halfStar = averageRating % 1 !== 0; // Check if there's a half star
+          business.emptyStars = 5 - business.fullStars - (business.halfStar ? 1 : 0);
+                                  });
+                                // Define the URL you want to push
+                                localStorage.setItem('selectedBusinessId', this.businessDetailsList[0].BUSINESS_DETAIL_ID.toString() );
+        
+                            } 
+                            else
+                            {
+                                this.ShowToast("Xplore", 'Wishlist is empty.', false);
+                        this.router.navigate(['/']);  
+                            }   
                     }
+                    else
+                    {
+                        this.ShowToast("Xplore", 'Wishlist is empty.', false);
+                        this.router.navigate(['/']);                    
+                    }
+
                    // this._spinner.hide();
                    //this.ShowToast("Alert", response.Message, response.success);
                    //this.toastr.success(response.Message, 'Toastr fun!');
@@ -155,6 +171,7 @@ if (business) {
   business.IsfavoriteBusiness = this.isfavoriteBusiness;
  /// console.log(`Business with ID ${businessId} is now followed.`);
 } 
+this.getBusiness();
                 //this.ShowToast("Xplore", "Your business has been successfully added.", true);
                 //this.router.navigate(['/dashboard-my-listings']);
                // this._spinner.hide();
