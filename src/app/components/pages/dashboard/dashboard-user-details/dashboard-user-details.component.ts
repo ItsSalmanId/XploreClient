@@ -127,18 +127,36 @@ export class DashboardUserDetailsComponent implements OnInit {
                 });
         //}
     }
+    checkAccountStatus(accountStatus: boolean)
+    {
+        //this.userAccount.Blocked = accountStatus == true ? true : false;
+    }
     selectUser(selectedUser: number)
     {
         console.log(selectedUser);
+        this.isLoading = true;
         this.slectedUser = selectedUser;
-        const selectedUsertemp = this.userAccountList.find(item => item.APPLICATION_USER_ACCOUNTS_ID === selectedUser) || null;
+            const selectedUsertemp = this.userAccountList.find(item => item.APPLICATION_USER_ACCOUNTS_ID === selectedUser) || null;
+    
+            this.userAccount = this.userAccountList.find(item => item.APPLICATION_USER_ACCOUNTS_ID === selectedUser) || null;
+        setTimeout(() => {
+            
+            this.cdr.detectChanges();
+            //this.userAccount.Blocked = this.userAccount.Blocked == false ? true : false;
+            this.userAccount.Is_FOLLOW_XPLORE = this.userAccount.Is_FOLLOW_XPLORE == false ? false : true;
 
-        this.userAccount = this.userAccountList.find(item => item.APPLICATION_USER_ACCOUNTS_ID === selectedUser) || null;
-
+        this.isLoading = false;
+        }, 500);
+        
         //this.userAccount.Blocked = true;
 
 
     }   
+    checkValue(temp: boolean)
+    {
+        console.log(temp);
+       this.userAccount.Is_FOLLOW_XPLORE = temp == true ? true : false;
+    }
     deleteUser()
     {
 

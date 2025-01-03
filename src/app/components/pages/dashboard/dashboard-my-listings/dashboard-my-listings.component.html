@@ -19,6 +19,9 @@
     <!-- Start -->
     <section class="listing-area">
         <div class="row">
+            <div class="add-listings-btn">
+                <button type="submit" routerLink="/dashboard-add-listings" >Add Listings</button>
+            </div>
             <div class="col-xl-4 col-lg-6 col-md-6" *ngFor="let Content of businessDetailsList | paginate: { itemsPerPage: 6, currentPage: gridListings }">
                 <div class="single-listings-box">
                     <div class="listings-image">
