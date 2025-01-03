@@ -209,7 +209,7 @@ export class DashboardAddListingsComponent implements OnInit {
                 this.businessDetail.uploadedFilesName = this.uploadedFilesName;
 
                 this.businessDetail.uploadedLogoFilesName = this.uploadedLogoFilesName[0];
-
+                this.businessDetail.USER_ID = Number(localStorage.getItem("Temp"));
 
                 //this._spinner.show();
                 this._addBusinessService.addUpdateBusiness(this.businessDetail).subscribe(

@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AddBusinessService } from '../../../../services/AddBusiness/AddBusiness.service'
 import { BusinessDetail } from "../../../../models/AddBusiness/AddBusiness.model";
 import { ToastrService } from 'ngx-toastr';
+import { SurveyAutomation, SurveyQuestions, SurveyLink, NavigationAndToggle, UserAccount } from "../../../../models/login/login.model";
+import { AccountService } from '../../../../services/login/login.service';
+import { CommonCall } from '../../../../components/common/commonCall/commonCall.component';
+
 
 
 @Component({
@@ -11,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./dashboard-all-listings.component.scss']
 })
 export class DashboardAllListingsComponent implements OnInit {
+  userAccount: UserAccount;
     businessDetail: BusinessDetail;
     businessDetailsList: BusinessDetail[] = [];
     isShownDelete: boolean;
@@ -18,12 +23,19 @@ export class DashboardAllListingsComponent implements OnInit {
     name = 'Angular';
     selectedId: number;
   isLoading: boolean;
-    constructor(private _addBusinessService: AddBusinessService, private toastr: ToastrService) { 
+  accountStatus: string;
+  selectedIdForAprovel: number;
+  isPopupVisible: boolean = false;
+  IsLoginAdmin: boolean;
+  IsLoginBusinessOwner: boolean;
+  @ViewChild(CommonCall, { static: false }) childComponent!: CommonCall;
+    constructor(private _accountServiceService: AccountService, private _addBusinessService: AddBusinessService, private toastr: ToastrService) { 
     this.businessDetail = new BusinessDetail();
     this.businessDetailsList = [];
     this.isShownDelete = true;
     this.selectedId = 0;
     this.isLoading = false;
+    this.userAccount = new UserAccount();
     
     
 
@@ -32,6 +44,13 @@ export class DashboardAllListingsComponent implements OnInit {
   ngOnInit(): void {
     this.resetOption = [this.options[0]];
         this.getBusiness();
+          this.userToken();
+   
+    }
+    ngAfterViewInit() {
+      if (this.childComponent) {
+        this.childComponent.userToken();
+      }
     }
 
     fetchRecord(id: number)
@@ -77,7 +96,91 @@ export class DashboardAllListingsComponent implements OnInit {
 
     }
 
+    bussinessStatus(selectedBussines: BusinessDetail)
+    {
+      this.isPopupVisible = true;
+      setTimeout(() => {
+        const modal = document.querySelector('.custom-modal');
+        if (modal) modal.classList.add('show');
+      }, 0);
+      console.log(this.isPopupVisible);
+      this.selectedIdForAprovel =selectedBussines.BUSINESS_DETAIL_ID;
+      this.accountStatus = selectedBussines.IS_APPROVED == false ? "approve" : "reject";
+    }
+    aprovelModelClose()
+    {
+      const modal = document.querySelector('.custom-modal');
+       if (modal) {
+         modal.classList.remove('show');
+         setTimeout(() => {
+           this.isPopupVisible = false;
+         }, 500); // Delay the removal until after the transition
+       }
+       if(this.accountStatus == "approve")
+       {
+        
+       }
+      this.selectedIdForAprovel;
+      let business = this.businessDetailsList.find(business => business.BUSINESS_DETAIL_ID === this.selectedIdForAprovel);
+      if (business) {
+        business.IS_APPROVED = this.accountStatus == "approve" ? false : true;
+    }
+    }
+    userToken()
+    {
+console.log("click on login");
+this.userAccount.APPLICATION_USER_ACCOUNTS_ID = Number(localStorage.getItem("Temp"));
+if (this.userAccount) {
+    //this._spinner.show();
+    this._accountServiceService.validateUser(this.userAccount).subscribe(
+        response => {
+            this.userAccount = response
+            if(this.userAccount.ACCOUNT_TYPE == "Admin")
+            {
+              this.IsLoginAdmin = true;
+            }
+            if(this.userAccount.ACCOUNT_TYPE == "Business Account")
+              {
+                this.IsLoginBusinessOwner = true;
+              }
+              if(this.userAccount.ACCOUNT_TYPE == "User")
+                {
+                  this.IsLoginAdmin = true;
+                }
+        });
+}
 
+
+    }
+    aprovelModelYes()
+    {
+      const modal = document.querySelector('.custom-modal');
+       if (modal) {
+         modal.classList.remove('show');
+         setTimeout(() => {
+           this.isPopupVisible = false;
+         }, 500); // Delay the removal until after the transition
+       }
+      var id = this.selectedIdForAprovel;
+        console.log(this.businessDetail);
+        console.log("click on RegisterNow");
+        if (this.selectedIdForAprovel != 0) {
+            //this._spinner.show();
+            this._addBusinessService.aprovelRejectBusinessDetails(this.selectedIdForAprovel).subscribe(
+                response => {
+                    console.log(response);
+                    var toastMessage = "Your business has been "+this.accountStatus+" successfully";
+                    this.ShowToast("Xplore", toastMessage, true);
+                    this.getBusiness();
+                    //this.businessDetailsList = response;
+                   // this._spinner.hide();
+                   //this.ShowToast("Alert", response.Message, response.success);
+                   //this.toastr.success(response.Message, 'Toastr fun!');
+                   //this.ShowToast("Xplore", response.Message, response.Success);
+                 
+                });
+        }
+    }
     openModal(inp: string) {
         console.log(inp);
         this.modal='modal-open';

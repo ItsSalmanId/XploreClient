@@ -128,18 +128,24 @@
                                     </div>
                                 </div>
                                 <div class="dropdown-body myCenter">
-                                    <ul class="profile-nav p-0 pt-3">
-                                        <li class="nav-item"><a  class="nav-link"><i class='bx bx-user'></i> <span>WishList</span></a></li>
-                                        <!-- <li class="nav-item"><a class="nav-link"><i class='bx bx-envelope'></i> <span>Messages</span></a></li>
-                                        <li class="nav-item"><a class="nav-link"><i class='bx bx-edit-alt'></i> <span>Bookings</span></a></li>
-                                        <li class="nav-item"><a  class="nav-link"><i class='bx bx-cog'></i> <span>Settings</span></a></li> -->
-                                    </ul>
-                                    <!-- <ul class="profile-nav p-0 pt-3">
-                                        <li class="nav-item"><a routerLink="/dashboard" class="nav-link"><i class='bx bx-user'></i> <span>Dashboard</span></a></li>
-                                        <li class="nav-item"><a routerLink="/dashboard-messages" class="nav-link"><i class='bx bx-envelope'></i> <span>Messages</span></a></li>
-                                        <li class="nav-item"><a routerLink="/dashboard-bookings" class="nav-link"><i class='bx bx-edit-alt'></i> <span>Bookings</span></a></li>
-                                        <li class="nav-item"><a routerLink="/dashboard-my-profile" class="nav-link"><i class='bx bx-cog'></i> <span>Settings</span></a></li>
-                                    </ul> -->
+                                    <ul class="profile-links ">
+                
+                                        <li routerLink="/dashboard-my-profile"><i class="bx bx-user" ></i> My Account</li>
+                                        <li (click)="myPost()" routerLink="/dashboard-add-listings"><i class="bx bx-cog"></i> Add Listings</li>
+                                        <li (click)="myPost()" routerLink="/dashboard-my-listings"><i class="bx bx-cog"></i> Edit Listings</li>
+                                        <li><i class="bx bx-envelope"
+                                         routerLink="/dashboard-my-profile"
+                                         ></i> Subscriptions </li>
+                                         
+                                        <li (click)="myPost()" routerLink="/homeone-banner-wishlist"><i class="bx bx-cog"></i> My post</li>
+                                        <li routerLink="/homeone-banner-wishlist" (click)="wishlist()"><i class="bx bx-user" id="main-navbar" ></i> Wish List</li>
+                                       <!--<li><i class="bx bx-envelope"></i> My Account</li>
+                                       <li><i class="bx bx-edit-alt"></i> Bookings</li>
+                                       <li><i class="bx bx-cog"></i> Settings</li> -->
+                                       <li class="logout" (click)="Logout()"><i class="bx bx-log-out"
+                                         
+                                         ></i> Logout</li>
+                                   </ul>
                                 </div>
                                 <div class="dropdown-footer">
                                     <ul class="profile-nav myCenter m-23px">

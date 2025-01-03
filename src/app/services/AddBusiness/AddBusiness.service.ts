@@ -59,6 +59,9 @@ export class AddBusinessService {
   deleteBusinessDetails(businessId: number): any {
     return this.accountUtility.getUnauthorizeGetCall(`SurveyAutomation/DeleteBusinessDetails?businessId=${businessId}`);
   }
+  aprovelRejectBusinessDetails(businessId: number): any {
+    return this.accountUtility.getUnauthorizeGetCall(`SurveyAutomation/AprovelRejectBusinessDetails?businessId=${businessId}`);
+  }
 
   addUpdateBlogBusiness(data: BusinessBlogDetail) {
     return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/AddUpdateBlogBusiness', data);
@@ -133,6 +136,9 @@ export class AddBusinessService {
   }
   getAnnouncementDetails(data: AnnouncementDetails) {
     return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/GetAnnouncementDetails', data);
+  }
+  addToFavoriteBusiness(data: BusinessDetail) {
+    return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/AddToFavoriteBusiness', data);
   }
   
 

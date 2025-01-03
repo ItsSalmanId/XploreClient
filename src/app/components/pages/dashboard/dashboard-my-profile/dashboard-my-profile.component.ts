@@ -43,6 +43,9 @@ export class DashboardMyProfileComponent implements OnInit {
   uploadedLogoFilesName: string[] = [];
   uploadedFilesNameClient: string[] = [];
     disableTreatmentLocation: boolean;
+    isPopupVisible: boolean;
+    OTP: number;
+    invalidOTP: boolean;
     
 
     constructor(private _genericUtilities: GenericUtility, 
@@ -64,6 +67,7 @@ export class DashboardMyProfileComponent implements OnInit {
         this.uploadedFilesName = [];
         this.uploadedLogoFilesName = [];
         this.uploadedFilesNameClient = [];
+        this.OTP = null;
     }
 
     ngOnInit(): void {
@@ -95,6 +99,117 @@ ngDoCheck() {
       this.toastr.error(title, message);
     }
   }
+  
+  verifyUserDetails()
+    {
+        this.OTP = null;
+        this.invalidOTP = false;
+        this.isLoading = true;
+console.log("click on login");
+//this.userAccountDetails.PROFILE_PICTURE = this.uploadedLogoFilesName[0];
+        //this.userAccount.APPLICATION_USER_ACCOUNTS_ID = Number(localStorage.getItem('Temp'));
+if (this.userAccountDetails) {
+    //this._spinner.show();
+    this._accountServiceService.verifyUserDetails(this.userAccountDetails).subscribe(
+        response => {
+            this.isLoading = false;
+            if(response != null)
+            {
+                this.isPopupVisible = true;
+      setTimeout(() => {
+        const modal = document.querySelector('.custom-modal');
+        if (modal) modal.classList.add('show');
+      }, 0);
+      console.log(this.isPopupVisible);
+               this.userAccountDetails.IS_EMAIL_VARIFIED = response.success;
+               const emailStatusSpan = document.getElementById('email-status');
+
+// Checking the IS_APPROVED status and updating the label
+if (this.userAccountDetails.IS_EMAIL_VARIFIED) {
+    emailStatusSpan.textContent = 'Verified';
+    emailStatusSpan.classList.add('green');
+} else {
+    emailStatusSpan.textContent = 'Not Verified';
+    emailStatusSpan.classList.add('red');
+}
+                //this.userAccountDetails = response;
+                //console.log(this.userAccountDetails);
+                this.ShowToast("Xplore", 'Verify OTP from your email..', true);
+                //this.router.navigate(['/']);  
+                //localStorage.setItem('Temp', this.userAccount.APPLICATION_USER_ACCOUNTS_ID.toString());
+                //this.login();
+            }
+            else
+            {
+                this.invalidOTP = true;
+                //this.ShowToast("Xplore", "The username or password is incorrect.", false);
+            }
+
+        });
+}
+
+
+    }
+    onInput(event: any): void {
+        setTimeout(() => {
+        // Remove any non-numeric characters from the input
+        const value = event.target.value.replace(/[^0-9]/g, '');
+        
+        // Update the OTP model with the cleaned value
+        this.OTP = value;    
+        }, 100);
+        
+      }
+
+    verifyOTPDetails()
+    {
+        this.isLoading = true;
+        //this.userAccount.APPLICATION_USER_ACCOUNTS_ID = Number(localStorage.getItem('Temp'));
+if (this.userAccountDetails) {
+    //this._spinner.show();
+    this._accountServiceService.verifyOTPDetails(this.OTP).subscribe(
+        response => {
+            this.isLoading = false;
+            if(response != null && response.Success == true)
+            {
+                this.isPopupVisible = false;
+      setTimeout(() => {
+        const modal = document.querySelector('.custom-modal');
+        if (modal) modal.classList.add('hide');
+      }, 0);
+      console.log(this.isPopupVisible);
+      this.userAccountDetails.IS_EMAIL_VARIFIED = response.Success;
+               const emailStatusSpan = document.getElementById('email-status');
+
+// Checking the IS_APPROVED status and updating the label
+if (this.userAccountDetails.IS_EMAIL_VARIFIED) {
+    emailStatusSpan.textContent = 'Verified';
+    emailStatusSpan.classList.remove('red');
+    emailStatusSpan.classList.add('green');
+} else {
+    emailStatusSpan.textContent = 'Not Verified';
+    emailStatusSpan.classList.add('red');
+}
+this.invalidOTP = false;
+
+                //this.userAccountDetails = response;
+                //console.log(this.userAccountDetails);
+                this.ShowToast("Xplore", 'Email has been successfully verified.', true);
+                //this.router.navigate(['/']);  
+                //localStorage.setItem('Temp', this.userAccount.APPLICATION_USER_ACCOUNTS_ID.toString());
+                //this.login();
+            }
+            else
+            {
+                this.invalidOTP = true;
+                //this.ShowToast("Xplore", "The username or password is incorrect.", false);
+            }
+
+        });
+}
+
+
+    }
     saveUserDetails()
     {
 
@@ -126,6 +241,16 @@ if (this.userAccountDetails) {
 
 
     }
+    closeModelClose()
+    {
+        const modal = document.querySelector('.custom-modal');
+        if (modal) {
+          modal.classList.remove('show');
+          setTimeout(() => {
+            this.isPopupVisible = false;
+          }, 100); // Delay the removal until after the transition
+        }
+    }
     
     GetUserDetails()
     {
@@ -142,6 +267,17 @@ if (this.userAccount) {
             {
                 this.userAccountDetails = response;
                 console.log(this.userAccountDetails);
+                const emailStatusSpan = document.getElementById('email-status');
+
+// Checking the IS_APPROVED status and updating the label
+if (this.userAccountDetails.IS_EMAIL_VARIFIED) {
+    emailStatusSpan.textContent = 'Verified';
+    emailStatusSpan.classList.remove('red'); // Ensures the 'red' class is removed
+    emailStatusSpan.classList.add('green');
+} else {
+    emailStatusSpan.textContent = 'Not Verified';
+    emailStatusSpan.classList.add('red');
+}
                 //localStorage.setItem('Temp', this.userAccount.APPLICATION_USER_ACCOUNTS_ID.toString());
                 //this.login();
             }
