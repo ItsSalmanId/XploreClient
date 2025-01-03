@@ -322,6 +322,78 @@
                         animation: blob .85s linear forwards .2s;
                     }
                 }
+                .switchtest {
+                    padding-left: 0;
+                    margin-bottom: 0;
+                    display: inline-block;
+                    position: absolute;
+                    right: 20px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    cursor: pointer;
+
+                    input {
+                        display: none;
+                    }
+                    input + span {
+                        width: 48px;
+                        height: 28px;
+                        border-radius: 14px;
+                        -webkit-transition: all .3s ease;
+                        transition: all .3s ease;
+                        display: block;
+                        position: relative;
+                        //background: var(--mainColor);
+                        background: red;
+                        box-shadow: 0 8px 16px -1px rgba(8, 141, 211, 0.2);
+                    }
+                    input + span:before, input + span:after {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        -webkit-transition: all .3s ease;
+                        transition: all .3s ease;
+                    }
+                    input + span:before {
+                        top: 5px;
+                        left: 5px;
+                        width: 18px;
+                        height: 18px;
+                        border-radius: 9px;
+                        border: 5px solid var(--whiteColor);
+                    }
+                    input + span:after {
+                        top: 5px;
+                        left: 32px;
+                        width: 6px;
+                        height: 18px;
+                        border-radius: 40%;
+                        transform-origin: 50% 50%;
+                        background: var(--whiteColor);
+                        opacity: 0;
+                    }
+                    input + span:active {
+                        transform: scale(0.92);
+                    }
+                    input:checked + span {
+                        //background: red;
+                        background: var(--mainColor);
+                        box-shadow: 0 8px 16px -1px rgba(72, 234, 139, 0.2);
+                    }
+                    input:checked + span:before {
+                        width: 0px;
+                        border-radius: 3px;
+                        margin-left: 27px;
+                        border-width: 3px;
+                        background: var(--whiteColor);
+                    }
+                    input:checked + span:after {
+                        animation: blobChecked .35s linear forwards .2s;
+                    }
+                    input:not(:checked) + span:before {
+                        animation: blob .85s linear forwards .2s;
+                    }
+                }
             }
         }
     }
@@ -446,6 +518,9 @@
         }
     }
 
+}
+.red {
+    color: red;
 }
 /* Min width 576px to Max width 767px */
 @media only screen and (min-width: 576px) and (max-width: 767px) {
