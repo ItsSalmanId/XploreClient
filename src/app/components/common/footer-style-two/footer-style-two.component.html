@@ -8,45 +8,44 @@
                         <h3>About</h3>
     
                         <ul class="link-list">
-                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> About</a></li>
-                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Careers</a></li>
-                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Recent News</a></li>
-                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Investor Relations</a></li>
-                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Content Guidelines</a></li>
+                            <li><a (click)="XploradoorPdf()"><i class="flaticon-left-chevron"></i> What is Xploradoor</a></li>
+                            <li><a (click)="CookiesPdf()"><i class="flaticon-left-chevron"></i> Cookie Policy</a></li>
+                            <li><a (click)="downloadPdf()"><i class="flaticon-left-chevron"></i> Terms & Services</a></li>
+                            <li><a routerLink="/blog-details"><i class="flaticon-left-chevron"></i> Blog</a></li>
+                            <!-- <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Content Guidelines</a></li>
                             <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Terms of Service</a></li>
-                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Privacy Policy</a></li>
+                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Privacy Policy</a></li> -->
                         </ul>
                     </div>
                 </div>
     
                 <div class="col-lg-3 col-sm-6 col-md-6">
                     <div class="single-footer-widget">
-                        <h3>Discover</h3>
+                        <h3>Xplor Your Business</h3>
     
                         <ul class="link-list">
-                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Project Cost Guides</a></li>
-                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Upcoming Events</a></li>
-                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Mobile App</a></li>
-                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Customer Support</a></li>
-                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Developers</a></li>
+                            <li><a routerLink="/products-list"><i class="flaticon-left-chevron"></i> Register your business</a></li>
+                            <!-- <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Advertise on Xploradoor</a></li> -->
+                            <!-- <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Help</a></li> -->
+                            <!-- <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Developers</a></li>
                             <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Collections</a></li>
-                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Our Blog</a></li>
+                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Our Blog</a></li> -->
                         </ul>
                     </div>
                 </div>
     
                 <div class="col-lg-3 col-sm-6 col-md-6">
                     <div class="single-footer-widget">
-                        <h3>Business With xploradoor</h3>
+                        <h3>Customer Support</h3>
     
                         <ul class="link-list">
-                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Claim your Business</a></li>
-                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Advertise on xploradoor</a></li>
-                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Restaurant Owners</a></li>
+                            <!-- <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Frequently asked question</a></li> -->
+                            <!-- <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Feedback</a></li> -->
+                            <!-- <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Restaurant Owners</a></li>
                             <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Business Success Stories</a></li>
                             <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Business Support</a></li>
                             <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Blog for Business</a></li>
-                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Privacy Policy</a></li>
+                            <li><a routerLink="/"><i class="flaticon-left-chevron"></i> Privacy Policy</a></li> -->
                         </ul>
                     </div>
                 </div>
@@ -56,22 +55,26 @@
                         <h3>Contact Info</h3>
     
                         <ul class="footer-contact-info">
-                            <li><i class="bx bx-map"></i> abc</li>
-                            <li><i class="bx bx-phone-call"></i><a href="tel:+11234567890">+123456754</a></li>
-                            <li><i class="bx bx-envelope"></i><a href="mailto:hello&#64;xploradoor.com">hello&#64;xploradoor.com</a></li>
-                            <li><i class="bx bxs-inbox"></i><a href="tel:+557854578964">+11111111222</a></li>
+                            <li><i class="bx bx-map"></i> Los Angeles, CA</li>   
+                            <li><i class="bx bx-phone-call"></i><a href="tel:+11234567890">+323-807-5226, 310-962-6915</a></li>
+                            <li><i class="bx bx-envelope"></i><a href="mailto:hello&#64;xploradoor.com">support&#64;xploradoor.com</a></li>
                         </ul>
     
                         <ul class="social-link">
-                            <li><a href="#" class="d-block" target="_blank"><i class="bx bxl-facebook"></i></a></li>
-                            <li><a href="#" class="d-block" target="_blank"><i class="bx bxl-twitter"></i></a></li>
-                            <li><a href="#" class="d-block" target="_blank"><i class="bx bxl-instagram"></i></a></li>
-                            <li><a href="#" class="d-block" target="_blank"><i class="bx bxl-linkedin"></i></a></li>
+                            <li><a href="https://www.facebook.com/xploradoorllc" class="d-block" target="_blank"><i class="bx bxl-facebook"></i></a></li>
+                            <li>
+                                <a href="https://x.com/xploradoor" class="d-block" target="_blank">
+                                  <!-- Replace the icon with an SVG or image if needed -->
+                                   <i>                                  <img src="assets/images/X_log.PNG" alt="X Logo" style="width: 20px; height: 20px;">
+                                   </i>
+                                </a>
+                              </li>
+                                                          <li><a href="https://www.instagram.com/_xploradoor/" class="d-block" target="_blank"><i class="bx bxl-instagram"></i></a></li>
+                            <li><a href="https://www.linkedin.com/company/xploradoor/?viewAsMember=true" class="d-block" target="_blank"><i class="bx bxl-linkedin"></i></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-    
             <div class="copyright-area">
                 <p>Copyright © 2024. All rights reserved.</p>
             </div>
@@ -83,5 +86,96 @@
     </div>
 </footer>
 <!-- End Footer Area -->
+
+<div class="custom-modal" *ngIf="isTermsVisible">
+    <div class="popup-overlay" (click)="closeTerms()"></div>
+    <div class="modal-content" style="max-height: 400px">
+        <div class="terms-header">
+            <h2 class="terms-title" style="text-align: center;">Terms and Conditions</h2>
+        </div>
+        <div class="terms-body" style="overflow-y: auto;">
+            <p style="color: aliceblue;">These Terms of Service ("Agreement") govern the use of the advertising website ("Xploradoor") and the services provided by the website owner. By accessing or using the Website, you Xplorers agree to be bound by these Terms of Service. If you do not agree with any part of these Terms of Service, you must refrain from using the Website.</p>
+            
+            <p style="color: aliceblue;"><strong>1. Acceptance of Terms</strong></p>
+            <p style="color: aliceblue;">a. Users must be at least 18 years old or have legal parental or guardian consent to use the Website.</p>
+            <p style="color: aliceblue;">b. By accessing or using the Website, users acknowledge that they have read, understood, and agree to be bound by these Terms of Service, as well as any additional guidelines or rules applicable to specific services or features provided by the Website.</p>
+            
+            <!-- Include the rest of the terms as formatted paragraphs. -->
+
+            <p style="color: aliceblue;"><strong>10. Governing Law and Jurisdiction</strong></p>
+            <p style="color: aliceblue;">These Terms of Service shall be governed by and construed in accordance with the laws of the US. Any legal action or proceeding arising out of or in connection with these Terms of Service shall be brought in the courts of the US.</p>
+
+            <p style="color: aliceblue;"><strong>11. Severability</strong></p>
+            <p style="color: aliceblue;">If any provision of these Terms of Service is deemed invalid or unenforceable, that provision shall be limited or eliminated to the minimum extent necessary, and the remaining provisions shall remain in full force and effect.</p>
+
+            <p style="color: aliceblue;">By using the Website, the User acknowledges and agrees to abide by these Terms of Service. I as a business owner or an xplorer will accept the terms of service above.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="cancel-btn" (click)="closeTerms()">Cancel</button>
+            <button class="accept-btn" (click)="closeTerms()">Accept</button>
+        </div>
+    </div>
+</div>
+
+<div class="custom-modal" *ngIf="isXploreVisible">
+    <div class="popup-overlay" (click)="closeXplore()"></div>
+    <div class="modal-content" style="max-height: 400px">
+        <div class="terms-header">
+            <h2 class="terms-title" style="text-align: center;">About Us - Xploradoor</h2>
+        </div>
+        <div class="terms-body" style="overflow-y: auto;">
+            <p style="color: aliceblue;">Xploradoor would like to assist any business in any industry to get recognized and succeed in their professional development. Xploradoor will be a platform for any business to connect with their communities. We would like to connect with your business to share your talents, whether that is food, cleaning services, or any other industry. We will work together to achieve your goals.</p>
+
+    <p style="color: aliceblue;">Users will be able to discover new businesses of their interest. Access to follow their favorite business, friends, or content creators. Discover posts and videos from all on Xploradoor. Users can utilize the search by category to find their appropriate destination/service per their interest.</p>
+
+    <p style="color: aliceblue;">Xploradoor has made it easy for businesses and users to connect and communicate. We are your compass, guiding you to new opportunities.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="cancel-btn" (click)="closeXplore()">Cancel</button>
+            <button class="accept-btn" (click)="closeXplore()">Accept</button>
+        </div>
+    </div>
+</div>
+
+<div class="custom-modal" *ngIf="isCookiesVisible">
+    <div class="popup-overlay" (click)="closeCookies()"></div>
+    <div class="modal-content" style="max-height: 400px">
+        <div class="terms-header">
+            <h2 class="terms-title" style="text-align: center;">Welcome to Xploradoor!</h2>
+        </div>
+        <div class="terms-body" style="overflow-y: auto;">
+            <p style="color: aliceblue;">This website uses cookies to enhance your browsing experience and provide personalized content. By using our site, you agree to the use of cookies in accordance with this cookie agreement. Please take a moment to read the following information.</p>
+    
+            <h6 style="color: aliceblue;">What are cookies?</h6>
+            <p style="color: aliceblue;">Cookies are small text files that are stored on your device when you visit a website. They are widely used to make websites work more efficiently, as well as to provide information to the website owners.</p>
+        
+            <h6 style="color: aliceblue;">Types of Cookies</h6>
+            <ul style="color: aliceblue;">
+                <li><strong>Essential cookies:</strong> These cookies are necessary for the website to function properly. They enable you to navigate the site and use its features.</li>
+                <li><strong>Analytics Cookies:</strong> We use analytics cookies to understand how visitors interact with our website. This helps us improve the content and user experience.</li>
+                <li><strong>Marketing Cookies:</strong> These cookies are used to deliver personalized advertisements and promotions based on your interests and browsing habits.</li>
+            </ul>
+        
+            <h6 style="color: aliceblue;">Managing Cookies</h6>
+            <p style="color: aliceblue;">You can control and manage cookies in your browser settings. Please note that restricting cookies may impact the functionality of the website.</p>
+        
+            <h6 style="color: aliceblue;">Your Consent</h6>
+            <p style="color: aliceblue;">By continuing to use our website, you consent to the use of cookies as described in this Cookie Agreement.</p>
+        
+            <h6 style="color: aliceblue;">Updates to this Cookie Agreement</h6>
+            <p style="color: aliceblue;">We may update this Cookie Agreement from time to time. Any changes will be effective immediately upon posting the updated agreement on the website.</p>
+        
+            <h6 style="color: aliceblue;">Contact Us</h6>
+            <p style="color: aliceblue;">If you have any questions or concerns about our use of cookies, please 
+                <a routerLink="/contact-us">contact us</a>.
+            </p>
+            <p style="color: aliceblue;">Thank you for visiting Xploradoor!</p>    
+        </div>
+        <div class="modal-footer">
+            <button class="cancel-btn" (click)="closeCookies()">Cancel</button>
+            <button class="accept-btn" (click)="closeCookies()">Accept</button>
+        </div>
+    </div>
+</div>
 
 <!-- <div class="go-top"><i class='bx bx-up-arrow-alt'></i></div> -->

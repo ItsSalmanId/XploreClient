@@ -86,7 +86,14 @@ export class NavbarStyleOneComponent implements OnInit {
     {
         this.router.navigate(['/blog-details']);
     }
-
+    myPost()
+    {
+        localStorage.setItem('myPost', "true" );
+    }
+    wishlist()
+    {
+        localStorage.setItem('myPost', "false" );
+    }
     isCallFromNavBar()
     {
         localStorage.setItem('isCallFromNavBar', "true" );
