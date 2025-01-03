@@ -42,6 +42,14 @@ export class AccountService {
   saveUserDetails(data: UserAccount) {
     return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/SaveUserDetails', data);
   }
+
+  verifyUserDetails(data: UserAccount) {
+    return this.accountUtility.getUnauthorizePostCall('SurveyAutomation/VerifyUserDetails', data);
+  }
+  
+  verifyOTPDetails(opt: number): any {
+    return this.accountUtility.getUnauthorizeGetCall(`SurveyAutomation/VerifyOTPDetails?opt=${opt}`);
+  }
   
   
 //   updatePatientSurvey(data: PatientSurveyModel) {

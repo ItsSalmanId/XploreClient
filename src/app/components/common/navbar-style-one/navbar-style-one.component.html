@@ -101,8 +101,8 @@
                         <li class="nav-item">
                             <a 
                             (click)="isClickBlog()"
-                              class="dropdown-toggle nav-link">
-                                About Us <i class="bi bi-alexa"></i>
+                              class="dropdown-toggle nav-link" id="navbarstyleone">
+                                Blog <i class="bi bi-alexa"></i>
                             </a>
                             <!-- <ul class="dropdown-menu">
                                 <li class="nav-item"><a routerLink="/products-list" class="nav-link" routerLinkActive="active"[routerLinkActiveOptions]="{exact: true}">Products List</a></li>
@@ -199,8 +199,17 @@
               </div>
              <div class="d-flex flex-column align-items-center">
               <ul class="profile-links ">
-                   <li routerLink="/homeone-banner-wishlist"><i class="bx bx-user" id="main-navbar" ></i> Wish List</li>
-                  <!--<li><i class="bx bx-envelope"></i> Messages</li>
+                
+                   <li routerLink="/dashboard-my-profile"><i class="bx bx-user" ></i> My Account</li>
+                   <li (click)="myPost()" routerLink="/dashboard-add-listings"><i class="bx bx-cog"></i> Add Listings</li>
+                   <li (click)="myPost()" routerLink="/dashboard-my-listings"><i class="bx bx-cog"></i> Edit Listings</li>
+                   <li><i class="bx bx-envelope"
+                    routerLink="/dashboard-my-profile"
+                    ></i> Subscriptions </li>
+                    
+                   <li (click)="myPost()" routerLink="/homeone-banner-wishlist"><i class="bx bx-cog"></i> My post</li>
+                   <li routerLink="/homeone-banner-wishlist" (click)="wishlist()"><i class="bx bx-user" id="main-navbar" ></i> Wish List</li>
+                  <!--<li><i class="bx bx-envelope"></i> My Account</li>
                   <li><i class="bx bx-edit-alt"></i> Bookings</li>
                   <li><i class="bx bx-cog"></i> Settings</li> -->
                   <li class="logout" (click)="Logout()"><i class="bx bx-log-out"

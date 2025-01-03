@@ -23,6 +23,14 @@ export class DashboardNavbarComponent implements OnInit {
         this.profilePicture = localStorage.getItem('ProfilePicture');
         
     }
+    wishlist()
+    {
+        localStorage.setItem('myPost', "false" );
+    }
+    myPost()
+    {
+        localStorage.setItem('myPost', "true" );
+    }
     Logout()
     {
      //this._commonCall.logout();

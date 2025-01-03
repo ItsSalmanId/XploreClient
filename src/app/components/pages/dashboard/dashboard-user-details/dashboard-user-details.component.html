@@ -71,7 +71,11 @@
             <!-- Data Rows -->
             <div *ngFor="let item of userAccountList; let i = index" class="grid-row">
                 <div class="grid-col">{{ i + 1 }}</div> <!-- Serial Number -->
-                <div class="grid-col">{{ item.User_Name }}</div>
+                <div class="grid-col">
+                    <i *ngIf="item.Status === 'isSuccess'" class="bi bi-globe-americas status-icon"
+                    style="color: #0ec6c6;"
+                    ></i>
+                    {{ item.User_Name }}</div>
                 <div class="grid-col" hidden>{{ item.APPLICATION_USER_ACCOUNTS_ID }}</div>
               <div class="grid-col">{{ item.EMAIL_ADDRESS }}</div>
               <div class="grid-col">{{ item.Blocked == false ? 'Active' : 'Blocked'}}</div>
@@ -219,6 +223,20 @@ aria-hidden="true">
                 </div>
             </div>
         </div>
+        
+        <div class="form-group">
+            <div class="sidebar-widgets" aria-disabled="true">
+        <div class="box">
+            <span class="title">Follow Xploreadoor</span>
+            <label class="switchtest">
+                <input type="checkbox" 
+                [(ngModel)]="userAccount.Is_FOLLOW_XPLORE" [checked]="userAccount.Is_FOLLOW_XPLORE"
+                (click)="checkValue(userAccount.Is_FOLLOW_XPLORE)">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+</div>
 
         <div class="add-listings-box">
             <h3>Account Status</h3>
@@ -228,7 +246,9 @@ aria-hidden="true">
                     <div class="box">
                         <span class="title">Active/In-Active</span>
                         <label class="switch">
-                            <input type="checkbox" [(ngModel)]="userAccount.Blocked">
+                            <input type="checkbox" [(ngModel)]="userAccount.Blocked"
+                            (click)="checkAccountStatus(userAccount.Blocked)"
+                            >
                             <span></span>
                         </label>
                     </div>

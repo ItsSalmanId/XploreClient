@@ -71,6 +71,21 @@
                             <a class="default-btn" data-bs-toggle="modal" data-bs-target="#message_modal-Confirmation" (click)="fetchRecord(Content.BUSINESS_DETAIL_ID)">Delete</a>
                         </div>
                     </div>
+                    <div class="add-listings-box" *ngIf="this.IsLoginAdmin == true">
+                        <div class="form-group">
+                            <div class="sidebar-widgets" aria-disabled="true">
+                                <div class="box">
+                                    <span class="title">Approve/Rejection</span>
+                                    <label class="switch">
+                                        <input type="checkbox" 
+                                        [(ngModel)]="Content.IS_APPROVED"
+                                        (click)="bussinessStatus(Content)">
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -99,6 +114,47 @@
             <div class="modal-footer">
                 <button class="btn btn-primary"  data-bs-dismiss="modal" aria-label="Close">No</button>
                 <button class="btn btn-primary" (click)="deleteRecord()"  data-bs-dismiss="modal" aria-label="Close">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Popup Modal -->
+<div class="custom-modal" *ngIf="isPopupVisible">
+    <div class="popup-overlay" ></div>
+    <div class="modal-content">
+        <div class="modal-header">
+        
+            <div class="modal-title" style="margin-bottom: 0px !important;">
+                <h2>Confirmation</h2>
+                <p>Are you sure want to {{accountStatus}} the record?</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="cancel-btn"  data-bs-dismiss="modal" aria-label="Close" (click)="aprovelModelClose()">No</button>
+            <button class="accept-btn" (click)="aprovelModelYes()"  data-bs-dismiss="modal" aria-label="Close">Yes</button>
+        </div>
+    </div>
+</div>
+
+   <!-- Modal to delete the images -->
+   <div class="modal fade" id="aprovel_modal-Confirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="box-shadow: 5px 5px #16f5f5; border: 1px solid #96e3e3;">
+            <div class="modal-header">
+                <h1 style="text-align: center;">Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="aprovelModelClose()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="send">
+                    <div class="search_person">
+                        <p>Are you sure want to {{accountStatus}} the record.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary"  data-bs-dismiss="modal" aria-label="Close" (click)="aprovelModelClose()">No</button>
+                <button class="btn btn-primary" (click)="aprovelModelYes()"  data-bs-dismiss="modal" aria-label="Close">Yes</button>
             </div>
         </div>
     </div>
