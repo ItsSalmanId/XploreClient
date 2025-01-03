@@ -114,7 +114,7 @@
                         <span style="color: red;"> *</span>
                     </label>
                     <input type="text" class="form-control" placeholder="Enter your city"
-                    [(ngModel)]="businessDetail.STATE" name="STATE" maxlength="20"
+                    [(ngModel)]="businessDetail.STATE" name="STATE" maxlength="10"
                     >
                 </div>
             </div>
@@ -186,15 +186,16 @@
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
-                <div class="form-group">
-                    <label><i class="bi bi-twitter twitter-icon"></i> Twitter
-                        <span style="color: red;"> *</span>
-                    </label>
-                    <input type="text" class="form-control" placeholder="Twitter Link"
-                    [(ngModel)]="businessDetail.TWITTER_LINK" name="TWITTER_LINK" maxlength="500"
-                    >
+                <div class="form-group" style="padding-left: inherit;">
+                  <label>
+                    <!-- Image for the official X logo -->
+                    <img src="assets/images/X_log.PNG" alt="Twitter Logo" class="x-logo" style="width: 24px; height: 24px; vertical-align: middle; border-radius: 50%;">
+                    Twitter <span style="color: red;"> *</span>
+                  </label>
+                  <input type="text" class="form-control" placeholder="Twitter Link"
+                    [(ngModel)]="businessDetail.TWITTER_LINK" name="TWITTER_LINK" maxlength="500">
                 </div>
-            </div>
+              </div>
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
                     <label><i class='bi bi-tiktok tiktok-icon'></i> Tiktok
@@ -236,19 +237,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-6 col-md-6">
-                <div class="form-group">
-                    <label><i class='bx bx-duplicate'></i>Social media accounts</label>
-                    <select [(ngModel)]="businessDetail.BUSINESS_CATEGORY_TYPE">
-                        <option>Select social-media accounts</option>
-                        <option>Facebook</option>
-                        <option>Twitter</option>
-                        <option>Snapchat</option>
-                        <option>Tiktok</option>
-                        <option>Linkedin</option>
-                    </select>
-                </div>
-            </div>
+            
         </div>
     </div>
 

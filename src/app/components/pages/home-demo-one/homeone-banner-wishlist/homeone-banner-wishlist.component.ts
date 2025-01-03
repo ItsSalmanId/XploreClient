@@ -84,7 +84,32 @@ export class HomeoneBannerWishlistComponent implements OnInit {
                     
                     if(this.businessDetailsList.length > 0)
                     {
-                        this.businessDetailsList = this.businessDetailsList.filter(item => item.IsfavoriteBusiness === true);
+                        var myPost = localStorage.getItem("myPost");
+                        if(myPost == 'true')
+                        {
+                            this.businessDetailsList = this.businessDetailsList.filter(item => item.USER_ID === this.businessDetail.USER_ID); 
+                            if(this.businessDetailsList.length > 0)
+                                {
+                                    this.businessDetailsList.forEach(business => {
+                                        let averageRating = Number(business.AverageRating); // Store the average rating in a variable
+            
+              business.fullStars = Math.floor(averageRating); // Full stars based on the integer part
+              business.halfStar = averageRating % 1 !== 0; // Check if there's a half star
+              business.emptyStars = 5 - business.fullStars - (business.halfStar ? 1 : 0);
+                                      });
+                                    // Define the URL you want to push
+                                    localStorage.setItem('selectedBusinessId', this.businessDetailsList[0].BUSINESS_DETAIL_ID.toString() );
+            
+                                } 
+                                else
+                                {
+                                    this.ShowToast("Xplore", 'MyPost List is empty.', false);
+                            this.router.navigate(['/']);  
+                                }    
+                        }
+                        else
+                        {
+                        this.businessDetailsList = this.businessDetailsList.filter(item => item.IsfavoriteBusiness === true); 
                         if(this.businessDetailsList.length > 0)
                             {
                                 this.businessDetailsList.forEach(business => {
@@ -103,6 +128,7 @@ export class HomeoneBannerWishlistComponent implements OnInit {
                                 this.ShowToast("Xplore", 'Wishlist is empty.', false);
                         this.router.navigate(['/']);  
                             }   
+                        }
                     }
                     else
                     {

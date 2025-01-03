@@ -55,6 +55,7 @@ export class BusinessDetail {
     halfStar: boolean = false;
     emptyStars: number = 4;
     AverageRating: string;
+    IS_APPROVED: boolean = false;
 }
 
 export class  BusinessFilesDetailList {
@@ -166,6 +167,9 @@ export class UserAccount {
     LINKEDIN_LINK: string;
     YOUTUBE_LINK: string;
     PROFILE_PICTURE: string;
+    IS_EMAIL_VARIFIED: boolean;
+    Status: string;
+    Is_FOLLOW_XPLORE: boolean = false;
 
 }
 
